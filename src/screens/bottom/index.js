@@ -1,0 +1,5 @@
+export {default as Dashboard } from './Dashboard'
+export {default as Recharge } from './Recharge'
+export {default as Bookings } from './Bookings'
+export {default as Chat } from './Chat'
+export {default as Profile } from './Profile'
