@@ -95,6 +95,7 @@ android {
 
     namespace "com.onit"
     defaultConfig {
+        vectorDrawables.useSupportLibrary = true
         applicationId "com.onit"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
