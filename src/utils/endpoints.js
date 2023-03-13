@@ -1,5 +1,5 @@
 export const BASE_URL = `https://api.onit.services/`;
-export const RAZORPAY_API_KEY = `rzp_live_xv1MWc6HtbSsul`;
+export const RAZORPAY_API_KEY = `rzp_live_yr00EgqO9pvjDt`;
 export const UPLOAD_URL = `${BASE_URL}common/upload-image/`;
 
 export const GET_ALL_SERVICES = `${BASE_URL}admin/get-all-services`;

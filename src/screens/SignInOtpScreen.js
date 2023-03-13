@@ -224,7 +224,7 @@ const SignInOtpScreen = ({ navigation, route }) => {
           alignSelf: 'center',
           color: counter === 0 ? "grey" : "#00796A",
           fontSize: 14,
-        }}> ({counter + "s"})</Text>
+        }}> {counter? (counter + "s"): ''}</Text>
       </View>
       <Modal
         animationType="fade"

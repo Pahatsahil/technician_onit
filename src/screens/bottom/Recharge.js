@@ -108,7 +108,7 @@ export default function Recharge({navigation}) {
             <TouchableOpacity>
               <Text
                 style={{
-                  marginLeft: 30,
+                  marginLeft: 10,
                   marginTop: 17,
                   color: '#FFFFFF',
                   fontSize: 20,
