@@ -40,7 +40,7 @@ export const BottomTabs = () => {
             case 'Dashboard':
               imageName = DashBoardImage;
               break;
-            case 'Recharge':
+            case 'Accounts':
               imageName = RechargeImage;
               break;
             case 'Booking':
@@ -65,7 +65,7 @@ export const BottomTabs = () => {
         headerShown: false,
       })}>
       <Tab.Screen name="Dashboard" component={Dashboard} />
-      <Tab.Screen name="Recharge" component={Recharge} />
+      <Tab.Screen name="Accounts" component={Recharge} />
       <Tab.Screen name="Booking" component={Home} />
       {/* <Tab.Screen name='Chat' component={Chat} /> */}
       <Tab.Screen name="Profile" component={Profile} />

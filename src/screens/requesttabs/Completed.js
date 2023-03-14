@@ -70,10 +70,12 @@ export default function Completed() {
                 style={{
                   color: 'black',
                   fontFamily: 'poppins-medium',
-                  fontSize: 18
+                  fontSize: 18,
+                  textAlign: 'center'
                 }}
               >
-                No Ticket Available
+                No Request Available
+                {'\n'}{'Share your QR from Profile'}
               </Text>
             </View>
           }

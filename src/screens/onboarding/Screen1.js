@@ -53,7 +53,7 @@ const Screen1 = () => (
         flexDirection: "row"
       }}>
         <Text style={styles.num}>1</Text>
-        <Text style={styles.intro}>Free Ticket Creation</Text>
+        <Text style={styles.intro}>Free Service Request Creation</Text>
       </View>
       <View style={{
         flexDirection: "row"

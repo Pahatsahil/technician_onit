@@ -78,7 +78,7 @@ export default function SignIn({ navigation,route }) {
               }}
               source={require('../images/logo.png')}
             />
-            <Text style={styles.header}>We Care of your Home</Text>
+            <Text style={styles.header}>Growing Business Digitally</Text>
             <Text style={styles.subheader}>Quick - Reliable - Economical</Text>
             <Controller
               control={control}

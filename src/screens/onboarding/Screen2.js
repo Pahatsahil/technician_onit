@@ -38,7 +38,7 @@ const Screen2 = () => (
         marginBottom: 4,
         fontFamily: 'poppins-semibold',
       }}>
-        Get more calls...
+        Get more business...
       </Text>
       <Text style={{
         color: '#fff',
@@ -55,7 +55,7 @@ const Screen2 = () => (
             source={require('../../images/arrow.png')}
           />
         </View>
-        <Text style={styles.intro}>Multiple ticket creation methods</Text>
+        <Text style={styles.intro}>Multiple service creation methods</Text>
       </View>
 
       <View style={styles.box}>

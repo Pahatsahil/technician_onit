@@ -333,7 +333,7 @@ export default function GenerateQR({ navigation, route }) {
           mode: "cors",
         });
         let _data = await response.json();
-        setImageResponse(_data);
+        // setImageResponse(_data);
         dispatch(setProfileImageUrl(_data?.data?.fileSavedUrl.toString()));
         sets3AadhaarCardFront(_data?.data?.fileSavedUrl.toString());
         if (_data.status === 200) {
@@ -403,7 +403,7 @@ export default function GenerateQR({ navigation, route }) {
           mode: "cors",
         });
         let _data = await response.json();
-        setImageResponse(_data);
+        // setImageResponse(_data);
         dispatch(setProfileImageUrl(_data?.data?.fileSavedUrl.toString()));
         sets3AadhaarCardBack(_data?.data?.fileSavedUrl.toString());
         if (_data.status === 200) {
@@ -555,12 +555,21 @@ export default function GenerateQR({ navigation, route }) {
                   }}
                 >
                   <Progress.Bar
-                    progress={0.8}
+                    progress={0.66}
                     width={200}
                     color={"#00796A"}
                     animated={true}
                     animationType="spring"
                   />
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      marginLeft: 10,
+                      fontFamily: 'poppins-semibold',
+                      color: '#000',
+                    }}>
+                    66%
+                  </Text>
                 </View>
                 <View style={styles.picture}>
                   <Image

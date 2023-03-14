@@ -35,6 +35,7 @@ import {
   TECHNICIAN_COMPANY_WORKED_WITH_CERTIFICATE,
   TECHNICIAN_PROFILE_PICTURE,
 } from '../utils/endpoints';
+// import DatePicker from 'react-native-datepicker';
 import {Picker} from '@react-native-picker/picker';
 LogBox.ignoreLogs(['VirtualizedLists']);
 
@@ -473,6 +474,33 @@ export default function GenerateQR({navigation}) {
                         }}
                         textColor="#00796A"
                       />
+                      {/* <DatePicker
+                        date={value || moment().subtract(18, 'years')._d}
+                        mode="date"
+                        placeholder="select date"
+                        format="YYYY-MM-DD"
+                        minDate="2016-05-01"
+                        maxDate={moment().subtract(18, 'years')._d}
+                        confirmBtnText="Confirm"
+                        cancelBtnText="Cancel"
+                        showIcon={false}
+                        // customStyles={{
+                        //   dateIcon: {
+                        //     position: 'absolute',
+                        //     left: 0,
+                        //     top: 4,
+                        //     marginLeft: 0,
+                        //   },
+                        //   dateInput: {
+                        //     marginLeft: 36,
+                        //   },
+                        //   // ... You can check the source to find the other keys.
+                        // }}
+                        onDateChange={date => {
+                          setOpen(false);
+                          onChange(date);
+                        }}
+                      /> */}
                     </TouchableOpacity>
                   )}
                   name="dob"
@@ -485,86 +513,37 @@ export default function GenerateQR({navigation}) {
                     <Picker.Item
                       label="Work Experience"
                       value="work"
-                      style={{
-                        fontSize: 16,
-                        fontWeight: 'bold',
-                        fontFamily: 'poppins-semibold',
-                        multiline: true,
-                        numberOfLines: 1,
-                        color: 'black',
-                      }}
+                      style={styles.dropDown}
                     />
                     <Picker.Item
                       label="0-1 Year"
                       value="0-2"
-                      style={{
-                        fontSize: 16,
-                        fontWeight: 'bold',
-                        fontFamily: 'poppins-semibold',
-                        multiline: true,
-                        numberOfLines: 1,
-                        color: 'black',
-                      }}
+                      style={styles.dropDown}
                     />
                     <Picker.Item
                       label="1-3 Year"
                       value="1-3"
-                      style={{
-                        fontSize: 16,
-                        fontWeight: 'bold',
-                        fontFamily: 'poppins-semibold',
-                        multiline: true,
-                        numberOfLines: 1,
-                        color: 'black',
-                      }}
+                      style={styles.dropDown}
                     />
                     <Picker.Item
                       label="3-5 Year"
                       value="3-5"
-                      style={{
-                        fontSize: 16,
-                        fontWeight: 'bold',
-                        fontFamily: 'poppins-semibold',
-                        multiline: true,
-                        numberOfLines: 1,
-                        color: 'black',
-                      }}
+                      style={styles.dropDown}
                     />
                     <Picker.Item
                       label="3-5 Year"
                       value="3-5"
-                      style={{
-                        fontSize: 16,
-                        fontWeight: 'bold',
-                        fontFamily: 'poppins-semibold',
-                        multiline: true,
-                        numberOfLines: 1,
-                        color: 'black',
-                      }}
+                      style={styles.dropDown}
                     />
                     <Picker.Item
                       label="5-10 Year"
                       value="5-10"
-                      style={{
-                        fontSize: 16,
-                        fontWeight: 'bold',
-                        fontFamily: 'poppins-semibold',
-                        multiline: true,
-                        numberOfLines: 1,
-                        color: 'black',
-                      }}
+                      style={styles.dropDown}
                     />
                     <Picker.Item
                       label=">10 Year"
                       value="10"
-                      style={{
-                        fontSize: 16,
-                        fontWeight: 'bold',
-                        fontFamily: 'poppins-semibold',
-                        multiline: true,
-                        numberOfLines: 1,
-                        color: 'black',
-                      }}
+                      style={styles.dropDown}
                     />
                   </Picker>
                 </TouchableOpacity>
@@ -686,7 +665,8 @@ export default function GenerateQR({navigation}) {
               {/* Information */}
               <View>
                 <Text style={styles.headline}>
-                  Information<Text style={styles.star}>*</Text>
+                  Information
+                  {/* <Text style={styles.star}>*</Text> */}
                 </Text>
                 <View>
                   <Controller
@@ -707,7 +687,8 @@ export default function GenerateQR({navigation}) {
                     rules={{
                       pattern: {
                         value:
-                          /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+                          // /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+                          /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
                         message: 'Please enter your email address',
                       },
                     }}
@@ -1044,6 +1025,14 @@ const styles = StyleSheet.create({
     fontSize: 20,
     paddingLeft: 10,
     marginTop: -2,
+  },
+  dropDown: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    fontFamily: 'poppins-semibold',
+    multiline: true,
+    numberOfLines: 1,
+    color: 'black',
   },
   selectedTextStyle1: {
     height: 50,

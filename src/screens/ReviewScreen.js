@@ -511,7 +511,7 @@ export default function ReviewScreen({navigation, route}) {
               <Image style={{height: 40, width: 40}} source={cash} />
             </View>
             <View style={{paddingLeft: 20}}>
-              <Text style={{fontSize: 14, fontWeight: '600'}}>Total Cost </Text>
+              <Text style={{fontSize: 14, fontWeight: '600'}}>Advance </Text>
               <Text style={{fontSize: 18, fontWeight: 'bold', color: 'black'}}>
                 ₹
                 {ticketDetails?.broadcast_status === 'matched_in_same_center'
@@ -539,7 +539,7 @@ export default function ReviewScreen({navigation, route}) {
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <Image style={{height: 40, width: 40}} source={cash} />
                 <Text style={{fontSize: 14, fontWeight: '600', marginLeft: 10}}>
-                  Total Service Charges{' '}
+                  Additional Charges{' '}
                 </Text>
               </View>
               <View

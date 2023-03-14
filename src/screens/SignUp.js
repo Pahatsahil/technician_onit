@@ -177,7 +177,7 @@ export default function SignUp({navigation}) {
           </Text>
 
           <Text style={styles.title}>
-            Shop Name / Center / Entity Name
+            Shop / Center / Entity Name
             <Text style={[styles.title, {color: 'red'}]}>*</Text>
           </Text>
 
@@ -212,7 +212,7 @@ export default function SignUp({navigation}) {
             <Text style={{color: 'red'}}>Shop/ Center name is required!</Text>
           )} */}
           <Text style={styles.title}>
-            Main service you offer/Need
+            Main service you offer
             <Text style={[styles.title, {color: 'red'}]}>*</Text>
           </Text>
           <TouchableOpacity

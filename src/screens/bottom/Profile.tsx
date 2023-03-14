@@ -28,7 +28,6 @@ import share from '../../images/share.png';
 import report from '../../images/report.png';
 import faq from '../../images/faq.png';
 import profile from '../../images/profile.png';
-import GppGoodTwoToneIcon from '@mui/icons-material/GppGoodTwoTone';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   logout,
@@ -49,7 +48,7 @@ export default function Profile({ navigation: {navigate}}) {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const [qrimage, setQrimage] = useState();
-  const [accType, setAccType] = useState()
+  const [accType, setAccType] = useState();
 
   const subject = 'Support and queries';
   const message = 'Write your query or problem.';
@@ -178,7 +177,7 @@ export default function Profile({ navigation: {navigate}}) {
             />
             <TouchableOpacity
               style={{
-                height: 30,
+                height: 35,
                 // width: 30,
                 borderRadius: 15,
                 borderWidth: 2,
@@ -187,14 +186,22 @@ export default function Profile({ navigation: {navigate}}) {
                 justifyContent: 'center',
                 marginVertical: 10,
                 flexDirection: 'row',
-                padding: 5
+                padding: 5,
+                paddingHorizontal: 10,
               }}
               onPress={() => captureAndShareScreenshot()}>
               <Image
-                style={{width: 22, height: 22, marginHorizontal: 2}}
+                style={{width: 22, height: 22, marginRight: 2}}
                 source={share}
               />
-              <Text style={{color: COLORS.DARK_GREEN}}>Share & Get Leads for Free</Text>
+              <Text
+                style={{
+                  color: COLORS.DARK_GREEN,
+                  fontSize: 15,
+                  textAlignVertical: 'top',
+                }}>
+                Share & Get Leads for Free
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -219,7 +226,7 @@ export default function Profile({ navigation: {navigate}}) {
             source={{uri: profileImageUrl}}
           />
         </View>
-        <View style={{marginLeft: 20, width: '60%'}}>
+        <View style={{marginLeft: 20, width: '65%'}}>
           <View
             style={{
               width: '100%',
@@ -232,11 +239,31 @@ export default function Profile({ navigation: {navigate}}) {
               style={{
                 width: '50%',
               }}>
-              <Text style={{fontSize: 18, color: 'white'}}>
-                {userData.userDetails?.personal_details?.name}{' '}
-                {accType? 'Verified': 'not'}
-              </Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text style={{fontSize: 18, color: 'white'}}>
+                  {userData.userDetails?.personal_details?.name}{' '}
+                </Text>
+                {accType ? (
+                  <Image
+                    source={require('../../images/tick.png')}
+                    style={{height: 17, width: 17}}
+                    resizeMode="contain"
+                  />
+                ) : (
+                  <Image
+                    source={require('../../images/greenTick.png')}
+                    style={{height: 17, width: 17}}
+                    resizeMode="contain"
+                  />
+                )}
+              </View>
               <Text style={{fontSize: 14, color: 'white', paddingBottom: 10}}>
+                {'\n'}
                 {userData.userDetails?.personal_details?.phone?.country_code}
                 {' ' +
                   userData.userDetails?.personal_details?.phone?.mobile_number}
@@ -266,7 +293,7 @@ export default function Profile({ navigation: {navigate}}) {
           <TouchableOpacity
             style={[styles.buttonBorder, {alignSelf: 'center'}]}
             onPress={() => navigate('EditProfile')}>
-            <Text style={{color: 'white', fontSize: 15,}}>View Profile</Text>
+            <Text style={{color: 'white', fontSize: 15}}>View Profile</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -300,6 +327,7 @@ export default function Profile({ navigation: {navigate}}) {
                     <Image
                       style={{height: 30, width: 30}}
                       source={PROFILE_ITEMS.uri}
+                      resizeMode='contain'
                     />
                   </View>
                   <View style={{}}>

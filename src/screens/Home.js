@@ -55,7 +55,7 @@ const Home = ({ navigation, route }) => {
             }}
           />
           <Text style={{color: "#fff", fontSize: 16, fontWeight:"bold" }}>
-            Create Ticket
+            Create Request
           </Text>
         </TouchableOpacity>
       </View>
@@ -66,7 +66,7 @@ const Home = ({ navigation, route }) => {
 function TopBar() {
   return (
     <Tab.Navigator
-      initialRouteName="New Request"
+      initialRouteName="NewRequest"
       screenOptions={{
         tabBarIndicatorStyle: { backgroundColor: '#00796A', height: 2 },
         tabBarActiveTintColor: '#00796A',

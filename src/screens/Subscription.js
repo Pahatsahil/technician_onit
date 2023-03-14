@@ -218,7 +218,7 @@ const Subscription = () => {
                 textAlign: "center",
               }}
             >
-              Bring Your Business Online & Get Unlimited Tickets Directly from
+              Bring Your Business Online & Get Unlimited Service Requests Directly from
               Customers, Dealers and Societies.
             </Text>
           </View>

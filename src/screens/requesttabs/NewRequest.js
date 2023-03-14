@@ -28,7 +28,6 @@ export default function NewRequestBox() {
   const [item, setItem] = useState();
   const [loader, setLoader] = useState(true);
   const [refetching, setRefetcing] = useState(false);
-  // console.log(_allTickets)
 
   const fetchTickets = async () => {
     setRefetcing(true);
@@ -186,9 +185,11 @@ export default function NewRequestBox() {
                   color: "black",
                   fontFamily: "poppins-semibold",
                   fontSize: 18,
+                  textAlign: 'center'
                 }}
               >
-                No Ticket Available
+                No Request Available
+                {'\n'}{'Share your QR from Profile'}
               </Text>
             </View>
           }
