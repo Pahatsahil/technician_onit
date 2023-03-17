@@ -1,30 +1,43 @@
-import { View, Text, StatusBar, StyleSheet, ScrollView, TouchableOpacity, Image, Dimensions, FlatList } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { Header } from '../../components/Header';
-import { Cards } from '../../components/Cards';
-import { useSelector } from 'react-redux';
+import {
+  View,
+  Text,
+  StatusBar,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+  Dimensions,
+  FlatList,
+} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Header} from '../../components/Header';
+import {Cards} from '../../components/Cards';
+import {useSelector} from 'react-redux';
 import axios from 'axios';
-import { GET_OPPORTUNITY_IN_YOUR_AREA } from '../../utils/endpoints';
+import {GET_OPPORTUNITY_IN_YOUR_AREA} from '../../utils/endpoints';
+import { COLORS } from '../../utils/constants';
 
-const { height, width } = Dimensions.get("screen");
+const {height, width} = Dimensions.get('screen');
 
-
-const array = [1, 2, 3, 4, 5, 6, 7]
-export default function Dashboard({ navigation }) {
-  const { accessToken, userData } = useSelector((state) => state.auth);
-  const [availableServices,setAvailableServices] = useState()
+const array = [1, 2, 3, 4, 5, 6, 7];
+export default function Dashboard({navigation}) {
+  const {accessToken, userData} = useSelector(state => state.auth);
+  const [availableServices, setAvailableServices] = useState();
   //console.log(availableServices);
   console.log(accessToken);
-  
+
   useEffect(() => {
     const fetchAvailableOpportunity = async () => {
       const res = await axios.get(GET_OPPORTUNITY_IN_YOUR_AREA);
-      setAvailableServices(res?.data?.data?.totalData)
-    }
-    fetchAvailableOpportunity()
-  }, [])
+      setAvailableServices(res?.data?.data?.totalData);
+    };
+    fetchAvailableOpportunity();
+  }, []);
   return (
-    <>
+    <View
+      style={{
+        backgroundColor: COLORS.GREY2,
+      }}>
       <Header />
       {/* <View style={styles.services}>
         <View>
@@ -86,19 +99,14 @@ export default function Dashboard({ navigation }) {
           <Text style={styles.imagetitle}>Refer Earn</Text>
         </View>
       </View> */}
-      <View style={{ paddingHorizontal: 10 }}>
-        <Text style={{ fontSize: 20, color: "black", marginVertical: 20 }}>
+      <View style={{paddingHorizontal: 10}}>
+        <Text style={{fontSize: 20, color: 'black', marginVertical: 20}}>
           Opportunity in your area:
         </Text>
-        <FlatList 
+        <FlatList
           data={availableServices}
-          style={{ height: "65%"}}
-          renderItem={({ item, index }) => (
-            <Cards 
-              key={index}
-              data={item}
-            />
-          )}
+          style={{height: '65%'}}
+          renderItem={({item, index}) => <Cards key={index} data={item} />}
         />
       </View>
       {/* <TouchableOpacity
@@ -125,7 +133,7 @@ export default function Dashboard({ navigation }) {
           }}
         />
       </TouchableOpacity> */}
-    </>
+    </View>
   );
 }
 
@@ -154,4 +162,4 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     color: '#000',
   },
-})
+});

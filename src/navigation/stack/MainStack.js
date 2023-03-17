@@ -16,6 +16,7 @@ import Subscription from '../../screens/Subscription';
 import {useSelector} from 'react-redux';
 import OnboardingScreens from '../../screens/onboarding/OnboardingScreens';
 import NewRequestBox from '../../components/NewRequestBox';
+import JobCompleted from '../../screens/requesttabs/JobCompleted';
 
 const Stack = createStackNavigator();
 const MainStack = () => {
@@ -58,6 +59,11 @@ const MainStack = () => {
       <Stack.Screen
         name="Reviews"
         component={ReviewScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="JobCompleted"
+        component={JobCompleted}
         options={{headerShown: false}}
       />
       <Stack.Screen

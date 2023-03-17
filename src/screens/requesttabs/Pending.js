@@ -29,6 +29,7 @@ import {
   GET_ALL_TECHNICIAN,
   UPDATE_TICKET_DETAILS,
 } from '../../utils/endpoints';
+import {COLORS} from '../../utils/constants';
 
 const {height, width} = Dimensions.get('screen');
 export default function Pending() {
@@ -260,6 +261,7 @@ export default function Pending() {
       <View
         style={{
           height: '90%',
+          backgroundColor: COLORS.GREY2,
         }}>
         <FlatList
           refreshing={visible}
@@ -294,10 +296,12 @@ export default function Pending() {
                   color: 'black',
                   fontFamily: 'poppins-medium',
                   fontSize: 18,
-                  textAlign: 'center'
+                  textAlign: 'center',
+                  color: COLORS.BLACK,
                 }}>
                 No Request Available
-                {'\n'}{'Share your QR from Profile'}
+                {'\n'}
+                {'Share your QR from Profile'}
               </Text>
             </View>
           }
@@ -320,6 +324,7 @@ export default function Pending() {
                 marginVertical: 10,
                 flexGrow: 1,
                 overflow: 'hidden',
+                elevation: 3,
               }}
               onPress={() => navigation.navigate('Reviews', {id: item._id})}>
               <View
@@ -396,9 +401,16 @@ export default function Pending() {
                     source={require('../../images/water-tap.png')}
                   />
                 </View>
-                <View style={{flexDirection: 'row', marginLeft: 16}}>
-                  <Text style={{fontSize: 14}}>Booking ID:</Text>
-                  <Text style={{fontSize: 14, fontWeight: 'bold'}}>
+                <View style={{flexDirection: 'row', marginLeft: 6}}>
+                  <Text style={{fontSize: 14, color: COLORS.BLACK}}>
+                    Booking ID:
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 14,
+                      fontWeight: 'bold',
+                      color: COLORS.BLACK,
+                    }}>
                     {' '}
                     {item?.ticket_id}
                   </Text>
@@ -451,9 +463,17 @@ export default function Pending() {
                         style={{width: 22, height: 22}}
                         source={require('../../images/warning.png')}
                       />
-                      <Text style={{fontSize: 12}}> Problems:</Text>
+                      <Text style={{fontSize: 12, color: COLORS.BLACK}}>
+                        {' '}
+                        Problems:
+                      </Text>
                     </View>
-                    <Text style={{fontSize: 13, fontWeight: 'bold'}}>
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 'bold',
+                        color: COLORS.BLACK,
+                      }}>
                       {' '}
                       {item?.specific_requirement}
                     </Text>

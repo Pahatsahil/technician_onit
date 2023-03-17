@@ -226,7 +226,7 @@ export default function Profile({ navigation: {navigate}}) {
             source={{uri: profileImageUrl}}
           />
         </View>
-        <View style={{marginLeft: 20, width: '65%'}}>
+        <View style={{marginLeft: 20, width: '60%'}}>
           <View
             style={{
               width: '100%',
@@ -262,7 +262,7 @@ export default function Profile({ navigation: {navigate}}) {
                   />
                 )}
               </View>
-              <Text style={{fontSize: 14, color: 'white', paddingBottom: 10}}>
+              <Text style={{fontSize: 13, color: 'white', paddingBottom: 10}}>
                 {'\n'}
                 {userData.userDetails?.personal_details?.phone?.country_code}
                 {' ' +
@@ -306,6 +306,7 @@ export default function Profile({ navigation: {navigate}}) {
       <View
         style={{
           flex: 1,
+          backgroundColor: COLORS.GREY2,
         }}>
         <ProfileHeader />
 
@@ -338,7 +339,7 @@ export default function Profile({ navigation: {navigate}}) {
                           color:
                             PROFILE_ITEMS.name === 'Subscription'
                               ? COLORS.DARK_GREEN
-                              : undefined,
+                              : COLORS.BLACK,
                         },
                       ]}>
                       {PROFILE_ITEMS.name}

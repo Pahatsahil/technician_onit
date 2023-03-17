@@ -1,4 +1,4 @@
-package com.onit;
+package com.onit.partners;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
