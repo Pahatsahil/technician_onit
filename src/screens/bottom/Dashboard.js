@@ -15,12 +15,14 @@ import {Cards} from '../../components/Cards';
 import {useSelector} from 'react-redux';
 import axios from 'axios';
 import {GET_OPPORTUNITY_IN_YOUR_AREA} from '../../utils/endpoints';
-import { COLORS } from '../../utils/constants';
+import {COLORS} from '../../utils/constants';
+import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 
 const {height, width} = Dimensions.get('screen');
 
 const array = [1, 2, 3, 4, 5, 6, 7];
 export default function Dashboard({navigation}) {
+  const tabBarHeight = useBottomTabBarHeight();
   const {accessToken, userData} = useSelector(state => state.auth);
   const [availableServices, setAvailableServices] = useState();
   //console.log(availableServices);
@@ -99,13 +101,15 @@ export default function Dashboard({navigation}) {
           <Text style={styles.imagetitle}>Refer Earn</Text>
         </View>
       </View> */}
-      <View style={{paddingHorizontal: 10}}>
-        <Text style={{fontSize: 20, color: 'black', marginVertical: 20}}>
+      <View
+        style={{paddingHorizontal: 10, height: height * 0.83 - tabBarHeight}}>
+        <Text style={{fontSize: 20, color: 'black', marginVertical: 10}}>
           Opportunity in your area:
         </Text>
         <FlatList
+          showsVerticalScrollIndicator={false}
           data={availableServices}
-          style={{height: '65%'}}
+          style={{marginVertical: 15}}
           renderItem={({item, index}) => <Cards key={index} data={item} />}
         />
       </View>

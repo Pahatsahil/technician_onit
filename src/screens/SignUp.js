@@ -25,6 +25,7 @@ import {Picker} from '@react-native-picker/picker';
 import {useRef} from 'react';
 import {getUniqueId} from 'react-native-device-info';
 import {GET_ALL_SERVICES, REGISTER_CENTER_SEND_OTP} from '../utils/endpoints';
+import { COLORS } from '../utils/constants';
 const {width, height} = Dimensions.get('window');
 
 const K_OPTIONS = [
@@ -91,6 +92,7 @@ export default function SignUp({navigation}) {
   }) => {
     setVisible(true);
     console.log(primaryService);
+    // navigation.navigate("CompleteProfile"); If you dont want to send OTP
     let payload = {
       center_name,
       personal_details: {
@@ -422,7 +424,7 @@ export default function SignUp({navigation}) {
                   textDecorationLine: 'underline',
                   fontFamily: 'poppins-regular',
                 }}>
-                Term & Conditions
+                Terms & Conditions
               </Text>
             </TouchableOpacity>
           </View>
@@ -678,7 +680,7 @@ const styles = StyleSheet.create({
     paddingLeft: 14,
     fontFamily: 'poppins-regular',
     fontSize: 14,
-    color: '#000',
+    color: COLORS.BLACK,
     marginBottom: 10,
   },
 });

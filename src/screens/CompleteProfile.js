@@ -17,6 +17,8 @@ import {
   ActivityIndicator,
   Alert,
 } from 'react-native';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import DateTimePicker from 'react-native-modal-datetime-picker';
 import cross from '../images/cross.png';
 import {TextInput} from 'react-native-gesture-handler';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -459,12 +461,23 @@ export default function GenerateQR({navigation}) {
                         }}>
                         {value ? moment(value).format('LL') : 'Date of Birth'}
                       </Text>
-                      <DatePicker
+                      <DateTimePicker
+                        isVisible={open}
+                        mode="date"
+                        onConfirm={date => {
+                          setOpen(false);
+                          onChange(date);
+                        }}
+                        onCancel={() => {
+                          setOpen(false);
+                        }}
+                        minimumDate={moment().subtract(18, 'years')._d}
+                        date={value || moment().subtract(18, 'years')._d}
+                      />
+                      {/* <DatePicker
                         modal
                         mode="date"
                         open={open}
-                        maximumDate={moment().subtract(18, 'years')._d}
-                        date={value || moment().subtract(18, 'years')._d}
                         onConfirm={date => {
                           setOpen(false);
                           onChange(date);
@@ -473,7 +486,7 @@ export default function GenerateQR({navigation}) {
                           setOpen(false);
                         }}
                         textColor="#00796A"
-                      />
+                      /> */}
                       {/* <DatePicker
                         date={value || moment().subtract(18, 'years')._d}
                         mode="date"

@@ -15,6 +15,7 @@ import {
 } from '../../screens/bottom';
 import {Home} from '../../screens';
 import {AddTechnician} from '../../screens/AddTechnician';
+import Earning from '../../screens/bottom/Earning';
 
 export const BottomTabs = () => {
   const Tab = createBottomTabNavigator();
@@ -65,7 +66,7 @@ export const BottomTabs = () => {
         headerShown: false,
       })}>
       <Tab.Screen name="Dashboard" component={Dashboard} />
-      <Tab.Screen name="Accounts" component={Recharge} />
+      <Tab.Screen name="Accounts" component={Earning} />
       <Tab.Screen name="Booking" component={Home} />
       {/* <Tab.Screen name='Chat' component={Chat} /> */}
       <Tab.Screen name="Profile" component={Profile} />

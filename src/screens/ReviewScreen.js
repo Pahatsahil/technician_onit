@@ -37,6 +37,7 @@ import {useSelector} from 'react-redux';
 import {Controller, useForm} from 'react-hook-form';
 import {BASE_URL, UPDATE_TICKET_DETAILS} from '../utils/endpoints';
 import {Picker} from '@react-native-picker/picker';
+import {COLORS} from '../utils/constants';
 const {width, height} = Dimensions.get('window');
 
 export default function ReviewScreen({navigation, route}) {
@@ -283,8 +284,8 @@ export default function ReviewScreen({navigation, route}) {
     }
   };
 
-  return (
-    <>
+  const Camera = () => {
+    return (
       <Modal
         visible={visible}
         transparent={true}
@@ -307,6 +308,11 @@ export default function ReviewScreen({navigation, route}) {
           </View>
         </View>
       </Modal>
+    );
+  };
+
+  const Loader = () => {
+    return (
       <Modal animationType="fade" transparent={true} visible={loader}>
         <View
           style={{
@@ -319,14 +325,22 @@ export default function ReviewScreen({navigation, route}) {
           <ActivityIndicator animating={loader} size="large" />
         </View>
       </Modal>
+    );
+  };
+
+  return (
+    <>
+      <Camera />
+      <Loader />
       <SafeAreaView
         style={{
-          paddingTop: StatusBar.currentHeight,
+          paddingTop: StatusBar.currentHeight
         }}>
         <ScrollView
           showsVerticalScrollIndicator={false}
           // style={{
-          //     backgroundColor: "red"
+          //   flex: 1,
+          //     paddingVertical: StatusBar.currentHeight + 30
           // }}
         >
           <View
@@ -350,6 +364,7 @@ export default function ReviewScreen({navigation, route}) {
                 style={{
                   fontSize: 18,
                   fontWeight: '600',
+                  color: COLORS.BLACK,
                 }}>
                 Booking ID :
               </Text>
@@ -358,6 +373,7 @@ export default function ReviewScreen({navigation, route}) {
                   fontSize: 16,
                   fontWeight: '600',
                   marginLeft: 6,
+                  color: COLORS.BLACK,
                 }}>
                 {ticketDetails?.ticket_id}
               </Text>
@@ -384,14 +400,16 @@ export default function ReviewScreen({navigation, route}) {
                 style={{
                   fontSize: 14,
                   fontWeight: '600',
+                  color: COLORS.BLACK,
                 }}>
                 Problem :
               </Text>
               {ticketDetails?.service_provided_for?.service_name ? (
                 <Text
                   style={{
-                    fontSize: 18,
+                    fontSize: 16,
                     fontWeight: 'bold',
+                    color: COLORS.BLACK,
                   }}>
                   {ticketDetails?.service_provided_for?.service_name}
                 </Text>
@@ -440,7 +458,7 @@ export default function ReviewScreen({navigation, route}) {
               source={watch}
             />
             <View>
-              <Text style={{fontSize: 14, fontWeight: '600'}}>Status :</Text>
+              <Text style={{fontSize: 14, fontWeight: '600', color: COLORS.BLACK}}>Status :</Text>
               {ticketDetails?.ticket_status ? (
                 <Text
                   style={{
@@ -466,7 +484,13 @@ export default function ReviewScreen({navigation, route}) {
           </View>
 
           <View style={{padding: 20}}>
-            <Text style={{fontSize: 20, fontWeight: 'bold', paddingBottom: 20}}>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: 'bold',
+                paddingBottom: 20,
+                color: COLORS.BLACK,
+              }}>
               Onsite Pictures<Text style={styles.star}>*</Text>
             </Text>
             <View
@@ -511,7 +535,10 @@ export default function ReviewScreen({navigation, route}) {
               <Image style={{height: 40, width: 40}} source={cash} />
             </View>
             <View style={{paddingLeft: 20}}>
-              <Text style={{fontSize: 14, fontWeight: '600'}}>Advance </Text>
+              <Text
+                style={{fontSize: 14, fontWeight: '600', color: COLORS.BLACK}}>
+                Advance{' '}
+              </Text>
               <Text style={{fontSize: 18, fontWeight: 'bold', color: 'black'}}>
                 ₹
                 {ticketDetails?.broadcast_status === 'matched_in_same_center'
@@ -538,7 +565,13 @@ export default function ReviewScreen({navigation, route}) {
               }}>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <Image style={{height: 40, width: 40}} source={cash} />
-                <Text style={{fontSize: 14, fontWeight: '600', marginLeft: 10}}>
+                <Text
+                  style={{
+                    fontSize: 14,
+                    fontWeight: '600',
+                    marginLeft: 10,
+                    color: COLORS.BLACK,
+                  }}>
                   Additional Charges{' '}
                 </Text>
               </View>
@@ -602,7 +635,7 @@ export default function ReviewScreen({navigation, route}) {
                   style={{height: 30, width: 60}}
                   resizeMode="contain"
                 />
-                <Text>Online</Text>
+                <Text style={{color: COLORS.BLACK}}>Online</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => setPaymentType('Cash')}
@@ -618,7 +651,7 @@ export default function ReviewScreen({navigation, route}) {
                   style={{height: 30, width: 60}}
                   resizeMode="contain"
                 />
-                <Text>Cash</Text>
+                <Text style={{color: COLORS.BLACK}}>Cash</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -857,7 +890,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 4,
-    // paddingRight:6,
+    paddingRight:6,
     backgroundColor: '#fff',
     justifyContent: 'center',
     marginHorizontal: 6,

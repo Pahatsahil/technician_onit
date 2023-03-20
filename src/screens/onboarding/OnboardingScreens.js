@@ -14,7 +14,7 @@ const OnboardingScreens = ({navigation}) => {
       <Swiper
         loop={false}
         autoplay={true}
-        autoplayTimeout={5}
+        autoplayTimeout={3.5}
         activeDot={
           <View
             style={{

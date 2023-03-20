@@ -28,6 +28,7 @@ import {LogBox} from 'react-native';
 import cross from '../images/cross.png';
 import axios from 'axios';
 import PhoneInput from 'react-native-phone-number-input';
+import {COLORS} from '../utils/constants';
 import {
   AADHAR_BACK_IMAGE,
   AADHAR_FRONT_IMAGE,
@@ -660,6 +661,7 @@ export const AddTechnician = ({navigation}) => {
                   control={control}
                   render={({field: {onChange, onBlur, value}}) => (
                     <TextInput
+                      placeholderTextColor={COLORS.LIGHT_BORDER}
                       style={[styles.fullinput]}
                       onBlur={onBlur}
                       placeholder="Name"
@@ -766,6 +768,7 @@ export const AddTechnician = ({navigation}) => {
                   control={control}
                   render={({field: {onChange, onBlur, value}}) => (
                     <TextInput
+                      placeholderTextColor={COLORS.LIGHT_BORDER}
                       style={styles.fullinput}
                       onBlur={onBlur}
                       placeholder="Address Line 1"
@@ -791,6 +794,7 @@ export const AddTechnician = ({navigation}) => {
                     control={control}
                     render={({field: {onChange, onBlur, value}}) => (
                       <TextInput
+                        placeholderTextColor={COLORS.LIGHT_BORDER}
                         style={styles.halfinput}
                         onBlur={onBlur}
                         placeholder="City"
@@ -813,6 +817,7 @@ export const AddTechnician = ({navigation}) => {
                     control={control}
                     render={({field: {onChange, onBlur, value}}) => (
                       <TextInput
+                        placeholderTextColor={COLORS.LIGHT_BORDER}
                         style={styles.halfinput}
                         onBlur={onBlur}
                         placeholder="Area Pincode"
@@ -909,6 +914,7 @@ export const AddTechnician = ({navigation}) => {
                   control={control}
                   render={({field: {onChange, onBlur, value}}) => (
                     <TextInput
+                      placeholderTextColor={COLORS.LIGHT_BORDER}
                       style={styles.fullinput}
                       onBlur={onBlur}
                       placeholder="Email Address"
@@ -933,9 +939,7 @@ export const AddTechnician = ({navigation}) => {
               </View>
             </View>
             {/* Reference person details (if any) */}
-            <Text style={styles.headline}>
-              Reference person deatils (if any)
-            </Text>
+            <Text style={styles.headline}>Reference person deatils</Text>
             <View>
               <View style={styles.halfview}>
                 <View style={{width: '48%'}}>
@@ -943,6 +947,7 @@ export const AddTechnician = ({navigation}) => {
                     control={control}
                     render={({field: {onChange, onBlur, value}}) => (
                       <TextInput
+                        placeholderTextColor={COLORS.LIGHT_BORDER}
                         style={styles.halfinput}
                         onBlur={onBlur}
                         placeholder="Name"
@@ -968,6 +973,7 @@ export const AddTechnician = ({navigation}) => {
                     control={control}
                     render={({field: {onChange, onBlur, value}}) => (
                       <TextInput
+                        placeholderTextColor={COLORS.LIGHT_BORDER}
                         style={styles.halfinput}
                         onBlur={onBlur}
                         placeholder="Phone Number"
@@ -1098,6 +1104,7 @@ export const AddTechnician = ({navigation}) => {
                   control={control}
                   render={({field: {onChange, onBlur, value}}) => (
                     <TextInput
+                      placeholderTextColor={COLORS.LIGHT_BORDER}
                       style={styles.fullinput}
                       onBlur={onBlur}
                       placeholder="Enter Aadhaar number"
@@ -1263,6 +1270,7 @@ export const AddTechnician = ({navigation}) => {
                   control={control}
                   render={({field: {onChange, onBlur, value}}) => (
                     <TextInput
+                      placeholderTextColor={COLORS.LIGHT_BORDER}
                       style={styles.fullinput}
                       onBlur={onBlur}
                       placeholder="Enter PAN number"
@@ -1402,7 +1410,7 @@ const styles = StyleSheet.create({
     borderColor: '#00796A',
     fontFamily: 'poppins-medium',
     fontSize: 16,
-    color: '#000',
+    color: COLORS.BLACK,
     paddingHorizontal: 10,
   },
   fullinput: {
@@ -1414,7 +1422,7 @@ const styles = StyleSheet.create({
     borderColor: '#00796A',
     fontFamily: 'poppins-medium',
     fontSize: 16,
-    color: '#000',
+    color: COLORS.BLACK,
     paddingHorizontal: 10,
   },
   headline: {

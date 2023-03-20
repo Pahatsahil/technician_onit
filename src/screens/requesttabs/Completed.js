@@ -99,7 +99,7 @@ export default function Completed() {
             backgroundColor: 'white',
           }}
           renderItem={({item}) => {
-            console.log("ITEM",item);
+            console.log('ITEM', item);
             return (
               <TouchableOpacity
                 key={item._id}
@@ -113,9 +113,10 @@ export default function Completed() {
                   borderColor: '#d6d6d6',
                   marginVertical: 10,
                 }}
-                onPress={() =>
-                  navigation.navigate('JobCompleted', {id: item._id})
-                }>
+                // onPress={() =>
+                //   navigation.navigate('JobCompleted', {id: item._id})
+                // }
+              >
                 <View
                   style={{
                     flex: 1,
@@ -132,8 +133,15 @@ export default function Completed() {
                     />
                   </View>
                   <View style={{flexDirection: 'row', paddingLeft: 16}}>
-                    <Text style={{fontSize: 16}}>Booking ID:</Text>
-                    <Text style={{fontSize: 16, fontWeight: 'bold'}}>
+                    <Text style={{fontSize: 16, color: COLORS.BLACK}}>
+                      Booking ID:
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontWeight: 'bold',
+                        color: COLORS.BLACK,
+                      }}>
                       {' '}
                       {item?.ticket_id}
                     </Text>
@@ -155,9 +163,17 @@ export default function Completed() {
                           style={{width: 22, height: 22}}
                           source={require('../../images/warning.png')}
                         />
-                        <Text style={{fontSize: 12}}> Problems:</Text>
+                        <Text style={{fontSize: 12, color: COLORS.BLACK}}>
+                          {' '}
+                          Problems:
+                        </Text>
                       </View>
-                      <Text style={{fontSize: 13, fontWeight: 'bold'}}>
+                      <Text
+                        style={{
+                          fontSize: 13,
+                          fontWeight: 'bold',
+                          color: COLORS.BLACK,
+                        }}>
                         {' '}
                         {item?.specific_requirement}
                       </Text>

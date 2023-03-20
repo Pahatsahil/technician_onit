@@ -13,6 +13,7 @@ const COLORS = {
     RED_DARK: '#CD0000',
     PINK: '#FF3E6C',
     LIGHT_BORDER: '#AFAFAF',
+    MODAL_BACKGROUND: 'rgba(0,0,0,0.5)'
 }
 
 export {COLORS}

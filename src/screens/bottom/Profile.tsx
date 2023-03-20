@@ -41,11 +41,12 @@ import {COLORS} from '../../utils/constants';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 const {width, height} = Dimensions.get('window');
 
-export default function Profile({ navigation: {navigate}}) {
+export default function Profile({navigation: {navigate}}) {
   const {accessToken, isAuthorized, userData, profileImageUrl} = useSelector(
     (state: any) => state.auth,
   );
   const [open, setOpen] = useState(false);
+  const [logOutModal, setLogOutModal] = useState(false);
   const dispatch = useDispatch();
   const [qrimage, setQrimage] = useState();
   const [accType, setAccType] = useState();
@@ -116,7 +117,7 @@ export default function Profile({ navigation: {navigate}}) {
       name: 'LogOut',
       uri: logOut,
       onPress: () => {
-        dispatch(logout());
+        setLogOutModal(true);
       },
     },
   ];
@@ -300,8 +301,66 @@ export default function Profile({ navigation: {navigate}}) {
     );
   };
 
+  const LogOutConfirm = () => {
+    return (
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={logOutModal}
+        onRequestClose={() => setLogOutModal(false)}>
+        <View
+          style={{
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            height: '100%',
+            width: '100%',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <StatusBar backgroundColor="rgba(0,0,0,0.7)" />
+        <View
+          style={{
+            height: height * 0.27,
+            width: width * 0.8,
+            // justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: COLORS.WHITE,
+            marginHorizontal: 30,
+            marginTop: 'auto',
+            marginBottom: 'auto',
+            elevation: 5,
+            padding: 15,
+            paddingTop: 45,
+            borderRadius: 5,
+          }}>
+          <Text style={{color: COLORS.BLACK, fontSize: 15}}>
+            Do you really want to Log Out from your Account ??
+          </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              width: width * 0.5,
+              alignSelf: 'center',
+              marginTop: height * 0.10,
+            }}>
+            <TouchableOpacity
+              onPress={() => setLogOutModal(false)}>
+              <Text style={{color: COLORS.DARK_GREEN, fontSize: 16,}}>Cancel</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => dispatch(logout())}>
+              <Text style={{color: COLORS.RED_DARK, fontSize: 16,}}>Logout</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        </View>
+      </Modal>
+    );
+  };
+
   return (
     <>
+      <LogOutConfirm />
       <QRCodeModal />
       <View
         style={{
@@ -328,7 +387,7 @@ export default function Profile({ navigation: {navigate}}) {
                     <Image
                       style={{height: 30, width: 30}}
                       source={PROFILE_ITEMS.uri}
-                      resizeMode='contain'
+                      resizeMode="contain"
                     />
                   </View>
                   <View style={{}}>

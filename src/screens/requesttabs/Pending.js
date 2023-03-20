@@ -96,6 +96,7 @@ export default function Pending() {
       data: payload,
     })
       .then(res => {
+        console.log(res)
         fetchTickets();
         ToastAndroid.show('Work Started!', ToastAndroid.LONG);
       })
@@ -170,6 +171,7 @@ export default function Pending() {
       }).then(res => {
         setAccept(false);
         setVisible(false);
+        console.log(res)
         ToastAndroid.show(
           'Technician Assigned Successfully!',
           ToastAndroid.SHORT,
@@ -177,7 +179,7 @@ export default function Pending() {
         fetchTickets();
       });
     } catch (err) {
-      console.log(err);
+      console.log("Technician Error",err);
       setVisible(false);
       setAccept(false);
     }

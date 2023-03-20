@@ -25,6 +25,9 @@ import {useSelector} from 'react-redux';
 import {useState} from 'react';
 import {BottomTabs} from '../../navigation/Tabs/BottomTabs';
 import CheckBox from '@react-native-community/checkbox';
+import {COLORS} from '../../utils/constants';
+import Earning from './Earning';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 const {width, height} = Dimensions.get('window');
 const transaction = [
   {
@@ -64,6 +67,7 @@ const transaction = [
     amount: -200,
   },
 ];
+// const Tab = createMaterialTopTabNavigator()
 
 export default function Recharge({navigation}) {
   const {accessToken} = useSelector(state => state.auth);
@@ -97,13 +101,841 @@ export default function Recharge({navigation}) {
   useEffect(() => {
     getOrderList();
   }, []);
+
+  const ExpensesText = [
+    {
+      id: 1,
+      name: 'Amount Paid to Platform',
+      subText: '',
+      amount: 200,
+    },
+    {
+      id: 2,
+      name: 'Platform Charge for New Ticket',
+      subText: '(Ticket Count - Amount)',
+      amount: 200,
+    },
+    {
+      id: 3,
+      name: 'Losses & Penalities',
+      subText: 'Calls Count moved for No Action',
+      amount: 358,
+    },
+    {
+      id: 4,
+      name: 'Admin Charge',
+      subText: '',
+      amount: 154,
+    },
+    {
+      id: 5,
+      name: 'In App Purchases',
+      subText: '',
+      amount: 99,
+    },
+  ];
+  const EarningText = [
+    {
+      id: 1,
+      icon: require('../../images/pouch.png'),
+      name: 'Bonus (Accrued)',
+      subText: '',
+      amount: 99,
+    },
+    {
+      id: 2,
+      icon: require('../../images/invoice.png'),
+      name: 'Earning from Own Ticket',
+      subText: '(ZeroCommission)',
+      amount: 200,
+    },
+    {
+      id: 3,
+      icon: require('../../images/slip.png'),
+      name: 'Earning from Tickets throught URL',
+      subText: '(ZeroCommission)',
+      amount: 358,
+    },
+    {
+      id: 4,
+      icon: require('../../images/payment.png'),
+      name: 'Earning from New Ticket',
+      subText: '(Customer)',
+      amount: 154,
+    },
+    {
+      id: 5,
+      icon: require('../../images/slip1.png'),
+      name: 'Earning from New Ticket',
+      subText: '(Platform to Pay)',
+      amount: 99,
+    },
+    {
+      id: 6,
+      icon: require('../../images/wallet.png'),
+      name: 'Wallet Recharge',
+      subText: '',
+      amount: null,
+    },
+  ];
+
+
+  const ExpensesModal = () => {
+    return (
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalDark}
+        onRequestClose={() => {
+          Alert.alert('Expenses has been closed.');
+          setModalDark(!modalDark);
+        }}>
+        <View style={{flex: 1}}>
+          <View style={styles.modalView3}>
+            <>
+              <ImageBackground
+                style={{flex: 0.6 / 2, width: width, marginTop: -36}}
+                source={require('../../images/Rect.png')}>
+                <Header />
+
+                <View style={{flexDirection: 'row'}}>
+                  <TouchableOpacity>
+                    <Text
+                      style={{
+                        color: '#FFFFFF',
+                        marginLeft: 25,
+                        marginTop: 19,
+                        fontSize: 20,
+                        backgroundColor: '#00796A',
+                        width: 172,
+                        height: 30,
+                        textAlign: 'center',
+                        borderTopLeftRadius: 20,
+                        letterSpacing: 0.5,
+                        borderBottomLeftRadius: 20,
+                      }}>
+                      Earning
+                    </Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity>
+                    <Text
+                      style={{
+                        marginTop: 19,
+                        color: '#FFFFFF',
+                        fontSize: 20,
+                        backgroundColor: '#0066FF',
+                        width: 172,
+                        height: 30,
+                        textAlign: 'center',
+                        borderBottomRightRadius: 20,
+                        letterSpacing: 0.5,
+                        borderTopRightRadius: 20,
+                      }}>
+                      Expenses
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </ImageBackground>
+
+              <View
+                style={{
+                  backgroundColor: '#0066FF',
+                  width: 350,
+                  height: 85,
+                  marginTop: -92,
+                  marginLeft: 2,
+                  borderRadius: 20,
+                }}>
+                <Text
+                  style={{
+                    color: '#FFFFFF',
+                    fontSize: 20,
+                    fontWeight: '600',
+                    textAlign: 'center',
+                    marginTop: 10,
+                    letterSpacing: 0.5,
+                  }}>
+                  Platform Charges
+                </Text>
+                <TouchableOpacity
+                  style={{
+                    justifyContent: 'flex-end',
+                    alignItems: 'flex-end',
+                    marginRight: 40,
+                  }}>
+                  <Image source={require('../../images/reload.png')} />
+                </TouchableOpacity>
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    color: '#FFFFFF',
+                    fontSize: 32,
+                    fontWeight: 'bold',
+                    marginTop: -20,
+                  }}>
+                  ₹99
+                </Text>
+                {/* Calendar Modal        */}
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginLeft: '-23%',
+                    marginTop: 7,
+                  }}>
+                  <View style={styles.centeredView}>
+                    <CalendarModal />
+                    <TouchableOpacity onPress={() => setModalVisible(true)}>
+                      <Image source={require('../../images/Iconmodal.png')} />
+                    </TouchableOpacity>
+                  </View>
+
+                  <Text
+                    style={{
+                      color: '#00796A',
+                      fontSize: 20,
+                      fontWeight: 'bold',
+                      marginTop: 15,
+                      marginRight: 80,
+                    }}>
+                    Last 7 Days
+                  </Text>
+                  <View
+                    style={{
+                      justifyContent: 'flex-end',
+                      alignItems: 'flex-end',
+                      marginRight: 26,
+                      marginTop: 10,
+                    }}>
+                    <TouchableOpacity>
+                      <Image source={require('../../images/email.png')} />
+                    </TouchableOpacity>
+                    <Text
+                      style={{
+                        color: '#17523C',
+                        fontSize: 14,
+                        marginRight: -16,
+                      }}>
+                      Export
+                    </Text>
+                  </View>
+                </View>
+
+                {ExpensesText.map(item => {
+                  return (
+                    <View
+                      key={item.id}
+                      style={{
+                        backgroundColor: COLORS.WHITE,
+                        flexDirection: 'row',
+                        marginVertical: 5,
+                        // alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: 10,
+                        width: width * 0.9,
+                      }}>
+                      <View style={{width: width * 0.65, marginHorizontal: 10}}>
+                        <Text
+                          style={{
+                            color: '#0066FF',
+                            fontWeight: '500',
+                            fontSize: 16,
+                            textAlignVertical: 'center'
+                          }}>
+                          {item.name}
+                        </Text>
+                        <Text
+                          style={{
+                            color: '#0066FF',
+                            fontSize: 13,
+                          }}>
+                          {item.subText}
+                        </Text>
+                        {item.name == 'Losses & Penalities' && (
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              justifyContent: 'space-between',
+                              marginTop: 10,
+                              width: width * 0.8
+                            }}>
+                            <Text style={{color: '#0066FF'}}>
+                              Warranty Liabilities
+                            </Text>
+                            <View
+                              style={{
+                                alignItems: 'center',
+                                alignSelf: 'flex-end',
+                              }}>
+                              <Text style={{color: '#0066FF'}}>
+                                (Paid for Picking)
+                              </Text>
+                              <Text style={{color: '#0066FF'}}>43</Text>
+                            </View>
+                          </View>
+                        )}
+                      </View>
+                      <Text
+                        style={{
+                          color: '#0066FF',
+                          fontWeight: '500',
+                          fontSize: 16,
+                        }}>
+                        {item.amount && '₹ '}
+                        {item.amount}
+                      </Text>
+                    </View>
+                  );
+                })}
+                {/* <View
+                  style={{
+                    backgroundColor: '#FFFFFF',
+
+                    height: 54,
+                    width: 343,
+                    flexDirection: 'row',
+                    marginHorizontal: 1,
+                    marginVertical: 7,
+                    alignItems: 'center',
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      fontWeight: '500',
+                      marginHorizontal: 20,
+                    }}>
+                    Amount Paid To Platform
+                  </Text>
+                  <Text
+                    style={{
+                      color: '#0066FF',
+                      fontSize: 18,
+                      fontWeight: '500',
+                      marginLeft: 25,
+                    }}>
+                    ₹200
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    backgroundColor: '#FFFFFF',
+                    height: 54,
+                    width: 343,
+                    flexDirection: 'row',
+                    marginHorizontal: 1,
+                    marginTop: 2,
+                    alignItems: 'center',
+                  }}>
+                  <Text
+                    style={{
+                      color: '#0066FF',
+                      fontSize: 18,
+                      fontWeight: '600',
+                      marginHorizontal: 16,
+                      marginTop: -25,
+                    }}>
+                    Platform Charge for New Ticket
+                  </Text>
+                  <Text
+                    style={{
+                      color: '#0066FF',
+                      fontSize: 18,
+                      fontWeight: '500',
+                      marginTop: -25,
+                    }}>
+                    ₹200
+                  </Text>
+
+                  <Text
+                    style={{
+                      marginHorizontal: '-92%',
+                      color: '#0066FF',
+                      fontSize: 14,
+                      marginTop: 17,
+                    }}>
+                    (Ticket Count – Amount)
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    backgroundColor: '#FFFFFF',
+                    height: 54,
+                    width: 343,
+                    flexDirection: 'row',
+                    marginHorizontal: 1,
+                    alignItems: 'center',
+                    marginTop: 12,
+                  }}>
+                  <Text
+                    style={{
+                      color: '#0066FF',
+                      fontSize: 15,
+                      fontWeight: 'bold',
+                      marginHorizontal: 17,
+                      marginTop: -25,
+                    }}>
+                    Platform Charge for New Ticket
+                  </Text>
+                  <Text
+                    style={{
+                      color: '#0066FF',
+                      fontSize: 18,
+                      fontWeight: '500',
+                      marginTop: -25,
+                      marginLeft: 37,
+                    }}>
+                    ₹200
+                  </Text>
+
+                  <Text
+                    style={{
+                      marginHorizontal: '-91%',
+                      color: '#0066FF',
+                      fontSize: 14,
+                      marginTop: 17,
+                    }}>
+                    (Ticket Count – Amount)
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    backgroundColor: '#FFFFFF',
+                    height: 122,
+                    width: 343,
+                    flexDirection: 'row',
+                    marginHorizontal: 1,
+                    alignItems: 'center',
+                    marginTop: 11,
+                  }}>
+                  <Text
+                    style={{
+                      color: '#0066FF',
+                      fontSize: 18,
+                      fontWeight: 'bold',
+                      marginHorizontal: 20,
+                      marginTop: -70,
+                    }}>
+                    Losses and Penalties
+                  </Text>
+                  <Text
+                    style={{
+                      marginLeft: -195,
+                      fontSize: 16,
+                      color: '#0066FF',
+                      marginTop: -17,
+                      fontWeight: '400',
+                    }}>
+                    Calls Count Moved for No Action
+                  </Text>
+                  <Text
+                    style={{
+                      color: '#0066FF',
+                      fontSize: 18,
+                      fontWeight: '500',
+                      marginTop: -59,
+                      marginLeft: 40,
+                    }}>
+                    ₹ 99
+                  </Text>
+                  <Text
+                    style={{
+                      marginLeft: -105,
+                      marginTop: 19,
+                      color: '#0066FF',
+                      fontWeight: '700',
+                    }}>
+                    (Paid for Picking)
+                  </Text>
+                  <Text
+                    style={{
+                      marginTop: 60,
+                      marginLeft: -19,
+                      color: '#0066FF',
+                      fontWeight: '600',
+                    }}>
+                    43
+                  </Text>
+
+                  <Text
+                    style={{
+                      marginHorizontal: '-90%',
+                      color: '#0066FF',
+                      fontSize: 16,
+                      marginTop: 50,
+                      fontWeight: '500',
+                    }}>
+                    Warranty Liabilities
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    backgroundColor: '#FFFFFF',
+                    height: 54,
+                    width: 343,
+                    flexDirection: 'row',
+                    marginHorizontal: 1,
+                    alignItems: 'center',
+                    marginTop: 12,
+                  }}>
+                  <Text
+                    style={{
+                      color: '#0066FF',
+                      fontSize: 18,
+                      fontWeight: 'bold',
+                      marginHorizontal: 20,
+                    }}>
+                    Admin Charge
+                  </Text>
+                  <Text
+                    style={{
+                      color: '#0066FF',
+                      fontSize: 18,
+                      fontWeight: '500',
+                      marginLeft: 130,
+                    }}>
+                    ₹200
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    backgroundColor: '#FFFFFF',
+                    height: 54,
+                    width: 343,
+                    flexDirection: 'row',
+                    marginHorizontal: 1,
+                    alignItems: 'center',
+                    marginTop: 12,
+                  }}>
+                  <Text
+                    style={{
+                      color: '#0066FF',
+                      fontSize: 18,
+                      fontWeight: '600',
+                      marginHorizontal: 20,
+                    }}>
+                    In App Purchases
+                  </Text>
+                </View> */}
+              </View>
+            </>
+          </View>
+
+          <TouchableOpacity onPress={() => setModalDark(!modalDark)}>
+            <Image
+              source={require('../../images/back.png')}
+              style={{
+                height: 40,
+                width: 40,
+                marginLeft: 23,
+                marginVertical: '-176%',
+              }}
+            />
+          </TouchableOpacity>
+        </View>
+      </Modal>
+    );
+  };
+
+  const AdjustRecharge = () => {
+    return (
+      <>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={ModalLight}
+          onRequestClose={() => {
+            Alert.alert('Adjust for Recharge has been closed.');
+            setModalLIght(!ModalLight);
+          }}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView2}>
+              <View
+                style={{
+                  backgroundColor: '#F5F5F5',
+                  shadowOpacity: '#00000029',
+                  height: 54,
+                  width: 300,
+                  flexDirection: 'row',
+                  marginHorizontal: 1,
+                  marginVertical: 20,
+                  alignItems: 'center',
+                }}>
+                <Image
+                  style={{marginLeft: 10}}
+                  source={require('../../images/pouch.png')}
+                />
+                <Text
+                  style={{
+                    color: '#00796A',
+                    fontSize: 20,
+                    fontWeight: 'bold',
+                    marginHorizontal: 20,
+                  }}>
+                  Bonus (Accrued)
+                </Text>
+                <Text
+                  style={{
+                    color: '#00796A',
+                    fontSize: 18,
+                    fontWeight: '700',
+                    marginLeft: 30,
+                  }}>
+                  ₹99
+                </Text>
+              </View>
+
+              <View
+                style={{
+                  backgroundColor: '#F5F5F5',
+                  shadowOpacity: '#00000029',
+                  height: 54,
+                  width: 300,
+                  flexDirection: 'row',
+                  marginHorizontal: 1,
+                  alignItems: 'center',
+                  marginTop: -3,
+                }}>
+                <Image
+                  style={{marginLeft: 10, alignItems: 'center'}}
+                  source={require('../../images/plat.png')}
+                />
+                <Text
+                  style={{
+                    color: '#00796A',
+                    fontSize: 15,
+                    fontWeight: 'bold',
+                    marginHorizontal: 20,
+                    marginTop: -25,
+                  }}>
+                  Earning from New Ticket
+                </Text>
+                <Text
+                  style={{
+                    color: '#00796A',
+                    fontSize: 18,
+                    marginTop: -25,
+                    marginLeft: 8,
+                    fontWeight: 'bold',
+                  }}>
+                  ₹154
+                </Text>
+
+                <Text
+                  style={{
+                    marginHorizontal: '-79%',
+                    color: '#00796A',
+                    fontSize: 14,
+                    marginTop: 17,
+                    fontWeight: '600',
+                  }}>
+                  (Platform To Pay)
+                </Text>
+              </View>
+
+              <TouchableOpacity>
+                <View
+                  style={{
+                    marginRight: 1,
+                    backgroundColor: '#00796A',
+                    width: 300,
+                    height: 51,
+                    marginTop: 20,
+                    borderRadius: 10,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text
+                    style={{
+                      color: '#FFFFFF',
+                      fontWeight: '600',
+                      fontSize: 20,
+                      letterSpacing: 1,
+                    }}
+                    onPress={() => {
+                      Alert.alert('coming soon');
+                    }}>
+                    Adjust for Recharge
+                  </Text>
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{marginVertical: '-88%'}}
+                onPress={() => setModalLIght(!ModalLight)}>
+                <Image source={require('../../images/cross2.png')} />
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+        <View style={{flexDirection: 'row'}}>
+          <TouchableOpacity onPress={() => setModalLIght(true)}>
+            <View
+              style={{
+                marginRight: 190,
+                backgroundColor: '#00796A',
+                width: 165,
+                height: 40,
+                marginTop: -7,
+                borderRadius: 10,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Text
+                style={{
+                  color: '#FFFFFF',
+                  fontWeight: '600',
+                  letterSpacing: 0.5,
+                }}>
+                Adjust for Recharge
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </>
+    );
+  };
+
+  const CalendarModal = () => {
+    return (
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert('Calendar has been closed.');
+          setModalVisible(!modalVisible);
+        }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <View style={{flexDirection: 'row', marginTop: -16}}>
+              <TouchableOpacity>
+                <Text
+                  style={{
+                    backgroundColor: '#F5F5F5',
+                    width: 100,
+                    height: 25,
+                    marginLeft: -2,
+                    fontWeight: '600',
+                    color: '#00796A',
+                    fontSize: 14,
+                    textAlign: 'center',
+                    shadowColor: '#00000029',
+                  }}>
+                  Last 24 hours
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity>
+                <Text
+                  style={{
+                    backgroundColor: '#F5F5F5',
+                    width: 100,
+                    height: 25,
+                    fontWeight: '600',
+                    marginLeft: 10,
+                    color: '#FFFFFF',
+                    fontSize: 14,
+                    textAlign: 'center',
+                    shadowColor: '#00000029',
+                    backgroundColor: '#00796A',
+                  }}>
+                  Last Week
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity>
+                <Text
+                  style={{
+                    backgroundColor: '#F5F5F5',
+                    width: 100,
+                    height: 25,
+                    fontWeight: '600',
+                    marginLeft: 10,
+                    color: '#00796A',
+                    fontSize: 14,
+                    textAlign: 'center',
+                    shadowColor: '#00000029',
+                  }}>
+                  Last Month
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            <TouchableOpacity>
+              <Text
+                style={{
+                  backgroundColor: '#F5F5F5',
+                  width: 100,
+                  height: 25,
+                  fontWeight: '600',
+                  marginLeft: 10,
+                  marginTop: 10,
+                  color: '#00796A',
+                  fontSize: 14,
+                  textAlign: 'center',
+                  shadowColor: '#00000029',
+                }}>
+                Custom Range
+              </Text>
+            </TouchableOpacity>
+            <Pressable
+              style={{marginLeft: '100%', marginTop: -15}}
+              onPress={() => setModalVisible(!modalVisible)}>
+              <Image source={require('../../images/cross2.png')} />
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
+    );
+  };
+
+  // const TopBar = () => {
+  //   return (
+  //     <Tab.Navigator
+  //       initialRouteName="Earning"
+  //       screenOptions={{
+  //         tabBarIndicatorStyle: {backgroundColor: '#00796A', height: 2},
+  //         tabBarActiveTintColor: '#00796A',
+  //         tabBarInactiveTintColor: '#000000',
+  //         tabBarPressColor: 'transparent',
+  //         tabBarLabelStyle: {
+  //           fontSize: 14,
+  //           textTransform: 'capitalize',
+  //           fontFamily: 'poppins-regular'
+  //         },
+  //         tabBarContentContainerStyle: {marginVertical: 4},
+  //         swipeEnabled: true,
+  //       }}>
+  //       <Tab.Screen
+  //         name="Earning"
+  //         component={Earning}
+  //         options={{tabBarLabel: 'Earning'}}
+  //       />
+  //       {/* <Tab.Screen
+  //         name="Pending"
+  //         component={Pending}
+  //         options={{tabBarLabel: 'Pending'}}
+  //       />
+  //       <Tab.Screen
+  //         name="Completed"
+  //         component={Completed}
+  //         options={{tabBarLabel: 'Completed'}}
+  //       /> */}
+  //     </Tab.Navigator>
+  //   );
+  // }
   return (
     <View style={styles.modalView3}>
       <ImageBackground
-        style={{flex: 0.7 / 2, marginTop: -42, width: width}}
+        style={{flex: 0.6 / 2, marginTop: -42, width: width}}
         source={require('../../images/Rect.png')}>
         <Header />
-        <View style={{flexDirection: 'row'}}>
+        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
           <View>
             <TouchableOpacity>
               <Text
@@ -127,493 +959,7 @@ export default function Recharge({navigation}) {
           {/* modal Expenses click */}
 
           <>
-            <Modal
-              animationType="slide"
-              transparent={true}
-              visible={modalDark}
-              onRequestClose={() => {
-                Alert.alert('Expenses has been closed.');
-                setModalDark(!modalDark);
-              }}>
-              <View style={{flex: 1}}>
-                <View style={styles.modalView3}>
-                  <>
-
-                 
-                 
-                    <ImageBackground
-                      style={{flex: 0.6 / 2, width: width, marginTop: -36}}
-                      source={require('../../images/Rect.png')}>
-                      <Header />
-
-                      <View style={{flexDirection: 'row'}}>
-                        <TouchableOpacity>
-                          <Text
-                            style={{
-                              color: '#FFFFFF',
-                              marginLeft: 25,
-                              marginTop: 19,
-                              fontSize: 20,
-                              backgroundColor: '#00796A',
-                              width: 172,
-                              height: 30,
-                              textAlign: 'center',
-                              borderTopLeftRadius: 20,
-                              letterSpacing: 0.5,
-                              borderBottomLeftRadius: 20,
-                            }}>
-                            Earning
-                          </Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity>
-                          <Text
-                            style={{
-                              marginTop: 19,
-                              color: '#FFFFFF',
-                              fontSize: 20,
-                              backgroundColor: '#0066FF',
-                              width: 172,
-                              height: 30,
-                              textAlign: 'center',
-                              borderBottomRightRadius: 20,
-                              letterSpacing: 0.5,
-                              borderTopRightRadius: 20,
-                            }}>
-                            Expenses
-                          </Text>
-                        </TouchableOpacity>
-                      </View>
-                    </ImageBackground>
-
-                    <View
-                      style={{
-                        backgroundColor: '#0066FF',
-                        width: 350,
-                        height: 85,
-                        marginTop: -92,
-                        marginLeft: 2,
-                        borderRadius: 20,
-                      }}>
-                      <Text
-                        style={{
-                          color: '#FFFFFF',
-                          fontSize: 20,
-                          fontWeight: '600',
-                          textAlign: 'center',
-                          marginTop: 10,
-                          letterSpacing: 0.5,
-                        }}>
-                        Platform Charges
-                      </Text>
-                      <TouchableOpacity
-                        style={{
-                          justifyContent: 'flex-end',
-                          alignItems: 'flex-end',
-                          marginRight: 40,
-                        }}>
-                        <Image source={require('../../images/reload.png')} />
-                      </TouchableOpacity>
-                      <Text
-                        style={{
-                          textAlign: 'center',
-                          color: '#FFFFFF',
-                          fontSize: 32,
-                          fontWeight: 'bold',
-                          marginTop: -20,
-                        }}>
-                        ₹99
-                      </Text>
-                      {/* Calendar Modal        */}
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          marginLeft: '-23%',
-                          marginTop: 7,
-                        }}>
-                        <View style={styles.centeredView}>
-                          <Modal
-                            animationType="slide"
-                            transparent={true}
-                            visible={modalVisible}
-                            onRequestClose={() => {
-                              Alert.alert('Calendar has been closed.');
-                              setModalVisible(!modalVisible);
-                            }}>
-                            <View style={styles.centeredView}>
-                              <View style={styles.modalView}>
-                                <View
-                                  style={{
-                                    flexDirection: 'row',
-                                    marginTop: -16,
-                                  }}>
-                                  <TouchableOpacity>
-                                    <Text
-                                      style={{
-                                        backgroundColor: '#F5F5F5',
-                                        width: 100,
-                                        height: 25,
-                                        marginLeft: -2,
-                                        fontWeight: '600',
-                                        color: '#00796A',
-                                        fontSize: 14,
-                                        textAlign: 'center',
-                                        shadowColor: '#00000029',
-                                      }}>
-                                      Last 24 hours
-                                    </Text>
-                                  </TouchableOpacity>
-
-                                  <TouchableOpacity>
-                                    <Text
-                                      style={{
-                                        backgroundColor: '#F5F5F5',
-                                        width: 100,
-                                        height: 25,
-                                        fontWeight: '600',
-                                        marginLeft: 10,
-                                        color: '#00796A',
-                                        fontSize: 14,
-                                        textAlign: 'center',
-                                        shadowColor: '#00000029',
-                                      }}>
-                                      Last Week
-                                    </Text>
-                                  </TouchableOpacity>
-
-                                  <TouchableOpacity>
-                                    <Text
-                                      style={{
-                                        backgroundColor: '#F5F5F5',
-                                        width: 100,
-                                        height: 25,
-                                        fontWeight: '600',
-                                        marginLeft: 10,
-                                        color: '#00796A',
-                                        fontSize: 14,
-                                        textAlign: 'center',
-                                        shadowColor: '#00000029',
-                                      }}>
-                                      Last Month
-                                    </Text>
-                                  </TouchableOpacity>
-                                </View>
-
-                                <TouchableOpacity>
-                                  <Text
-                                    style={{
-                                      backgroundColor: '#F5F5F5',
-                                      width: 100,
-                                      height: 25,
-                                      fontWeight: '600',
-                                      marginLeft: 10,
-                                      marginTop: 10,
-                                      color: '#00796A',
-                                      fontSize: 14,
-                                      textAlign: 'center',
-                                      shadowColor: '#00000029',
-                                    }}>
-                                    Custom Range
-                                  </Text>
-                                </TouchableOpacity>
-                                <Pressable
-                                  onPress={() =>
-                                    setModalVisible(!modalVisible)
-                                  }></Pressable>
-                              </View>
-                            </View>
-                          </Modal>
-                          <TouchableOpacity
-                            onPress={() => setModalVisible(true)}>
-                            <Image
-                              source={require('../../images/Iconmodal.png')}
-                            />
-                          </TouchableOpacity>
-                        </View>
-
-                        <Text
-                          style={{
-                            color: '#00796A',
-                            fontSize: 20,
-                            fontWeight: 'bold',
-                            marginTop: 15,
-                            marginRight: 80,
-                          }}>
-                          Last 7 Days
-                        </Text>
-                        <View
-                          style={{
-                            justifyContent: 'flex-end',
-                            alignItems: 'flex-end',
-                            marginRight: 26,
-                            marginTop: 10,
-                          }}>
-                          <TouchableOpacity>
-                            <Image source={require('../../images/email.png')} />
-                          </TouchableOpacity>
-                          <Text
-                            style={{
-                              color: '#17523C',
-                              fontSize: 14,
-                              marginRight: -16,
-                            }}>
-                            Export
-                          </Text>
-                        </View>
-                      </View>
-
-                      <View
-                        style={{
-                          backgroundColor: '#FFFFFF',
-
-                          height: 54,
-                          width: 343,
-                          flexDirection: 'row',
-                          marginHorizontal: 1,
-                          marginVertical: 7,
-                          alignItems: 'center',
-                        }}>
-                        <Text
-                          style={{
-                            color: '#0066FF',
-                            fontSize: 20,
-                            fontWeight: '500',
-                            marginHorizontal: 20,
-                          }}>
-                          Amount Paid To Platform
-                        </Text>
-                        <Text
-                          style={{
-                            color: '#0066FF',
-                            fontSize: 18,
-                            fontWeight: '500',
-                            marginLeft: 25,
-                          }}>
-                          ₹200
-                        </Text>
-                      </View>
-
-                      <View
-                        style={{
-                          backgroundColor: '#FFFFFF',
-                          height: 54,
-                          width: 343,
-                          flexDirection: 'row',
-                          marginHorizontal: 1,
-                          marginTop: 2,
-                          alignItems: 'center',
-                        }}>
-                        <Text
-                          style={{
-                            color: '#0066FF',
-                            fontSize: 18,
-                            fontWeight: '600',
-                            marginHorizontal: 16,
-                            marginTop: -25,
-                          }}>
-                          Platform Charge for New Ticket
-                        </Text>
-                        <Text
-                          style={{
-                            color: '#0066FF',
-                            fontSize: 18,
-                            fontWeight: '500',
-                            marginTop: -25,
-                          }}>
-                          ₹200
-                        </Text>
-
-                        <Text
-                          style={{
-                            marginHorizontal: '-92%',
-                            color: '#0066FF',
-                            fontSize: 14,
-                            marginTop: 17,
-                          }}>
-                          (Ticket Count – Amount)
-                        </Text>
-                      </View>
-
-                      <View
-                        style={{
-                          backgroundColor: '#FFFFFF',
-                          height: 54,
-                          width: 343,
-                          flexDirection: 'row',
-                          marginHorizontal: 1,
-                          alignItems: 'center',
-                          marginTop: 12,
-                        }}>
-                        <Text
-                          style={{
-                            color: '#0066FF',
-                            fontSize: 15,
-                            fontWeight: 'bold',
-                            marginHorizontal: 17,
-                            marginTop: -25,
-                          }}>
-                          Platform Charge for New Ticket
-                        </Text>
-                        <Text
-                          style={{
-                            color: '#0066FF',
-                            fontSize: 18,
-                            fontWeight: '500',
-                            marginTop: -25,
-                            marginLeft: 37,
-                          }}>
-                          ₹200
-                        </Text>
-
-                        <Text
-                          style={{
-                            marginHorizontal: '-91%',
-                            color: '#0066FF',
-                            fontSize: 14,
-                            marginTop: 17,
-                          }}>
-                          (Ticket Count – Amount)
-                        </Text>
-                      </View>
-
-                      <View
-                        style={{
-                          backgroundColor: '#FFFFFF',
-                          height: 122,
-                          width: 343,
-                          flexDirection: 'row',
-                          marginHorizontal: 1,
-                          alignItems: 'center',
-                          marginTop: 11,
-                        }}>
-                        <Text
-                          style={{
-                            color: '#0066FF',
-                            fontSize: 18,
-                            fontWeight: 'bold',
-                            marginHorizontal: 20,
-                            marginTop: -70,
-                          }}>
-                          Losses and Penalties
-                        </Text>
-                        <Text
-                          style={{
-                            marginLeft: -195,
-                            fontSize: 16,
-                            color: '#0066FF',
-                            marginTop: -17,
-                            fontWeight: '400',
-                          }}>
-                          Calls Count Moved for No Action
-                        </Text>
-                        <Text
-                          style={{
-                            color: '#0066FF',
-                            fontSize: 18,
-                            fontWeight: '500',
-                            marginTop: -59,
-                            marginLeft: 40,
-                          }}>
-                          ₹ 99
-                        </Text>
-                        <Text
-                          style={{
-                            marginLeft: -105,
-                            marginTop: 19,
-                            color: '#0066FF',
-                            fontWeight: '700',
-                          }}>
-                          (Paid for Picking)
-                        </Text>
-                        <Text
-                          style={{
-                            marginTop: 60,
-                            marginLeft: -19,
-                            color: '#0066FF',
-                            fontWeight: '600',
-                          }}>
-                          43
-                        </Text>
-
-                        <Text
-                          style={{
-                            marginHorizontal: '-90%',
-                            color: '#0066FF',
-                            fontSize: 16,
-                            marginTop: 50,
-                            fontWeight: '500',
-                          }}>
-                          Warranty Liabilities
-                        </Text>
-                      </View>
-
-                      <View
-                        style={{
-                          backgroundColor: '#FFFFFF',
-                          height: 54,
-                          width: 343,
-                          flexDirection: 'row',
-                          marginHorizontal: 1,
-                          alignItems: 'center',
-                          marginTop: 12,
-                        }}>
-                        <Text
-                          style={{
-                            color: '#0066FF',
-                            fontSize: 18,
-                            fontWeight: 'bold',
-                            marginHorizontal: 20,
-                          }}>
-                          Admin Charge
-                        </Text>
-                        <Text
-                          style={{
-                            color: '#0066FF',
-                            fontSize: 18,
-                            fontWeight: '500',
-                            marginLeft: 130,
-                          }}>
-                          ₹200
-                        </Text>
-                      </View>
-
-                      <View
-                        style={{
-                          backgroundColor: '#FFFFFF',
-                          height: 54,
-                          width: 343,
-                          flexDirection: 'row',
-                          marginHorizontal: 1,
-                          alignItems: 'center',
-                          marginTop: 12,
-                        }}>
-                        <Text
-                          style={{
-                            color: '#0066FF',
-                            fontSize: 18,
-                            fontWeight: '600',
-                            marginHorizontal: 20,
-                          }}>
-                          In App Purchases
-                        </Text>
-                      </View>
-                    </View>
-                  </>
-                </View>
-
-                <TouchableOpacity onPress={() => setModalDark(!modalDark)}>
-                  <Image
-                    source={require('../../images/back.png')}
-                    style={{
-                      height: 40,
-                      width: 40,
-                      marginLeft: 23,
-                      marginVertical: '-176%',
-                    }}
-                  />
-                </TouchableOpacity>
-              </View>
-            </Modal>
+            <ExpensesModal />
             <TouchableOpacity onPress={() => setModalDark(true)}>
               <Text
                 style={{
@@ -642,7 +988,8 @@ export default function Recharge({navigation}) {
           width: 350,
           height: 85,
           marginTop: -91,
-          marginLeft: 11,
+          // marginLeft: 11,
+          alignSelf: 'center',
           borderRadius: 20,
         }}>
         <Text
@@ -675,99 +1022,20 @@ export default function Recharge({navigation}) {
           ₹99
         </Text>
         {/* Calender Model */}
-        <View style={{flexDirection: 'row', marginLeft: '-29%', marginTop: 7}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            marginLeft: '-29%',
+            marginTop: 7,
+            justifyContent: 'center',
+          }}>
           <View style={styles.centeredView}>
-            <Modal
-              animationType="slide"
-              transparent={true}
-              visible={modalVisible}
-              onRequestClose={() => {
-                Alert.alert('Calendar has been closed.');
-                setModalVisible(!modalVisible);
-              }}>
-              <View style={styles.centeredView}>
-                <View style={styles.modalView}>
-                  <View style={{flexDirection: 'row', marginTop: -16}}>
-                    <TouchableOpacity>
-                      <Text
-                        style={{
-                          backgroundColor: '#F5F5F5',
-                          width: 100,
-                          height: 25,
-                          marginLeft: -2,
-                          fontWeight: '600',
-                          color: '#00796A',
-                          fontSize: 14,
-                          textAlign: 'center',
-                          shadowColor: '#00000029',
-                        }}>
-                        Last 24 hours
-                      </Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity>
-                      <Text
-                        style={{
-                          backgroundColor: '#F5F5F5',
-                          width: 100,
-                          height: 25,
-                          fontWeight: '600',
-                          marginLeft: 10,
-                          color: '#FFFFFF',
-                          fontSize: 14,
-                          textAlign: 'center',
-                          shadowColor: '#00000029',
-                          backgroundColor: '#00796A',
-                        }}>
-                        Last Week
-                      </Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity>
-                      <Text
-                        style={{
-                          backgroundColor: '#F5F5F5',
-                          width: 100,
-                          height: 25,
-                          fontWeight: '600',
-                          marginLeft: 10,
-                          color: '#00796A',
-                          fontSize: 14,
-                          textAlign: 'center',
-                          shadowColor: '#00000029',
-                        }}>
-                        Last Month
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-
-                  <TouchableOpacity>
-                    <Text
-                      style={{
-                        backgroundColor: '#F5F5F5',
-                        width: 100,
-                        height: 25,
-                        fontWeight: '600',
-                        marginLeft: 10,
-                        marginTop: 10,
-                        color: '#00796A',
-                        fontSize: 14,
-                        textAlign: 'center',
-                        shadowColor: '#00000029',
-                      }}>
-                      Custom Range
-                    </Text>
-                  </TouchableOpacity>
-                  <Pressable
-                    style={{marginLeft: '100%', marginTop: -15}}
-                    onPress={() => setModalVisible(!modalVisible)}>
-                    <Image source={require('../../images/cross2.png')} />
-                  </Pressable>
-                </View>
-              </View>
-            </Modal>
+            <CalendarModal />
             <TouchableOpacity onPress={() => setModalVisible(true)}>
               <Image source={require('../../images/Iconmodal.png')} />
+            <Text style={{color: '#17523C', fontSize: 14}}>
+              Date
+            </Text>
             </TouchableOpacity>
           </View>
 
@@ -786,7 +1054,7 @@ export default function Recharge({navigation}) {
               justifyContent: 'flex-end',
               alignItems: 'flex-end',
               marginRight: 26,
-              marginTop: 10,
+              marginVertical: 10,
             }}>
             <TouchableOpacity>
               <Image source={require('../../images/email.png')} />
@@ -797,405 +1065,55 @@ export default function Recharge({navigation}) {
           </View>
         </View>
 
-        <View
-          style={{
-            backgroundColor: '#FFFFFF',
-            height: 54,
-            width: 343,
-            flexDirection: 'row',
-            marginHorizontal: 1,
-            marginVertical: 13,
-            alignItems: 'center',
-          }}>
-          <Image
-            style={{marginLeft: 10}}
-            source={require('../../images/pouch.png')}
-          />
-          <Text
-            style={{
-              color: '#00796A',
-              fontSize: 20,
-              fontWeight: 'bold',
-              marginHorizontal: 20,
-            }}>
-            Bonus (Accrued)
-          </Text>
-          <Text
-            style={{
-              color: '#00796A',
-              fontSize: 18,
-              fontWeight: '700',
-              marginLeft: 70,
-            }}>
-            ₹99
-          </Text>
-        </View>
-
-        <View
-          style={{
-            backgroundColor: '#FFFFFF',
-            height: 54,
-            width: 343,
-            flexDirection: 'row',
-            marginHorizontal: 1,
-            marginVertical: -4,
-            alignItems: 'center',
-          }}>
-          <Image
-            style={{marginLeft: 10, alignItems: 'center'}}
-            source={require('../../images/invoice.png')}
-          />
-          <Text
-            style={{
-              color: '#00796A',
-              fontSize: 19,
-              fontWeight: 'bold',
-              marginHorizontal: 20,
-              marginTop: -25,
-            }}>
-            Earning From Own Ticket
-          </Text>
-          <Text
-            style={{
-              color: '#00796A',
-              fontSize: 18,
-              fontWeight: '500',
-              marginTop: -25,
-            }}>
-            ₹200
-          </Text>
-
-          <Text
-            style={{
-              marginHorizontal: '-80%',
-              color: '#00796A',
-              fontSize: 14,
-              marginTop: 17,
-              letterSpacing: 0.5,
-            }}>
-            (Zero Commission)
-          </Text>
-        </View>
-
-        <View
-          style={{
-            backgroundColor: '#FFFFFF',
-            height: 54,
-            width: 343,
-            flexDirection: 'row',
-            marginHorizontal: 1,
-            alignItems: 'center',
-            marginTop: 18,
-          }}>
-          <Image
-            style={{marginLeft: 10, alignItems: 'center'}}
-            source={require('../../images/slip.png')}
-          />
-          <Text
-            style={{
-              color: '#00796A',
-              fontSize: 15,
-              fontWeight: 'bold',
-              marginHorizontal: 20,
-              marginTop: -25,
-            }}>
-            Earning from Tickets Thru URL
-          </Text>
-          <Text
-            style={{
-              color: '#00796A',
-              fontSize: 18,
-              fontWeight: '500',
-              marginTop: -25,
-            }}>
-            ₹358
-          </Text>
-
-          <Text
-            style={{
-              marginHorizontal: '-79%',
-              color: '#00796A',
-              fontSize: 14,
-              marginTop: 17,
-              letterSpacing: 0.5,
-            }}>
-            (Zero Commission)
-          </Text>
-        </View>
-
-        <View
-          style={{
-            backgroundColor: '#FFFFFF',
-            height: 54,
-            width: 343,
-            flexDirection: 'row',
-            marginHorizontal: 1,
-            alignItems: 'center',
-            marginTop: 12,
-          }}>
-          <Image
-            style={{marginLeft: 10, alignItems: 'center'}}
-            source={require('../../images/payment.png')}
-          />
-          <Text
-            style={{
-              color: '#00796A',
-              fontSize: 18,
-              fontWeight: 'bold',
-              marginHorizontal: 20,
-              marginTop: -25,
-            }}>
-            Earning from New Ticket
-          </Text>
-          <Text
-            style={{
-              color: '#00796A',
-              fontSize: 18,
-              fontWeight: '500',
-              marginTop: -25,
-              marginLeft: 10,
-            }}>
-            ₹154
-          </Text>
-
-          <Text
-            style={{
-              marginHorizontal: '-79%',
-              color: '#00796A',
-              fontSize: 14,
-              marginTop: 17,
-              letterSpacing: 0.5,
-            }}>
-            (Customer)
-          </Text>
-        </View>
-
-        <View
-          style={{
-            backgroundColor: '#FFFFFF',
-            height: 54,
-            width: 343,
-            flexDirection: 'row',
-            marginHorizontal: 1,
-            alignItems: 'center',
-            marginTop: 12,
-          }}>
-          <Image
-            style={{marginLeft: 10, alignItems: 'center'}}
-            source={require('../../images/slip1.png')}
-          />
-          <Text
-            style={{
-              color: '#00796A',
-              fontSize: 18,
-              fontWeight: 'bold',
-              marginHorizontal: 20,
-              marginTop: -25,
-            }}>
-            Earning from New Ticket
-          </Text>
-          <Text
-            style={{
-              color: '#00796A',
-              fontSize: 18,
-              fontWeight: '500',
-              marginTop: -25,
-              marginLeft: 10,
-            }}>
-            ₹154
-          </Text>
-
-          <Text
-            style={{
-              marginHorizontal: '-79%',
-              color: '#00796A',
-              fontSize: 14,
-              marginTop: 17,
-              letterSpacing: 0.5,
-            }}>
-            (Platform To Pay)
-          </Text>
-        </View>
-
-        <View
-          style={{
-            backgroundColor: '#FFFFFF',
-            height: 54,
-            width: 343,
-            flexDirection: 'row',
-            marginHorizontal: 1,
-            alignItems: 'center',
-            marginTop: 12,
-          }}>
-          <Image
-            style={{marginLeft: 10, alignItems: 'center'}}
-            source={require('../../images/wallet.png')}
-          />
-          <Text
-            style={{
-              color: '#00796A',
-              fontSize: 18,
-              fontWeight: 'bold',
-              marginHorizontal: 20,
-            }}>
-            Wallet Recharge
-          </Text>
-        </View>
-
-        <View style={styles.centeredView}>
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={ModalLight}
-            onRequestClose={() => {
-              Alert.alert('Adjust for Recharge has been closed.');
-              setModalLIght(!ModalLight);
-            }}>
-            <View style={styles.centeredView}>
-              <View style={styles.modalView2}>
-                <View
-                  style={{
-                    backgroundColor: '#F5F5F5',
-                    shadowOpacity: '#00000029',
-                    height: 54,
-                    width: 300,
-                    flexDirection: 'row',
-                    marginHorizontal: 1,
-                    marginVertical: 20,
-                    alignItems: 'center',
-                  }}>
-                  <Image
-                    style={{marginLeft: 10}}
-                    source={require('../../images/pouch.png')}
-                  />
-                  <Text
-                    style={{
-                      color: '#00796A',
-                      fontSize: 20,
-                      fontWeight: 'bold',
-                      marginHorizontal: 20,
-                    }}>
-                    Bonus (Accrued)
-                  </Text>
-                  <Text
-                    style={{
-                      color: '#00796A',
-                      fontSize: 18,
-                      fontWeight: '700',
-                      marginLeft: 30,
-                    }}>
-                    ₹99
-                  </Text>
-                </View>
-
-                <View
-                  style={{
-                    backgroundColor: '#F5F5F5',
-                    shadowOpacity: '#00000029',
-                    height: 54,
-                    width: 300,
-                    flexDirection: 'row',
-                    marginHorizontal: 1,
-                    alignItems: 'center',
-                    marginTop: -3,
-                  }}>
-                  <Image
-                    style={{marginLeft: 10, alignItems: 'center'}}
-                    source={require('../../images/plat.png')}
-                  />
-                  <Text
-                    style={{
-                      color: '#00796A',
-                      fontSize: 15,
-                      fontWeight: 'bold',
-                      marginHorizontal: 20,
-                      marginTop: -25,
-                    }}>
-                    Earning from New Ticket
-                  </Text>
-                  <Text
-                    style={{
-                      color: '#00796A',
-                      fontSize: 18,
-                      fontWeight: '500',
-                      marginTop: -25,
-                      marginLeft: 8,
-                      fontWeight: 'bold',
-                    }}>
-                    ₹154
-                  </Text>
-
-                  <Text
-                    style={{
-                      marginHorizontal: '-79%',
-                      color: '#00796A',
-                      fontSize: 14,
-                      marginTop: 17,
-                      fontWeight: '600',
-                    }}>
-                    (Platform To Pay)
-                  </Text>
-                </View>
-
-                <TouchableOpacity>
-                  <View
-                    style={{
-                      marginRight: 1,
-                      backgroundColor: '#00796A',
-                      width: 300,
-                      height: 51,
-                      marginTop: 20,
-                      borderRadius: 10,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}>
-                    <Text
-                      style={{
-                        color: '#FFFFFF',
-                        fontWeight: '600',
-                        fontSize: 20,
-                        letterSpacing: 1,
-                      }}
-                      onPress={() => {
-                        alert('coming soon');
-                      }}>
-                      Adjust for Recharge
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  style={{marginVertical: '-88%'}}
-                  onPress={() => setModalLIght(!ModalLight)}>
-                  <Image source={require('../../images/cross2.png')} />
-                </TouchableOpacity>
-              </View>
-            </View>
-          </Modal>
-          <View style={{flexDirection: 'row'}}>
-            <TouchableOpacity onPress={() => setModalLIght(true)}>
-              <View
-                style={{
-                  marginRight: 190,
-                  backgroundColor: '#00796A',
-                  width: 165,
-                  height: 40,
-                  marginTop: -7,
-                  borderRadius: 10,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
+        {EarningText.map(item => {
+          return (
+            <View
+              key={item.id}
+              style={{
+                backgroundColor: COLORS.WHITE,
+                flexDirection: 'row',
+                marginVertical: 5,
+                // alignItems: 'center',
+                justifyContent: 'center',
+                padding: 10,
+                width: width * 0.9,
+              }}>
+              <Image
+                resizeMode="contain"
+                source={item.icon}
+                style={{alignSelf: 'center'}}
+              />
+              <View style={{width: width * 0.65, marginHorizontal: 10}}>
                 <Text
                   style={{
-                    color: '#FFFFFF',
-                    fontWeight: '600',
-                    letterSpacing: 0.5,
+                    color: COLORS.DARK_GREEN,
+                    fontWeight: '500',
+                    fontSize: 16,
                   }}>
-                  Adjust for Recharge
+                  {item.name}
+                </Text>
+                <Text
+                  style={{
+                    color: COLORS.DARK_GREEN,
+                    fontSize: 13,
+                  }}>
+                  {item.subText}
                 </Text>
               </View>
-            </TouchableOpacity>
-          </View>
+              <Text
+                style={{
+                  color: COLORS.DARK_GREEN,
+                  fontWeight: '500',
+                  fontSize: 16,
+                }}>
+                {item.amount && '₹ '}
+                {item.amount}
+              </Text>
+            </View>
+          );
+        })}
+        <View style={styles.centeredView2}>
+          <AdjustRecharge />
 
           {/* cash Recharge Modal */}
 
@@ -1592,11 +1510,17 @@ export default function Recharge({navigation}) {
   );
 }
 const styles = StyleSheet.create({
+  centeredView2: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 15,
+  },
   centeredView: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 22,
+    // marginTop: 22,
   },
   modalView: {
     margin: 20,
@@ -1636,7 +1560,9 @@ const styles = StyleSheet.create({
   modalView3: {
     width: width,
     height: '93%',
+    flex: 1,
     backgroundColor: '#F5F5F5',
+    // backgroundColor: COLORS.RED_DARK,
     borderRadius: 20,
     padding: 35,
     alignItems: 'center',

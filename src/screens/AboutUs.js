@@ -31,6 +31,7 @@ const AboutUs = () => {
             fontFamily: 'poppins-semibold',
             fontWeight: 'bold',
             fontSize: 22,
+            color: COLORS.BLACK
           }}>
           About{' '}
           <Text style={{color: '#00796A', fontWeight: 'bold'}}>
@@ -42,7 +43,8 @@ const AboutUs = () => {
             fontFamily: 'poppins-semibold',
             fontWeight: 'bold',
             fontSize: 16,
-            textAlign: 'justify'
+            textAlign: 'justify',
+            color: COLORS.BLACK
           }}>
           Onit.services is a leading service platform that connects customers
           with top-quality service providers for a range of services, including

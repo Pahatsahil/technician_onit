@@ -35,6 +35,7 @@ const PrivacyPolicy = () => {
             fontWeight: 'bold',
             fontSize: 28,
             marginBottom: 24,
+            color: COLORS.BLACK
           }}>
           Privacy <Text style={{color: '#00796A'}}>Policy</Text>
         </Text>
@@ -46,7 +47,7 @@ const PrivacyPolicy = () => {
         </Text>
         <View>
           <Text style={styles.labelText}>1. Information we collect</Text>
-          <Text style={styles.labelText2}>
+          <Text style={styles.contentText}>
             When you use our service platform, we may collect the following
             types of information:
           </Text>
