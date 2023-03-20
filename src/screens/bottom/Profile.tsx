@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -34,7 +34,8 @@ import {
   setAccessToken,
   setUserData,
 } from '../../../redux-toolkit/slice';
-import QRCode from 'react-native-qrcode-generator';
+// import QRCode from 'react-native-qrcode-generator';
+import QRCode from 'react-native-qrcode-svg';
 import {useRef} from 'react';
 import Share from 'react-native-share';
 import {COLORS} from '../../utils/constants';
@@ -53,7 +54,6 @@ export default function Profile({navigation: {navigate}}) {
 
   const subject = 'Support and queries';
   const message = 'Write your query or problem.';
-
   const PROFILE_ITEMS = [
     {
       name: 'Technicians',
@@ -121,11 +121,15 @@ export default function Profile({navigation: {navigate}}) {
       },
     },
   ];
+  const url = (Data: any) => {
+    console.log(Data);
+    setQrimage(Data);
+  };
 
   const captureAndShareScreenshot = () => {
     let shareImage = {
       message: `https://app.onit.services/#/booking/${userData.userDetails?.center_id[0].qr_details.qr_id}`,
-      url: qrimage,
+      url: `data:image/png;base64,${qrimage}`,
     };
     Share.open(shareImage).catch(err => console.log(err));
   };
@@ -171,10 +175,13 @@ export default function Profile({navigation: {navigate}}) {
             </Text>
             <QRCode
               value={`https://app.onit.services/#/booking/${userData.userDetails?.center_id[0].qr_details.qr_id}`}
+              // value={`http://facebook.github.io/react-native/`}
               size={200}
-              bgColor="black"
-              fgColor="white"
-              getImageOnLoad={img => setQrimage(img)}
+              // bgColor="white"
+              // fgColor="black"
+              getRef={(img: any) => {
+                img?.toDataURL(url);
+              }}
             />
             <TouchableOpacity
               style={{
@@ -317,42 +324,44 @@ export default function Profile({navigation: {navigate}}) {
             alignItems: 'center',
           }}>
           <StatusBar backgroundColor="rgba(0,0,0,0.7)" />
-        <View
-          style={{
-            height: height * 0.27,
-            width: width * 0.8,
-            // justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: COLORS.WHITE,
-            marginHorizontal: 30,
-            marginTop: 'auto',
-            marginBottom: 'auto',
-            elevation: 5,
-            padding: 15,
-            paddingTop: 45,
-            borderRadius: 5,
-          }}>
-          <Text style={{color: COLORS.BLACK, fontSize: 15}}>
-            Do you really want to Log Out from your Account ??
-          </Text>
           <View
             style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              width: width * 0.5,
-              alignSelf: 'center',
-              marginTop: height * 0.10,
+              height: height * 0.27,
+              width: width * 0.8,
+              // justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: COLORS.WHITE,
+              marginHorizontal: 30,
+              marginTop: 'auto',
+              marginBottom: 'auto',
+              elevation: 5,
+              padding: 15,
+              paddingTop: 45,
+              borderRadius: 5,
             }}>
-            <TouchableOpacity
-              onPress={() => setLogOutModal(false)}>
-              <Text style={{color: COLORS.DARK_GREEN, fontSize: 16,}}>Cancel</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => dispatch(logout())}>
-              <Text style={{color: COLORS.RED_DARK, fontSize: 16,}}>Logout</Text>
-            </TouchableOpacity>
+            <Text style={{color: COLORS.BLACK, fontSize: 15}}>
+              Do you really want to Log Out from your Account ??
+            </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                width: width * 0.5,
+                alignSelf: 'center',
+                marginTop: height * 0.1,
+              }}>
+              <TouchableOpacity onPress={() => setLogOutModal(false)}>
+                <Text style={{color: COLORS.DARK_GREEN, fontSize: 16}}>
+                  Cancel
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => dispatch(logout())}>
+                <Text style={{color: COLORS.RED_DARK, fontSize: 16}}>
+                  Logout
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
         </View>
       </Modal>
     );

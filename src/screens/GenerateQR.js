@@ -24,7 +24,7 @@ import { TextInput } from "react-native-gesture-handler";
 import ImagePicker from "react-native-image-crop-picker";
 import * as Progress from "react-native-progress";
 import { useDispatch, useSelector } from "react-redux";
-import QRCode from "react-native-qrcode-generator";
+// import QRCode from "react-native-qrcode-generator";
 import {
   authorizedLogin,
   setProfileImageUrl,
@@ -42,6 +42,7 @@ import {
   UPDATE_TECHNICIAN,
 } from "../utils/endpoints";
 import { Picker } from "@react-native-picker/picker";
+import QRCode from 'react-native-qrcode-svg';
 
 const { width, height } = Dimensions.get("window");
 export default function GenerateQR({ navigation, route }) {
@@ -68,6 +69,7 @@ export default function GenerateQR({ navigation, route }) {
   const profile_picture = route?.params?.profile_picture;
   const [loader, setLoader] = useState(false);
   const [turnover, setturnover] = useState(0);
+  const [qrimage, setQrimage] = useState();
   const { accessToken, isAuthorized, userData, profileImageUrl } = useSelector(
     (state) => state.auth
   );
@@ -85,11 +87,17 @@ export default function GenerateQR({ navigation, route }) {
       console.log(res?.data?.data);
     });
   }, []);
+  
+  const url = (Data) => {
+    console.log(Data);
+    setQrimage(Data);
+  };
 
   const onShare = async () => {
     try {
       const result = await Share.share({
         message: `https://app.onit.services/#/booking/${QRID}`,
+        url: `data:image/png;base64,${qrimage}`,
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
@@ -1009,12 +1017,16 @@ export default function GenerateQR({ navigation, route }) {
             </Text>{" "}
             @ Zero Charges
           </Text>
-          <QRCode
-            value={`https://app.onit.services/#/booking/${QRID}`}
-            size={200}
-            bgColor="black"
-            fgColor="white"
-          />
+            <QRCode
+              value={`https://app.onit.services/#/booking/${QRID}`}
+              // value={`http://facebook.github.io/react-native/`}
+              size={200}
+              // bgColor="white"
+              // fgColor="black"
+              getRef={(img) => {
+                img?.toDataURL(url);
+              }}
+            />
           <TouchableOpacity
             style={{
               height: 30,
