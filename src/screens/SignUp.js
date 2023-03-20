@@ -236,6 +236,7 @@ export default function SignUp({navigation}) {
                 fontFamily: 'poppins-regular',
                 paddingLeft: 11,
                 paddingVertical: 14,
+                color: COLORS.BLACK
               }}>
               {primaryService?.service_name
                 ? primaryService?.service_name.split('-')[0]
@@ -569,6 +570,7 @@ export default function SignUp({navigation}) {
                           fontWeight: 'bold',
                           fontFamily: 'poppins-semibold',
                           padding: 10,
+                          color: COLORS.BLACK
                         }}
                         //
                       >
