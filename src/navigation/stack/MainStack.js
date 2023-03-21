@@ -17,6 +17,8 @@ import {useSelector} from 'react-redux';
 import OnboardingScreens from '../../screens/onboarding/OnboardingScreens';
 import NewRequestBox from '../../components/NewRequestBox';
 import JobCompleted from '../../screens/requesttabs/JobCompleted';
+import Earning from '../../screens/bottom/Earning';
+import Expenses from '../../screens/bottom/Expenses';
 
 const Stack = createStackNavigator();
 const MainStack = () => {
@@ -52,6 +54,16 @@ const MainStack = () => {
       <Stack.Screen
         name="Recharge"
         component={Recharge}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Earning"
+        component={Earning}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Expenses"
+        component={Expenses}
         options={{headerShown: false}}
       />
       <Stack.Screen name="Chat" component={Chat} />

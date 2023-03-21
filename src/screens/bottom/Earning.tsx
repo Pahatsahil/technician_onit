@@ -1,5 +1,6 @@
 import CheckBox from '@react-native-community/checkbox';
 import axios from 'axios';
+import moment from 'moment';
 import React, {useEffect, useState} from 'react';
 import {
   View,
@@ -15,13 +16,14 @@ import {
   StatusBar,
   TextInput,
 } from 'react-native';
+import DateTimePicker from 'react-native-modal-datetime-picker';
 import {useSelector} from 'react-redux';
 import {Header} from '../../components/Header';
 import {COLORS} from '../../utils/constants';
 
 const {width, height} = Dimensions.get('screen');
 
-const Earning = (props: any) => {
+const Earning = ({navigation}) => {
   const {accessToken} = useSelector((state: any) => state.auth);
   const [orderDetailsList, setOrderDetailsList] = useState();
   const [loader, setLoader] = useState(false);
@@ -32,9 +34,10 @@ const Earning = (props: any) => {
   const [modalPink, setModalPink] = useState(false);
   const [isSelected, setSelection] = useState(false);
   const [selectedDate, setSelectedDate] = useState('Last Month');
-  const [fromDate, setFromDate] = useState();
+  const [fromDate, setFromDate] = useState<Date>();
+  const [fromDateModal, setFromDateModal] = useState();
   const [toDate, setToDate] = useState();
-
+let CustomDateis = fromDate+ ' - '+toDate
   const getOrderList = async () => {
     setLoader(true);
     try {
@@ -283,79 +286,90 @@ const Earning = (props: any) => {
     },
   ];
 
-  const CustomDate = () => {
-    return (
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={customDateModal}
-        onRequestClose={() => {
-          setCustomDateModal(!customDateModal);
-        }}>
-        <View style={styles.modalBlack}>
-          <View style={styles.modalView5}>
-            <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <View style={{alignItems: 'center',marginBottom: 15}}>
-                <Text style={{color: '#17523C', fontSize: 14, paddingBottom: 10}}>From</Text>
-                <TextInput
-                  style={{
-                    borderRadius: 10,
-                    borderColor: COLORS.DARK_GREEN,
-                    borderWidth: 1,
-                    width: width * 0.35,
-                  }}
-                  onChangeText={(text: any) => setFromDate(text)}
-                  value={fromDate}
-                />
-              </View>
-              <View style={{alignItems: 'center',marginBottom: 15}}>
-                <Text style={{color: '#17523C', fontSize: 14, paddingBottom: 10}}>To</Text>
-                <TextInput
-                  style={{
-                    borderRadius: 10,
-                    borderColor: COLORS.DARK_GREEN,
-                    borderWidth: 1,
-                    width: width * 0.35,
-                  }}
-                  onChangeText={(text: any) => setToDate(text)}
-                  value={toDate}
-                />
-              </View>
-            </View>
-            <TouchableOpacity>
-              <View
-                style={{
-                  marginRight: 1,
-                  backgroundColor: '#00796A',
-                  // width: 300,
-                  // height: 51,
-                  // marginTop: 20,
-                  borderRadius: 10,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  padding: 10,
-                }}>
-                <Text
-                  style={{
-                    color: '#FFFFFF',
-                    fontWeight: '600',
-                    fontSize: 20,
-                    letterSpacing: 1,
-                  }}
-                  onPress={() => {
-                    setCustomDateModal(!customDateModal);
-                    setSelectedDate(fromDate + ' - ' + toDate);
-                  }}>
-                  OK
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
-    );
-  };
+  // const CustomDate = () => {
+  //   return (
+  //     <Modal
+  //       animationType="slide"
+  //       transparent={true}
+  //       visible={customDateModal}
+  //       onRequestClose={() => {
+  //         setCustomDateModal(!customDateModal);
+  //       }}>
+  //       <View style={styles.modalBlack}>
+  //         <View style={styles.modalView5}>
+  //           <View
+  //             style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+  //             <View style={{alignItems: 'center',marginBottom: 15}}>
+  //               <Text style={{color: '#17523C', fontSize: 14, paddingBottom: 10}}>From</Text>
+  //               <Text
+  //                 style={{
+  //                   borderRadius: 10,
+  //                   borderColor: COLORS.DARK_GREEN,
+  //                   borderWidth: 1,
+  //                   width: width * 0.35,
+  //                 }}
+  //               >{fromDate}</Text>
+  //                     <DateTimePicker
+  //                       isVisible={open}
+  //                       mode="date"
+  //                       onConfirm={date => {
+  //                         setFromDateModal(false);
+  //                         setFromDate(date);
+  //                       }}
+  //                       onCancel={() => {
+  //                         setFromDateModal(false);
+  //                       }}
+  //                       minimumDate={moment().subtract(18, 'years')._d}
+  //                       date={moment().subtract(18, 'years')._d}
+  //                     />
+  //             </View>
+  //             <View style={{alignItems: 'center',marginBottom: 15}}>
+  //               <Text style={{color: '#17523C', fontSize: 14, paddingBottom: 10}}>To</Text>
+  //               <TextInput
+  //                 style={{
+  //                   borderRadius: 10,
+  //                   borderColor: COLORS.DARK_GREEN,
+  //                   borderWidth: 1,
+  //                   width: width * 0.35,
+  //                 }}
+  //                 onChangeText={(text: any) => setToDate(text)}
+  //                 value={toDate}
+  //               />
+  //             </View>
+  //           </View>
+  //           <TouchableOpacity>
+  //             <View
+  //               style={{
+  //                 marginRight: 1,
+  //                 backgroundColor: '#00796A',
+  //                 // width: 300,
+  //                 // height: 51,
+  //                 // marginTop: 20,
+  //                 borderRadius: 10,
+  //                 justifyContent: 'center',
+  //                 alignItems: 'center',
+  //                 padding: 10,
+  //               }}>
+  //               <Text
+  //                 style={{
+  //                   color: '#FFFFFF',
+  //                   fontWeight: '600',
+  //                   fontSize: 20,
+  //                   letterSpacing: 1,
+  //                 }}
+  //                 onPress={() => {
+  //                   setCustomDateModal(!customDateModal);
+  //                   setSelectedDate(CustomDateis);
+  //                 }}>
+  //                 OK
+  //               </Text>
+  //             </View>
+  //           </TouchableOpacity>
+  //         </View>
+  //       </View>
+  //     </Modal>
+  //   );
+  // };
 
   const CalendarModal = () => {
     return (
@@ -435,7 +449,7 @@ const Earning = (props: any) => {
 
   return (
     <>
-      <CustomDate />
+      {/* <CustomDate /> */}
       <View style={styles.modalView3}>
         <ImageBackground
           style={{flex: 0.6 / 2, marginTop: -42, width: width}}
@@ -463,6 +477,7 @@ const Earning = (props: any) => {
               Earning
             </Text>
             <TouchableOpacity
+            onPress={() => navigation.navigate('Expenses')}
               style={{
                 width: '50%',
                 backgroundColor: COLORS.DARK_GREEN,
