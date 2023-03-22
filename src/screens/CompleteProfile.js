@@ -228,6 +228,8 @@ export default function GenerateQR({navigation}) {
   const onsubmit = data => {
     data.dob = moment(data?.dob).format('LL');
     if (s3ProfileImage) {
+      console.log('cpROFILE', userData?.populatedTechnicianDetails?.center_id[0]?.qr_details
+      ?.qr_id)
       if (s3Certificate) {
         navigation.navigate('GenerateQR', {
           data,
@@ -471,7 +473,7 @@ export default function GenerateQR({navigation}) {
                         onCancel={() => {
                           setOpen(false);
                         }}
-                        minimumDate={moment().subtract(18, 'years')._d}
+                        maximumDate={moment().subtract(18, 'years')._d}
                         date={value || moment().subtract(18, 'years')._d}
                       />
                       {/* <DatePicker
@@ -700,8 +702,8 @@ export default function GenerateQR({navigation}) {
                     rules={{
                       pattern: {
                         value:
-                          // /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-                          /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                          /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+                          // /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
                         message: 'Please enter your email address',
                       },
                     }}

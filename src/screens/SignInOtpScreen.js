@@ -16,13 +16,13 @@ import {
 } from 'react-native';
 import { getUniqueId } from 'react-native-device-info';
 import { useDispatch, useSelector } from "react-redux";
-import { login, setAccessToken, setProfileImageUrl, setUserData } from '../../redux-toolkit/slice';
+import { login, setAccessToken, setProfileImageUrl, setUserData, setUserId } from '../../redux-toolkit/slice';
 import { GET_USER_DETAILS, LOGIN_WITH_OTP, SEND_OTP } from '../utils/endpoints';
 
 const { width, height } = Dimensions.get('window');
 
 const SignInOtpScreen = ({ navigation, route }) => {
-  const { accessToken, isAuthorized, userData, profileImageUrl } = useSelector((state) => state.auth);
+  const { accessToken, isAuthorized, userData, profileImageUrl, userId } = useSelector((state) => state.auth);
   //console.log(accessToken)
   const data = route?.params?.data
   const firstInput = useRef();
@@ -90,9 +90,11 @@ const SignInOtpScreen = ({ navigation, route }) => {
       }).then(res => {
         console.log("User Details--->", res?.data)
         dispatch(setUserData(res?.data?.data));
+        dispatch(setUserId(res?.data?.data?.userDetails?.personal_details?.phone?.mobile_number));
         setTimeout(() => {
           if (res?.data?.data?.userDetails?.document_details?.aadhar_number) {
             console.log("User Data---->", userData)
+            console.log("User ID---->", userId)
             dispatch(setProfileImageUrl(res?.data?.data?.userDetails?.personal_details?.profile_picture));
             setVisible(false)
             dispatch(login());
@@ -129,6 +131,7 @@ const SignInOtpScreen = ({ navigation, route }) => {
       )
     } catch (error) {
       setVisible(false);
+      console.log(error)
       ToastAndroid.show(error?.response?.data?.message + "!", ToastAndroid.SHORT);
     }
   }

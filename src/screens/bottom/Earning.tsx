@@ -1,6 +1,3 @@
-import CheckBox from '@react-native-community/checkbox';
-import axios from 'axios';
-import moment from 'moment';
 import React, {useEffect, useState} from 'react';
 import {
   View,
@@ -20,11 +17,15 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 import {useSelector} from 'react-redux';
 import {Header} from '../../components/Header';
 import {COLORS} from '../../utils/constants';
+import CheckBox from '@react-native-community/checkbox';
+import axios from 'axios';
+import moment from 'moment';
+import { GET_WALLET_BALANCE } from '../../utils/endpoints';
 
 const {width, height} = Dimensions.get('screen');
 
 const Earning = ({navigation}) => {
-  const {accessToken} = useSelector((state: any) => state.auth);
+  const {accessToken, userData, userId, walletBalance} = useSelector((state: any) => state.auth);
   const [orderDetailsList, setOrderDetailsList] = useState();
   const [loader, setLoader] = useState(false);
   const [dateModal, setDateModal] = useState(false);
@@ -56,10 +57,43 @@ let CustomDateis = fromDate+ ' - '+toDate
       console.log(err);
     }
   };
-
+useEffect(() => {
+  console.log('USERID', userId)
+  if(userId){
+    WalletBalance()
+  }
+},[])
   useEffect(() => {
     getOrderList();
   }, []);
+
+  const WalletBalance = async() => {
+    try {
+      let payload = {
+        userId: "9873371012",
+        // amount: 99
+      }
+      console.log(payload)
+     const res = await axios({
+        url: 'https://api.onit.fit/payment/wallet-balance',
+        method: 'post',
+        headers: {
+          'x-access-token': accessToken,
+        },
+        data: payload
+      })
+      const {data, error} = res.data;
+      if(data){
+        console.log('DATA_BALANCE', res)
+      }
+      else{
+        console.log('ERROR BALANCE', res)
+      }
+
+    } catch (error) {
+      console.log('ERROR', error)
+    }
+  }
 
   const EarningText = [
     {

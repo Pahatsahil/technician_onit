@@ -166,7 +166,7 @@ export default function GenerateQR({ navigation, route }) {
       annual_turnover: turnover,
       // engagement_type: service || []
     };
-    console.log(payload);
+    console.log("complete",payload);
     setLoader(true);
     try {
       await axios({
