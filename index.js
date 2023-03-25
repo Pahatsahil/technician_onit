@@ -8,11 +8,12 @@ import { PersistGate } from "redux-persist/integration/react";
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import PushNotification from "react-native-push-notification";
 import {  NotificationListener, NotificationProps } from "./src/components/Notifications";
-import { useEffect } from "react";
+import deviceInfoModule from "react-native-device-info";
 
 const Root = () =>{
   // useEffect(() => {
   // },[])
+  console.log('DEVICE ID', deviceInfoModule.getUniqueId())
   NotificationProps()
   NotificationListener()
   // NotificationProps()

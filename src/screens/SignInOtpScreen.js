@@ -46,6 +46,7 @@ const SignInOtpScreen = ({ navigation, route }) => {
     const deviceInfo = async () => {
       const deviceID = await getUniqueId();
       setDeviceID(deviceID);
+      console.log('DEVICE ID', deviceID)
     }
     deviceInfo()
   }, [])

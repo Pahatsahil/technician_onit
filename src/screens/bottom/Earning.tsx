@@ -20,12 +20,14 @@ import {COLORS} from '../../utils/constants';
 import CheckBox from '@react-native-community/checkbox';
 import axios from 'axios';
 import moment from 'moment';
-import { GET_WALLET_BALANCE } from '../../utils/endpoints';
+import {GET_WALLET_BALANCE} from '../../utils/endpoints';
 
 const {width, height} = Dimensions.get('screen');
 
 const Earning = ({navigation}) => {
-  const {accessToken, userData, userId, walletBalance} = useSelector((state: any) => state.auth);
+  const {accessToken, userData, userId, walletBalance} = useSelector(
+    (state: any) => state.auth,
+  );
   const [orderDetailsList, setOrderDetailsList] = useState();
   const [loader, setLoader] = useState(false);
   const [dateModal, setDateModal] = useState(false);
@@ -38,7 +40,7 @@ const Earning = ({navigation}) => {
   const [fromDate, setFromDate] = useState<Date>();
   const [fromDateModal, setFromDateModal] = useState();
   const [toDate, setToDate] = useState();
-let CustomDateis = fromDate+ ' - '+toDate
+  let CustomDateis = fromDate + ' - ' + toDate;
   const getOrderList = async () => {
     setLoader(true);
     try {
@@ -57,43 +59,41 @@ let CustomDateis = fromDate+ ' - '+toDate
       console.log(err);
     }
   };
-useEffect(() => {
-  console.log('USERID', userId)
-  if(userId){
-    WalletBalance()
-  }
-},[])
+  useEffect(() => {
+    console.log('USERID', userId);
+    if (userId) {
+      WalletBalance();
+    }
+  }, []);
   useEffect(() => {
     getOrderList();
   }, []);
 
-  const WalletBalance = async() => {
+  const WalletBalance = async () => {
     try {
       let payload = {
-        userId: "9873371012",
+        userId: '9810024941',
         // amount: 99
-      }
-      console.log(payload)
-     const res = await axios({
+      };
+      console.log(payload);
+      const res = await axios({
         url: 'https://api.onit.fit/payment/wallet-balance',
         method: 'post',
         headers: {
           'x-access-token': accessToken,
         },
-        data: payload
-      })
+        data: payload,
+      });
       const {data, error} = res.data;
-      if(data){
-        console.log('DATA_BALANCE', res)
+      if (data) {
+        console.log('DATA_BALANCE', res);
+      } else {
+        console.log('ERROR BALANCE', res);
       }
-      else{
-        console.log('ERROR BALANCE', res)
-      }
-
     } catch (error) {
-      console.log('ERROR', error)
+      console.log('ERROR', error);
     }
-  }
+  };
 
   const EarningText = [
     {
@@ -511,7 +511,7 @@ useEffect(() => {
               Earning
             </Text>
             <TouchableOpacity
-            onPress={() => navigation.navigate('Expenses')}
+              onPress={() => navigation.navigate('Expenses')}
               style={{
                 width: '50%',
                 backgroundColor: COLORS.DARK_GREEN,
@@ -581,6 +581,7 @@ useEffect(() => {
               Wallet Balance
             </Text>
             <TouchableOpacity
+              onPress={() => WalletBalance()}
               style={{
                 justifyContent: 'flex-end',
                 alignItems: 'flex-end',
