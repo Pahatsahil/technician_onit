@@ -125,10 +125,25 @@ export default function Profile({navigation: {navigate}}) {
     console.log(Data);
     setQrimage(Data);
   };
-
+  useEffect(() => {
+    console.log('ERROR ', userData.userDetails.personal_details.name);
+  }, []);
   const captureAndShareScreenshot = () => {
     let shareImage = {
-      message: `https://app.onit.services/#/booking/${userData.userDetails?.center_id[0].qr_details.qr_id}`,
+      message: `Greetings 🙏 Our services for ${
+        userData?.userDetails?.services?.primary_services?.service_name.split(
+          '-',
+        )[0]
+      } are Digital now !
+       You can book our services any time and from anywhere using the link below without paying any advance ( Reply Yes to activate the link)
+     Center Name: ${
+       userData.userDetails.personal_details.name
+     }Contact Number: ${
+        userData?.userDetails?.personal_details?.phone?.mobile_number
+      }
+       https://app.onit.services/#/booking/${
+         userData.userDetails?.center_id[0].qr_details.qr_id
+       }`,
       url: `data:image/png;base64,${qrimage}`,
     };
     Share.open(shareImage).catch(err => console.log(err));

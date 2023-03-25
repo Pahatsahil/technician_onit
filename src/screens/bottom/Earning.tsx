@@ -45,7 +45,7 @@ const Earning = (props: any) => {
           'x-access-token': accessToken,
         },
       }).then(res => {
-        console.log(res.data.data.paymentDetails);
+        console.log("ORDER",res.data.data.paymentDetails);
         setOrderDetailsList(res.data.data.paymentDetails);
         setLoader(false);
       });

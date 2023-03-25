@@ -132,7 +132,7 @@ export default function SignUp({navigation}) {
         });
       });
     } catch (err) {
-      console.log(err);
+      console.log("ERROR",err);
       setVisible(false);
       ToastAndroid.show('Something went wrong!', ToastAndroid.SHORT);
     }

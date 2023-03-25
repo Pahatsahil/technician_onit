@@ -30,10 +30,12 @@ export default function Dashboard({navigation}) {
 
   useEffect(() => {
     const fetchAvailableOpportunity = async () => {
-      const res = await axios.get(GET_OPPORTUNITY_IN_YOUR_AREA);
+      const res = await axios.get('https://api.onit.services/technicianApp/get-opportunity-in-your-area');
       setAvailableServices(res?.data?.data?.totalData);
+      console.log("DATAs", res.data.data)
     };
     fetchAvailableOpportunity();
+    console.log("DATA", availableServices)
   }, []);
   return (
     <View
