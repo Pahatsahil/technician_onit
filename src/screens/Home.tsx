@@ -12,18 +12,54 @@ import {Completed, NewRequest, Pending} from './requesttabs';
 import {Header} from '../components/Header';
 import axios from 'axios';
 import plus from '../images/plus.png';
-import {GET_ALL_SERVICES} from '../utils/endpoints';
+import {GET_ALL_SERVICES, GET_WALLET_BALANCE} from '../utils/endpoints';
+import { useDispatch, useSelector } from 'react-redux';
+import { setWalletBalance } from '../../redux-toolkit/slice';
 
 const {height, width} = Dimensions.get('screen');
 const Tab = createMaterialTopTabNavigator();
 
 const Home = ({navigation, route}) => {
+  const {walletBalance, userId, accessToken} = useSelector((state: any) => state.auth)
+  const dispatch = useDispatch()
   useEffect(() => {
     const fetchServices = async () => {
       const res = await axios.get(GET_ALL_SERVICES);
     };
     fetchServices();
   }, []);
+
+  useEffect(() => {
+    console.log('USERID', userId);
+    if (userId) {
+      WalletBalanceAPI();
+    }
+  }, []);
+
+  const WalletBalanceAPI = async () => {
+    try {
+      let payload = {
+        userId: userId,
+        // amount: 99
+      };
+      const res = await axios({
+        url: 'https://api.onit.fit/payment/wallet-balance',
+        method: 'post',
+        headers: {
+          'x-access-token': accessToken,
+        },
+        data: payload,
+      });
+      if (res) {
+        console.log('DATA_BALANCE', res.data);
+        dispatch(setWalletBalance(res.data.wallet_balance));
+      } else {
+        console.log('ERROR BALANCE', res.error);
+      }
+    } catch (error) {
+      console.log('ERROR', error);
+    }
+  };
 
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
