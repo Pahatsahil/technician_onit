@@ -23,7 +23,7 @@ import moment from 'moment';
 import {TextInput} from 'react-native-gesture-handler';
 import ImagePicker from 'react-native-image-crop-picker';
 import {Controller, useForm} from 'react-hook-form';
-import DatePicker from 'react-native-date-picker';
+// import DatePicker from 'react-native-date-picker';
 import {LogBox} from 'react-native';
 import cross from '../images/cross.png';
 import axios from 'axios';
@@ -37,6 +37,7 @@ import {
   TECHNICIAN_PAN_CARD,
   TECHNICIAN_PROFILE_PICTURE,
 } from '../utils/endpoints';
+import DateTimePicker from 'react-native-modal-datetime-picker';
 LogBox.ignoreLogs(['VirtualizedLists']);
 
 const {width, height} = Dimensions.get('window');
@@ -719,7 +720,7 @@ export const AddTechnician = ({navigation}) => {
                         }}>
                         {value ? moment(value).format('LL') : 'Date of Birth'}
                       </Text>
-                      <DatePicker
+                      {/* <DatePicker
                         modal
                         mode="date"
                         format="YYYY-MM-DD"
@@ -734,6 +735,19 @@ export const AddTechnician = ({navigation}) => {
                           setOpen(false);
                         }}
                         textColor="#00796A"
+                      /> */}
+                      <DateTimePicker
+                        isVisible={open}
+                        mode="date"
+                        onConfirm={date => {
+                          setOpen(false);
+                          onChange(date);
+                        }}
+                        onCancel={() => {
+                          setOpen(false);
+                        }}
+                        maximumDate={moment().subtract(18, 'years')._d}
+                        date={value || moment().subtract(18, 'years')._d}
                       />
                     </TouchableOpacity>
                   )}
@@ -928,7 +942,8 @@ export const AddTechnician = ({navigation}) => {
                   defaultValue=""
                   rules={{
                     pattern: {
-                      value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+                      value: 
+                      /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
                       message: 'Please enter your email address',
                     },
                   }}
@@ -980,6 +995,7 @@ export const AddTechnician = ({navigation}) => {
                         onChangeText={value => onChange(value)}
                         value={value}
                         autoCapitalize="characters"
+                        keyboardType='numeric'
                       />
                     )}
                     name="reference_person_mobile"

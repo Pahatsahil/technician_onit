@@ -23,7 +23,7 @@ import axios from 'axios';
 import moment from 'moment';
 import {setWalletBalance} from '../../../redux-toolkit/slice';
 import RazorpayCheckout from 'react-native-razorpay';
-import {RAZOR_TEST_KEY} from '../../utils/endpoints';
+import {RAZOR_TEST_KEY, RECHARGE_WALLET} from '../../utils/endpoints';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -844,9 +844,52 @@ const Earning = ({navigation}) => {
     );
   };
 
-  const rechargeWallet = async (data: any) => {
+  const WalletBalanceAPI = async () => {
     try {
-    } catch (error) {}
+      let payload = {
+        userId: userId,
+        // amount: 99
+      };
+      const res = await axios({
+        url: 'https://api.onit.fit/payment/wallet-balance',
+        method: 'post',
+        headers: {
+          'x-access-token': accessToken,
+        },
+        data: payload,
+      });
+      if (res) {
+        console.log('DATA_BALANCE', res.data);
+        dispatch(setWalletBalance(res.data.wallet_balance));
+      } else {
+        console.log('ERROR BALANCE', res.error);
+      }
+    } catch (error) {
+      console.log('ERROR', error);
+    }
+  };
+
+  const rechargeWallet = async () => {
+    try {
+      setLoader(true)
+      let payload = {
+        userId: userId,
+        amount: rechargeAmt
+      }
+      const res = await axios({
+        method: 'post',
+        url: RECHARGE_WALLET,
+        data: payload
+      })
+      if (res) {
+        console.log('Recharged', res.data)
+        WalletBalanceAPI()
+      } else {
+        console.log('Recharged', res)  
+      }
+    } catch (error) {
+      console.log('RechargedER', error)  
+    }
   };
   const handlePaymentRequest = () => {
     let amt = parseInt(rechargeAmt);
@@ -872,7 +915,7 @@ const Earning = ({navigation}) => {
         .then((data: any) => {
           console.log('This---->', data);
           try {
-            rechargeWallet(data);
+            rechargeWallet();
           } catch (err) {
             ToastAndroid.show('Something went wrong!', ToastAndroid.SHORT);
             navigation.goBack();
@@ -1161,7 +1204,7 @@ const Earning = ({navigation}) => {
                         fontWeight: '500',
                         fontSize: 16,
                       }}>
-                      {item.name}
+                      {item.name}{item.amount && '  >>>'}
                     </Text>
                     <Text
                       style={{

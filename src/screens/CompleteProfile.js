@@ -39,6 +39,7 @@ import {
 } from '../utils/endpoints';
 // import DatePicker from 'react-native-datepicker';
 import {Picker} from '@react-native-picker/picker';
+import { COLORS } from '../utils/constants';
 LogBox.ignoreLogs(['VirtualizedLists']);
 
 const {width, height} = Dimensions.get('window');
@@ -463,7 +464,7 @@ export default function GenerateQR({navigation}) {
                         }}>
                         {value ? moment(value).format('LL') : 'Date of Birth'}
                       </Text>
-                      <DateTimePicker
+                      <DateTimePicker 
                         isVisible={open}
                         mode="date"
                         onConfirm={date => {
@@ -893,6 +894,7 @@ export default function GenerateQR({navigation}) {
                         fontSize: 16,
                         fontWeight: 'bold',
                         fontFamily: 'poppins-semibold',
+                        color: COLORS.BLACK
                       }}>
                       {secondaryService?.service_name
                         ? secondaryService?.service_name.split('-')[0]
