@@ -67,6 +67,7 @@ const Earning = ({navigation}) => {
   };
   useEffect(() => {
     getOrderList();
+    WalletBalanceAPI()
   }, []);
 
   const EarningText = [
@@ -869,17 +870,21 @@ const Earning = ({navigation}) => {
     }
   };
 
-  const rechargeWallet = async () => {
+  const rechargeWallet = async (data: any) => {
     try {
       setLoader(true)
       let payload = {
         userId: userId,
-        amount: rechargeAmt
+        amount: rechargeAmt,
+        ...data,
       }
       const res = await axios({
         method: 'post',
         url: RECHARGE_WALLET,
-        data: payload
+        data: payload,
+        headers: {
+          "x-access-token": accessToken
+        }
       })
       if (res) {
         console.log('Recharged', res.data)
@@ -915,7 +920,7 @@ const Earning = ({navigation}) => {
         .then((data: any) => {
           console.log('This---->', data);
           try {
-            rechargeWallet();
+            rechargeWallet(data);
           } catch (err) {
             ToastAndroid.show('Something went wrong!', ToastAndroid.SHORT);
             navigation.goBack();

@@ -327,8 +327,8 @@ export default function GenerateQR({navigation}) {
                         fontWeight: 'bold',
                         fontFamily: 'poppins-semibold',
                         padding: 10,
+                        color: COLORS.BLACK
                       }}
-                      //
                     >
                       {item.service_name}
                     </Text>

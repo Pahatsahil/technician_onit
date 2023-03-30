@@ -74,14 +74,13 @@ export default function GenerateQR({navigation, route}) {
   const [turnover, setturnover] = useState(0);
   const [qrimage, setQrimage] = useState();
   const [bonusAmount, setBonusAmount] = useState(99);
-  const [bonusModal, setBonusModal] = useState(99);
+  const [bonusModal, setBonusModal] = useState(false);
   const {accessToken, isAuthorized, userData, profileImageUrl} = useSelector(
     state => state.auth,
   );
   const QRID = route?.params?.QRID;
 
   useEffect(() => {
-    setBonusModal(true)
     axios({
       method: 'get',
       url: GET_USER_DETAILS,
@@ -90,7 +89,7 @@ export default function GenerateQR({navigation, route}) {
         'x-access-token': accessToken,
       },
     }).then(res => {
-      console.log(res?.data?.data);
+      console.log("user_details",res?.data?.data);
     });
   }, []);
 
@@ -222,10 +221,10 @@ export default function GenerateQR({navigation, route}) {
     }
   };
   const joining_bonus = async () => {
-    console.log('PAYLOAD_BONUS');
+    console.log('PAYLOAD_BONUS',userData?.userDetails?.personal_details?.phone?.mobile_number);
     const payload = {
       userId:
-        userData?.userDetails?.personal_details?.phone?.mobile_number.toString(),
+        userData?.userDetails?.personal_details?.phone?.mobile_number?.toString(),
       amount: bonusAmount,
     };
     console.log('PAYLOAD', payload);
@@ -239,7 +238,7 @@ export default function GenerateQR({navigation, route}) {
       dispatch(setUserId(userData?.userDetails?.personal_details?.phone?.mobile_number))
       setBonusModal(true);
     } catch (error) {
-      console.log('EROR', error);
+      console.log('EROR', error?.response?.data?.message);
     }
   };
   const uploadImageForPanCard = (uploadType, imageType) => {
@@ -1102,7 +1101,7 @@ export default function GenerateQR({navigation, route}) {
             width: width,
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: COLORS.WHITE,
+            backgroundColor: COLORS.MODAL_BACKGROUND,
             elevation: 10,
           }}>
           <View
@@ -1111,7 +1110,7 @@ export default function GenerateQR({navigation, route}) {
               width: width,
               justifyContent: 'center',
               alignItems: 'center',
-              backgroundColor: COLORS.MODAL_BACKGROUND,
+              backgroundColor: COLORS.WHITE,
             }}>
             <Text
               style={{

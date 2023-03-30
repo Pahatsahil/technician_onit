@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import React, { useRef, useState, } from 'react';
 import { useEffect } from 'react';
@@ -47,6 +48,7 @@ const SignInOtpScreen = ({ navigation, route }) => {
       const deviceID = await getUniqueId();
       setDeviceID(deviceID);
       console.log('DEVICE ID', deviceID)
+      AsyncStorage.setItem('device_id', deviceID)
     }
     deviceInfo()
   }, [])

@@ -12,16 +12,23 @@ import {Completed, NewRequest, Pending} from './requesttabs';
 import {Header} from '../components/Header';
 import axios from 'axios';
 import plus from '../images/plus.png';
-import {GET_ALL_SERVICES, GET_WALLET_BALANCE} from '../utils/endpoints';
-import { useDispatch, useSelector } from 'react-redux';
-import { setWalletBalance } from '../../redux-toolkit/slice';
+import {
+  GET_ALL_SERVICES,
+  GET_NOTIFICATION_TOKEN,
+  GET_WALLET_BALANCE,
+} from '../utils/endpoints';
+import {useDispatch, useSelector} from 'react-redux';
+import {setWalletBalance} from '../../redux-toolkit/slice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const {height, width} = Dimensions.get('screen');
 const Tab = createMaterialTopTabNavigator();
 
 const Home = ({navigation, route}) => {
-  const {walletBalance, userId, accessToken} = useSelector((state: any) => state.auth)
-  const dispatch = useDispatch()
+  const {walletBalance, userId, accessToken} = useSelector(
+    (state: any) => state.auth,
+  );
+  const dispatch = useDispatch();
   useEffect(() => {
     const fetchServices = async () => {
       const res = await axios.get(GET_ALL_SERVICES);
@@ -31,6 +38,7 @@ const Home = ({navigation, route}) => {
 
   useEffect(() => {
     console.log('USERID', userId);
+    NotificationToken()
     if (userId) {
       WalletBalanceAPI();
     }
@@ -58,6 +66,29 @@ const Home = ({navigation, route}) => {
       }
     } catch (error) {
       console.log('ERROR', error);
+    }
+  };
+  const NotificationToken = async () => {
+    let fcmToken = await AsyncStorage.getItem('fcmtoken');
+    let device_id = await AsyncStorage.getItem('device_id');
+    console.log('abhay', fcmToken);
+    const payload = {
+      token: fcmToken,
+      device_id: device_id?.toString(),
+    };
+    try {
+      console.log('NOTIFICATIONs',payload)
+      const res = await axios({
+        method: 'post',
+        url: GET_NOTIFICATION_TOKEN,
+        data: payload,
+      })
+      if(res){
+        console.log('NotificationToken', res.data);
+      }
+      console.log('', res)
+    } catch (err) {
+      console.log('errorToken', err);
     }
   };
 
@@ -110,7 +141,7 @@ function TopBar() {
         tabBarLabelStyle: {
           fontSize: 14,
           textTransform: 'capitalize',
-          fontFamily: 'poppins-regular'
+          fontFamily: 'poppins-regular',
         },
         tabBarContentContainerStyle: {marginVertical: 4},
         swipeEnabled: true,

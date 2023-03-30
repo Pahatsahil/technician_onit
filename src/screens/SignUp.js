@@ -16,7 +16,7 @@ import {
   ActivityIndicator,
   Modal,
 } from 'react-native';
-import {Checkbox} from 'react-native-paper';
+import CheckBox from '@react-native-community/checkbox';
 import text from '../document/Text';
 import {useEffect} from 'react';
 import axios from 'axios';
@@ -25,7 +25,9 @@ import {Picker} from '@react-native-picker/picker';
 import {useRef} from 'react';
 import {getUniqueId} from 'react-native-device-info';
 import {GET_ALL_SERVICES, REGISTER_CENTER_SEND_OTP} from '../utils/endpoints';
-import { COLORS } from '../utils/constants';
+import {COLORS} from '../utils/constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const {width, height} = Dimensions.get('window');
 
 const K_OPTIONS = [
@@ -72,6 +74,7 @@ export default function SignUp({navigation}) {
     const deviceInfo = async () => {
       const deviceID = await getUniqueId();
       setDeviceID(deviceID);
+      AsyncStorage.setItem('device_id', deviceID);
     };
     deviceInfo();
   }, []);
@@ -236,7 +239,7 @@ export default function SignUp({navigation}) {
                 fontFamily: 'poppins-regular',
                 paddingLeft: 11,
                 paddingVertical: 14,
-                color: COLORS.BLACK
+                color: COLORS.BLACK,
               }}>
               {primaryService?.service_name
                 ? primaryService?.service_name.split('-')[0]
@@ -398,14 +401,14 @@ export default function SignUp({navigation}) {
                 marginRight: 10,
                 borderRadius: 4,
                 backgroundColor: 'rgba(0,0,0,.1)',
-              }}>
-              <Checkbox
-                style={styles.checkbox}
-                status={toggleCheckBox ? 'checked' : 'unchecked'}
-                // value={toggleCheckBox}
-                onPress={() => setToggleCheckBox(!toggleCheckBox)}
-              />
-            </View>
+              }}></View>
+            <CheckBox
+              // style={styles.checkbox}
+              // status={toggleCheckBox ? 'checked' : 'unchecked'}
+              value={toggleCheckBox}
+              // color={COLORS.DARK_GREEN}
+              onValueChange={(val) => setToggleCheckBox(val)}
+            />
             <Text
               style={{
                 marginVertical: 4,
@@ -570,7 +573,7 @@ export default function SignUp({navigation}) {
                           fontWeight: 'bold',
                           fontFamily: 'poppins-semibold',
                           padding: 10,
-                          color: COLORS.BLACK
+                          color: COLORS.BLACK,
                         }}
                         //
                       >
