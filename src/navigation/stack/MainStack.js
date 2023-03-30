@@ -17,6 +17,7 @@ import {useSelector} from 'react-redux';
 import OnboardingScreens from '../../screens/onboarding/OnboardingScreens';
 import NewRequestBox from '../../components/NewRequestBox';
 import JobCompleted from '../../screens/requesttabs/JobCompleted';
+import Expenses from '../../screens/bottom/Expenses';
 
 const Stack = createStackNavigator();
 const MainStack = () => {
@@ -29,6 +30,11 @@ const MainStack = () => {
           ? 'Tab'
           : 'Subscription'
       }>
+      <Stack.Screen
+        name="Expenses"
+        component={Expenses}
+        options={{headerShown: false}}
+      />
       <Stack.Screen
         name="Tab"
         component={BottomTabs}

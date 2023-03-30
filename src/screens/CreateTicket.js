@@ -20,6 +20,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import angleLeft from "../images/angleLeft.png";
 import { CREATE_NEW_TICKET, GET_ALL_SERVICES } from "../utils/endpoints";
+import { COLORS } from "../utils/constants";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -157,6 +158,7 @@ export const CreateTicket = ({ navigation }) => {
                         fontWeight: "bold",
                         fontFamily: "poppins-semibold",
                         padding: 10,
+                        color: COLORS.BLACK
                       }}
                     >
                       {item.service_name}

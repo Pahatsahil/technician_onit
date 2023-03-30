@@ -37,6 +37,7 @@ import {
   TECHNICIAN_PAN_CARD,
   TECHNICIAN_PROFILE_PICTURE,
 } from '../utils/endpoints';
+import DateTimePicker from 'react-native-modal-datetime-picker';
 LogBox.ignoreLogs(['VirtualizedLists']);
 
 const {width, height} = Dimensions.get('window');
@@ -719,7 +720,7 @@ export const AddTechnician = ({navigation}) => {
                         }}>
                         {value ? moment(value).format('LL') : 'Date of Birth'}
                       </Text>
-                      <DatePicker
+                      {/* <DatePicker
                         modal
                         mode="date"
                         format="YYYY-MM-DD"
@@ -734,7 +735,20 @@ export const AddTechnician = ({navigation}) => {
                           setOpen(false);
                         }}
                         textColor="#00796A"
-                      />
+                      /> */}
+                      <DateTimePicker
+                        isVisible={open}
+                        mode="date"
+                        onConfirm={date => {
+                          setOpen(false);
+                          onChange(date);
+                        }}
+                        onCancel={() => {
+                          setOpen(false);
+                        }}
+                        maximumDate={moment().subtract(18, 'years')._d}
+                        date={value || moment().subtract(18, 'years')._d}
+                      />                      
                     </TouchableOpacity>
                   )}
                   name="dob"

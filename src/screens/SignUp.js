@@ -26,6 +26,7 @@ import {useRef} from 'react';
 import {getUniqueId} from 'react-native-device-info';
 import {GET_ALL_SERVICES, REGISTER_CENTER_SEND_OTP} from '../utils/endpoints';
 import { COLORS } from '../utils/constants';
+import CheckBox from '@react-native-community/checkbox';
 const {width, height} = Dimensions.get('window');
 
 const K_OPTIONS = [
@@ -399,11 +400,11 @@ export default function SignUp({navigation}) {
                 borderRadius: 4,
                 backgroundColor: 'rgba(0,0,0,.1)',
               }}>
-              <Checkbox
+              <CheckBox
                 style={styles.checkbox}
-                status={toggleCheckBox ? 'checked' : 'unchecked'}
+                value={toggleCheckBox}
                 // value={toggleCheckBox}
-                onPress={() => setToggleCheckBox(!toggleCheckBox)}
+                onValueChange={(val) => setToggleCheckBox(val)}
               />
             </View>
             <Text

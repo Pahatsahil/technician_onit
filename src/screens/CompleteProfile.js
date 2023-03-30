@@ -39,6 +39,7 @@ import {
 } from '../utils/endpoints';
 // import DatePicker from 'react-native-datepicker';
 import {Picker} from '@react-native-picker/picker';
+import { COLORS } from '../utils/constants';
 LogBox.ignoreLogs(['VirtualizedLists']);
 
 const {width, height} = Dimensions.get('window');
@@ -324,6 +325,7 @@ export default function GenerateQR({navigation}) {
                         fontWeight: 'bold',
                         fontFamily: 'poppins-semibold',
                         padding: 10,
+                        color: COLORS.BLACK
                       }}
                       //
                     >
@@ -471,7 +473,7 @@ export default function GenerateQR({navigation}) {
                         onCancel={() => {
                           setOpen(false);
                         }}
-                        minimumDate={moment().subtract(18, 'years')._d}
+                        maximumDate={moment().subtract(18, 'years')._d}
                         date={value || moment().subtract(18, 'years')._d}
                       />
                       {/* <DatePicker

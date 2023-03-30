@@ -591,6 +591,7 @@ export default function ReviewScreen({navigation, route}) {
                     <TextInput
                       style={{
                         width: '80%',
+                        color: COLORS.BLACK
                       }}
                       onBlur={onBlur}
                       placeholder=""

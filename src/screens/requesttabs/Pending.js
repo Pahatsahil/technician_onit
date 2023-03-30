@@ -75,7 +75,7 @@ export default function Pending() {
         ToastAndroid.show('Time updated successfully!', ToastAndroid.LONG);
       })
       .catch(error => {
-        console.log(error?.response?.data?.message);
+        console.log("TICKET ERROR",error?.response?.data?.message);
         ToastAndroid.show('Something went wrong!', ToastAndroid.LONG);
       });
   };
@@ -96,12 +96,12 @@ export default function Pending() {
       data: payload,
     })
       .then(res => {
-        console.log(res)
+        console.log("TICKET",res)
         fetchTickets();
         ToastAndroid.show('Work Started!', ToastAndroid.LONG);
       })
       .catch(error => {
-        console.log(error?.response?.data?.message);
+        console.log("TICKET ER",error?.response?.data?.message);
         ToastAndroid.show('Something went wrong!', ToastAndroid.LONG);
       });
   };
@@ -145,7 +145,7 @@ export default function Pending() {
         setAllTechnicianCenter(res?.data?.data);
       });
     } catch (err) {
-      console.log(err);
+      console.log("TECH",err);
     }
     setLoader(false);
   };
