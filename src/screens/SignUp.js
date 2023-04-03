@@ -186,7 +186,7 @@ export default function SignUp({navigation}) {
 
           <Controller
             control={control}
-            rules={{required: true, pattern: /^[A-Z]+$/}}
+            rules={{required: true, pattern: /^[A-Z\s]+$/}}
             render={({field: {onChange, onBlur, value}}) => (
               <TextInput
                 style={styles.input}
@@ -398,7 +398,7 @@ export default function SignUp({navigation}) {
               style={{
                 marginRight: 10,
                 borderRadius: 4,
-                backgroundColor: 'rgba(0,0,0,.1)',
+                // backgroundColor: 'rgba(0,0,0,.1)',
               }}>
               <CheckBox
                 style={styles.checkbox}
