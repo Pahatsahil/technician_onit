@@ -38,6 +38,7 @@ import share from '../images/share.png';
 import {
   AADHAR_BACK_IMAGE,
   AADHAR_FRONT_IMAGE,
+  GET_NOTIFICATION_TOKEN,
   GET_USER_DETAILS,
   JOINING_BONUS,
   TECHNICIAN_PAN_CARD,
@@ -46,6 +47,7 @@ import {
 import {Picker} from '@react-native-picker/picker';
 import QRCode from 'react-native-qrcode-svg';
 import {COLORS} from '../utils/constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const {width, height} = Dimensions.get('window');
 export default function GenerateQR({navigation, route}) {
@@ -79,7 +81,33 @@ export default function GenerateQR({navigation, route}) {
     state => state.auth,
   );
   const QRID = route?.params?.QRID;
+  useEffect(() => {
+    NotificationToken();
+  }, []);
 
+  const NotificationToken = async () => {
+    let fcmToken = await AsyncStorage.getItem('fcmtoken');
+    let device_id = await AsyncStorage.getItem('device_id');
+    console.log('abhay', fcmToken);
+    const payload = {
+      token: fcmToken,
+      device_id: device_id?.toString(),
+    };
+    try {
+      console.log('NOTIFICATIONs', payload);
+      const res = await axios({
+        method: 'post',
+        url: GET_NOTIFICATION_TOKEN,
+        data: payload,
+      });
+      if (res) {
+        console.log('NotificationToken', res.data);
+      }
+      console.log('', res);
+    } catch (err) {
+      console.log('errorToken', err);
+    }
+  };
   useEffect(() => {
     axios({
       method: 'get',
@@ -89,7 +117,7 @@ export default function GenerateQR({navigation, route}) {
         'x-access-token': accessToken,
       },
     }).then(res => {
-      console.log("user_details",res?.data?.data);
+      console.log('user_details', res?.data?.data);
     });
   }, []);
 
@@ -221,7 +249,10 @@ export default function GenerateQR({navigation, route}) {
     }
   };
   const joining_bonus = async () => {
-    console.log('PAYLOAD_BONUS',userData?.userDetails?.personal_details?.phone?.mobile_number);
+    console.log(
+      'PAYLOAD_BONUS',
+      userData?.userDetails?.personal_details?.phone?.mobile_number,
+    );
     const payload = {
       userId:
         userData?.userDetails?.personal_details?.phone?.mobile_number?.toString(),
@@ -235,7 +266,11 @@ export default function GenerateQR({navigation, route}) {
         data: payload,
       });
       console.log('JOINIG', res.data);
-      dispatch(setUserId(userData?.userDetails?.personal_details?.phone?.mobile_number))
+      dispatch(
+        setUserId(
+          userData?.userDetails?.personal_details?.phone?.mobile_number,
+        ),
+      );
       setBonusModal(true);
     } catch (error) {
       console.log('EROR', error?.response?.data?.message);

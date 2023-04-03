@@ -38,7 +38,6 @@ const Home = ({navigation, route}) => {
 
   useEffect(() => {
     console.log('USERID', userId);
-    NotificationToken()
     if (userId) {
       WalletBalanceAPI();
     }
@@ -66,29 +65,6 @@ const Home = ({navigation, route}) => {
       }
     } catch (error) {
       console.log('ERROR', error);
-    }
-  };
-  const NotificationToken = async () => {
-    let fcmToken = await AsyncStorage.getItem('fcmtoken');
-    let device_id = await AsyncStorage.getItem('device_id');
-    console.log('abhay', fcmToken);
-    const payload = {
-      token: fcmToken,
-      device_id: device_id?.toString(),
-    };
-    try {
-      console.log('NOTIFICATIONs',payload)
-      const res = await axios({
-        method: 'post',
-        url: GET_NOTIFICATION_TOKEN,
-        data: payload,
-      })
-      if(res){
-        console.log('NotificationToken', res.data);
-      }
-      console.log('', res)
-    } catch (err) {
-      console.log('errorToken', err);
     }
   };
 
