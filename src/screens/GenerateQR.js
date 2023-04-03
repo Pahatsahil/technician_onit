@@ -878,7 +878,7 @@ export default function GenerateQR({ navigation, route }) {
                 </TouchableOpacity>
               </View>
               <View>
-                <Text style={styles.headline}>UPI ID</Text>
+                <Text style={styles.headline}>UPI ID (Not Mandatory)</Text>
                 <Controller
                   control={control}
                   render={({ field: { onChange, onBlur, value } }) => (
@@ -909,7 +909,7 @@ export default function GenerateQR({ navigation, route }) {
                 )}
               </View>
               <View>
-                <Text style={styles.headline}>GST Number</Text>
+                <Text style={styles.headline}>GST Number (Not Mandatory)</Text>
                 <Controller
                   control={control}
                   render={({ field: { onChange, onBlur, value } }) => (

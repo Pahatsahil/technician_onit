@@ -403,6 +403,7 @@ export default function SignUp({navigation}) {
               <CheckBox
                 style={styles.checkbox}
                 value={toggleCheckBox}
+                tintColor={COLORS.BLACK}
                 // value={toggleCheckBox}
                 onValueChange={(val) => setToggleCheckBox(val)}
               />
