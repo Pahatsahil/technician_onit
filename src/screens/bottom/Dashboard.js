@@ -32,7 +32,7 @@ export default function Dashboard({navigation}) {
     const fetchAvailableOpportunity = async () => {
       const res = await axios.get('https://api.onit.services/technicianApp/get-opportunity-in-your-area');
       setAvailableServices(res?.data?.data?.totalData);
-      console.log("DATAs", res.data.data)
+      console.log("DATAs", JSON.stringify(res?.data?.data?.totalData[1]?._id))
     };
     fetchAvailableOpportunity();
     console.log("DATA", availableServices)

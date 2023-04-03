@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 import Second from "../../images/second.png";
-import Logo from "../../images/logo1.png";
+import Logo from "../../images/lo.png";
 
 const { height, width } = Dimensions.get("screen");
 
@@ -22,11 +22,11 @@ const Screen2 = () => (
     <Image
       source={Logo}
       style={{
-        height: height * 0.1,
+        height: height * 0.23,
         width: width * 0.5,
         resizeMode: "contain",
         position: "absolute",
-        top: "24%"
+        top: "20%"
       }}
     />
     <View
