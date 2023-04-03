@@ -13,6 +13,7 @@ import {Header} from '../components/Header';
 import axios from 'axios';
 import plus from '../images/plus.png';
 import {GET_ALL_SERVICES} from '../utils/endpoints';
+import {useSelector} from 'react-redux';
 
 const {height, width} = Dimensions.get('screen');
 const Tab = createMaterialTopTabNavigator();
@@ -63,6 +64,8 @@ const Home = ({navigation, route}) => {
 };
 
 function TopBar() {
+  const {userData} = useSelector(state => state.auth);
+  console.log('reds', userData?.userDetails?.is_technician_admin);
   return (
     <Tab.Navigator
       initialRouteName="NewRequest"
@@ -74,16 +77,18 @@ function TopBar() {
         tabBarLabelStyle: {
           fontSize: 14,
           textTransform: 'capitalize',
-          fontFamily: 'poppins-regular'
+          fontFamily: 'poppins-regular',
         },
         tabBarContentContainerStyle: {marginVertical: 4},
         swipeEnabled: true,
       }}>
-      <Tab.Screen
-        name="NewRequest"
-        component={NewRequest}
-        options={{tabBarLabel: 'New Request'}}
-      />
+      {userData?.userDetails?.is_technician_admin && (
+        <Tab.Screen
+          name="NewRequest"
+          component={NewRequest}
+          options={{tabBarLabel: 'New Request'}}
+        />
+      )}
       <Tab.Screen
         name="Pending"
         component={Pending}
