@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 
 import Third from "../../images/third.png";
-import Logo from "../../images/logo1.png";
+import Logo from "../../images/lo.png";
 import { useDispatch } from 'react-redux';
 import { setOnbaordingShown } from '../../../redux-toolkit/slice';
 
@@ -47,9 +47,9 @@ const Screen1 = ({ navigation }) => {
         <Image
           source={Logo}
           style={{
-            height: 100,
-            width: 180,
-            resizeMode: "contain",
+            height:100,
+            width:180,
+         
           }}
         />
         <TouchableOpacity

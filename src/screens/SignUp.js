@@ -406,7 +406,11 @@ export default function SignUp({navigation}) {
                 tintColor={COLORS.BLACK}
                 // value={toggleCheckBox}
                 onValueChange={(val) => setToggleCheckBox(val)}
+                // status
+                
+                
               />
+              {/* <Text>{toggleCheckBox ? 'Checked' : 'Unchecked'}</Text> */}
             </View>
             <Text
               style={{
@@ -643,7 +647,8 @@ const styles = StyleSheet.create({
   checkbox: {
     height: 30,
     width: 30,
-    marginRight: 2,
+    // marginRight: 1,
+    backgroundColor:"white"
   },
   modelContainer: {
     height: height,

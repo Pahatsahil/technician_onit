@@ -10,7 +10,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import First from "../../images/first.png";
-import Logo from "../../images/logo1.png";
+import Logo from "../../images/lo.png";
 
 const { height, width } = Dimensions.get("screen");
 
@@ -22,8 +22,8 @@ const Screen1 = () => (
     <Image
       source={Logo}
       style={{
-        height: height * 0.1,
-        width: width * 0.5,
+        height: height * 0.23,
+        width: width * 0.6,
         resizeMode: "contain",
         position:"absolute",
         top:"24%"
