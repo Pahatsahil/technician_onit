@@ -953,7 +953,7 @@ export const AddTechnician = ({navigation}) => {
               </View>
             </View>
             {/* Reference person details (if any) */}
-            <Text style={styles.headline}>Reference person deatils</Text>
+            <Text style={styles.headline}>Reference person deatils (mandatory)</Text>
             <View>
               <View style={styles.halfview}>
                 <View style={{width: '48%'}}>
@@ -994,6 +994,7 @@ export const AddTechnician = ({navigation}) => {
                         onChangeText={value => onChange(value)}
                         value={value}
                         autoCapitalize="characters"
+                        keyboardType='numeric'
                       />
                     )}
                     name="reference_person_mobile"
