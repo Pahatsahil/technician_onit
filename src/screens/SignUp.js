@@ -319,7 +319,7 @@ export default function SignUp({navigation}) {
                   marginBottom: 10,
                   width: '100%',
                 }}
-                textInputProps={{placeholderTextColor: 'grey'}}
+                textInputProps={{placeholderTextColor: 'grey', maxLength: 12}}
               />
             )}
             name="mobile_number"

@@ -72,6 +72,9 @@ export const AddTechnician = ({navigation}) => {
   const [s3panCard, sets3PanCard] = useState();
   const [turnover, setturnover] = useState(0);
   const [panVisible, setPanVisible] = useState(false);
+  const [pin, setPin] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
   const primaryPhoneInputRef = useRef();
   const alternatePhoneInputRef = useRef();
   // console.log(userData?.userDetails?.services?.primary_services?._id)
@@ -144,7 +147,6 @@ export const AddTechnician = ({navigation}) => {
       );
     }
   };
-
   useEffect(() => {
     const fetchServices = async () => {
       const res = await axios.get(GET_ALL_SERVICES);
@@ -152,7 +154,19 @@ export const AddTechnician = ({navigation}) => {
     };
     fetchServices();
   }, []);
-
+  const GET_CITY = async () => {
+    console.log(pin)
+    try {
+      const res = await axios({
+        url: `https://api.postalpincode.in/pincode/${pin}`
+      })
+      setCity(res.data[0]?.PostOffice[0]?.District)
+      setState(res.data[0]?.PostOffice[0]?.State)
+      console.log('CITYs', city)
+    } catch (error) {
+      console.log('GERROR', error)
+    }
+  }
   const uploadImageForPanCard = (uploadType, imageType) => {
     if (uploadType === 'camera') {
       ImagePicker.openCamera({
@@ -802,75 +816,101 @@ export const AddTechnician = ({navigation}) => {
                   </Text>
                 )}
               </View>
-              <View style={styles.halfview}>
-                <View style={{width: '48%'}}>
-                  <Controller
-                    control={control}
-                    render={({field: {onChange, onBlur, value}}) => (
-                      <TextInput
-                        placeholderTextColor={COLORS.LIGHT_BORDER}
-                        style={styles.halfinput}
-                        onBlur={onBlur}
-                        placeholder="City"
-                        onChangeText={value => onChange(value)}
-                        value={value}
-                        autoCapitalize="characters"
-                        maxLength={50}
-                      />
+                <View style={styles.halfview}>
+                  <View style={{width: '48%'}}>
+                    <Controller
+                      control={control}
+                      render={({field: {onChange, onBlur, value}}) => {
+                        if(value.length === 6){
+                          setPin(value)
+                          GET_CITY()
+                        }
+                        return(
+                        <TextInput
+                          style={{
+                            borderRadius: 4,
+                            marginTop: 10,
+                            height: 60,
+                            borderWidth: 1,
+                            borderColor: '#00796A',
+                            fontFamily: 'poppins-medium',
+                            fontSize: 16,
+                            color: '#000',
+                          }}
+                          onBlur={onBlur}
+                          placeholder="Area Pincode"
+                          onChangeText={value => onChange(value)}
+                          value={value}
+                          keyboardType="numeric"
+                        />
+                      )}}
+                      name="service_area_secondary_pincode"
+                      defaultValue=""
+                      rules={{
+                        required: true,
+                        minLength: 6,
+                        maxLength: 6,
+                        pattern: {
+                          value: /^[1-9]{1}[0-9]{2}[0-9]{3}$/,
+                          message: 'Please enter a number',
+                        },
+                      }}
+                    />
+                    {errors.service_area_secondary_pincode?.type ===
+                      'pattern' && (
+                      <Text style={{color: 'red'}}>Enter valid PIN code.</Text>
                     )}
-                    name="city"
-                    defaultValue=""
-                    rules={{required: true}}
-                  />
-                  {errors.city && (
-                    <Text style={{color: 'red'}}>City is required!</Text>
-                  )}
-                </View>
-                <View style={{width: '48%'}}>
-                  <Controller
-                    control={control}
-                    render={({field: {onChange, onBlur, value}}) => (
-                      <TextInput
-                        placeholderTextColor={COLORS.LIGHT_BORDER}
-                        style={styles.halfinput}
-                        onBlur={onBlur}
-                        placeholder="Area Pincode"
-                        onChangeText={value => onChange(value)}
-                        value={value}
-                        keyboardType="numeric"
-                        autoCapitalize="characters"
-                      />
+                    {errors.service_area_secondary_pincode?.type ===
+                      'required' && (
+                      <Text style={{color: 'red'}}>Pincode is required.</Text>
                     )}
-                    name="service_area_secondary_pincode"
-                    defaultValue=""
-                    rules={{
-                      required: true,
-                      minLength: 6,
-                      maxLength: 6,
-                      pattern: {
-                        value: /^[1-9]{1}[0-9]{2}[0-9]{3}$/,
-                        message: 'Please enter a number',
-                      },
-                    }}
-                  />
-                  {errors.service_area_secondary_pincode?.type ===
-                    'pattern' && (
-                    <Text style={{color: 'red'}}>Enter valid PIN code.</Text>
-                  )}
-                  {errors.service_area_secondary_pincode?.type ===
-                    'required' && (
-                    <Text style={{color: 'red'}}>Pincode is required.</Text>
-                  )}
-                  {errors.service_area_secondary_pincode?.type ===
-                    'minLength' && (
-                    <Text style={{color: 'red'}}>Enter valid PIN code.</Text>
-                  )}
-                  {errors.service_area_secondary_pincode?.type ===
-                    'maxLength' && (
-                    <Text style={{color: 'red'}}>Enter valid PIN code.</Text>
-                  )}
+                    {errors.service_area_secondary_pincode?.type ===
+                      'minLength' && (
+                      <Text style={{color: 'red'}}>Enter valid PIN code.</Text>
+                    )}
+                    {errors.service_area_secondary_pincode?.type ===
+                      'maxLength' && (
+                      <Text style={{color: 'red'}}>Enter valid PIN code.</Text>
+                    )}
+                  </View>
+                  <View style={{width: '48%'}}>
+                    <Controller
+                      control={control}
+                      render={({field: {onChange, onBlur, value}}) => {
+                        if(city.length !== 0){
+                          value = city
+                          console.log(value)
+                        }
+                        return(
+                        <TextInput
+                          style={{
+                            borderRadius: 4,
+                            marginTop: 10,
+                            height: 60,
+                            borderWidth: 1,
+                            borderColor: '#00796A',
+                            fontFamily: 'poppins-medium',
+                            fontSize: 16,
+                            color: '#000',
+                          }}
+                          onBlur={onBlur}
+                          placeholder="City"
+                          onChangeText={value => onChange(value)}
+                          value={value}
+                          autoCapitalize="characters"
+                          maxLength={50}
+                          editable={city.length == 0 ? false : true}
+                        />
+                      )}}
+                      name="city"
+                      defaultValue=""
+                      rules={{required: city.length == 0 ? false : true}}
+                    />
+                    {(errors.city) && (
+                      <Text style={{color: 'red'}}>City is required!</Text>
+                    )}
+                  </View>
                 </View>
-              </View>
             </View>
             {/* Information */}
             <View>
