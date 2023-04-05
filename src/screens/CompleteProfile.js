@@ -67,7 +67,23 @@ export default function GenerateQR({navigation}) {
   const [certificate, setCertificate] = useState();
   const [brand, setBrand] = useState();
   const [s3ProfileImage, setS3ProfileImage] = useState();
+  const [pin, setPin] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
 
+  const GET_CITY = async () => {
+    console.log(pin)
+    try {
+      const res = await axios({
+        url: `https://api.postalpincode.in/pincode/${pin}`
+      })
+      setCity(res.data[0]?.PostOffice[0]?.District)
+      setState(res.data[0]?.PostOffice[0]?.State)
+      console.log('CITYs', city)
+    } catch (error) {
+      console.log('GERROR', error)
+    }
+  }
   function deltaDate(input, days, months, years) {
     return new Date(
       input.getFullYear() + years,
@@ -596,38 +612,12 @@ export default function GenerateQR({navigation}) {
                   <View style={{width: '48%'}}>
                     <Controller
                       control={control}
-                      render={({field: {onChange, onBlur, value}}) => (
-                        <TextInput
-                          style={{
-                            borderRadius: 4,
-                            marginTop: 10,
-                            height: 60,
-                            borderWidth: 1,
-                            borderColor: '#00796A',
-                            fontFamily: 'poppins-medium',
-                            fontSize: 16,
-                            color: '#000',
-                          }}
-                          onBlur={onBlur}
-                          placeholder="City"
-                          onChangeText={value => onChange(value)}
-                          value={value}
-                          autoCapitalize="characters"
-                          maxLength={50}
-                        />
-                      )}
-                      name="city"
-                      defaultValue=""
-                      rules={{required: true}}
-                    />
-                    {errors.city && (
-                      <Text style={{color: 'red'}}>City is required!</Text>
-                    )}
-                  </View>
-                  <View style={{width: '48%'}}>
-                    <Controller
-                      control={control}
-                      render={({field: {onChange, onBlur, value}}) => (
+                      render={({field: {onChange, onBlur, value}}) => {
+                        if(value.length === 6){
+                          setPin(value)
+                          GET_CITY()
+                        }
+                        return(
                         <TextInput
                           style={{
                             borderRadius: 4,
@@ -645,7 +635,7 @@ export default function GenerateQR({navigation}) {
                           value={value}
                           keyboardType="numeric"
                         />
-                      )}
+                      )}}
                       name="service_area_secondary_pincode"
                       defaultValue=""
                       rules={{
@@ -673,6 +663,43 @@ export default function GenerateQR({navigation}) {
                     {errors.service_area_secondary_pincode?.type ===
                       'maxLength' && (
                       <Text style={{color: 'red'}}>Enter valid PIN code.</Text>
+                    )}
+                  </View>
+                  <View style={{width: '48%'}}>
+                    <Controller
+                      control={control}
+                      render={({field: {onChange, onBlur, value}}) => {
+                        if(city.length !== 0){
+                          value = city
+                          console.log(value)
+                        }
+                        return(
+                        <TextInput
+                          style={{
+                            borderRadius: 4,
+                            marginTop: 10,
+                            height: 60,
+                            borderWidth: 1,
+                            borderColor: '#00796A',
+                            fontFamily: 'poppins-medium',
+                            fontSize: 16,
+                            color: '#000',
+                          }}
+                          onBlur={onBlur}
+                          placeholder="City"
+                          onChangeText={value => onChange(value)}
+                          value={value}
+                          autoCapitalize="characters"
+                          maxLength={50}
+                          editable={city.length == 0 ? false : true}
+                        />
+                      )}}
+                      name="city"
+                      defaultValue=""
+                      rules={{required: city.length == 0 ? false : true}}
+                    />
+                    {(errors.city) && (
+                      <Text style={{color: 'red'}}>City is required!</Text>
                     )}
                   </View>
                 </View>
