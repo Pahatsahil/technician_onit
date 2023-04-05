@@ -14,7 +14,8 @@ const persistConfig = {
         "userId",
         "accessToken",
         "profileImageUrl",
-        "userData"
+        "userData",
+        "walletBlanace"
     ]
 };
 export const store = configureStore({

@@ -16,7 +16,7 @@ import {
   ActivityIndicator,
   Modal,
 } from 'react-native';
-import {Checkbox} from 'react-native-paper';
+import CheckBox from '@react-native-community/checkbox';
 import text from '../document/Text';
 import {useEffect} from 'react';
 import axios from 'axios';
@@ -73,6 +73,7 @@ export default function SignUp({navigation}) {
     const deviceInfo = async () => {
       const deviceID = await getUniqueId();
       setDeviceID(deviceID);
+      AsyncStorage.setItem('device_id', deviceID);
     };
     deviceInfo();
   }, []);
@@ -237,7 +238,7 @@ export default function SignUp({navigation}) {
                 fontFamily: 'poppins-regular',
                 paddingLeft: 11,
                 paddingVertical: 14,
-                color: COLORS.BLACK
+                color: COLORS.BLACK,
               }}>
               {primaryService?.service_name
                 ? primaryService?.service_name.split('-')[0]
@@ -576,7 +577,7 @@ export default function SignUp({navigation}) {
                           fontWeight: 'bold',
                           fontFamily: 'poppins-semibold',
                           padding: 10,
-                          color: COLORS.BLACK
+                          color: COLORS.BLACK,
                         }}
                         //
                       >

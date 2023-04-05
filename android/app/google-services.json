@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "663738502464",
+    "project_id": "tech-onit",
+    "storage_bucket": "tech-onit.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:663738502464:android:d6b4df5c2697b6b744bea5",
+        "android_client_info": {
+          "package_name": "com.onit.partners"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "663738502464-n2kq5i4pan8ke9063lprq5bf4bcri9b1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.onit.partners",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "663738502464-r9m7nv9u7474dc3ba7bphf8vket653kf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDj9lMQGrDLAIChWOe_BvQ8WKS5G4WiBMQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "663738502464-r9m7nv9u7474dc3ba7bphf8vket653kf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

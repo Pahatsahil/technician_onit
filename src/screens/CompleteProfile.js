@@ -245,6 +245,8 @@ export default function GenerateQR({navigation}) {
   const onsubmit = data => {
     data.dob = moment(data?.dob).format('LL');
     if (s3ProfileImage) {
+      console.log('cpROFILE', userData?.populatedTechnicianDetails?.center_id[0]?.qr_details
+      ?.qr_id)
       if (s3Certificate) {
         navigation.navigate('GenerateQR', {
           data,
@@ -343,7 +345,6 @@ export default function GenerateQR({navigation}) {
                         padding: 10,
                         color: COLORS.BLACK
                       }}
-                      //
                     >
                       {item.service_name}
                     </Text>
@@ -479,7 +480,7 @@ export default function GenerateQR({navigation}) {
                         }}>
                         {value ? moment(value).format('LL') : 'Date of Birth'}
                       </Text>
-                      <DateTimePicker
+                      <DateTimePicker 
                         isVisible={open}
                         mode="date"
                         onConfirm={date => {
@@ -729,8 +730,8 @@ export default function GenerateQR({navigation}) {
                     rules={{
                       pattern: {
                         value:
-                          // /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-                          /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                          /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+                          // /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
                         message: 'Please enter your email address',
                       },
                     }}
@@ -920,6 +921,7 @@ export default function GenerateQR({navigation}) {
                         fontSize: 16,
                         fontWeight: 'bold',
                         fontFamily: 'poppins-semibold',
+                        color: COLORS.BLACK
                       }}>
                       {secondaryService?.service_name
                         ? secondaryService?.service_name.split('-')[0]

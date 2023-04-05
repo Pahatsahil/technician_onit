@@ -1,3 +1,4 @@
+
 import React, {useEffect} from 'react';
 import {
   View,
@@ -64,7 +65,7 @@ const Home = ({navigation, route}) => {
 };
 
 function TopBar() {
-  const {userData} = useSelector(state => state.auth);
+  const {userData} = useSelector((state: any) => state.auth);
   console.log('reds', userData?.userDetails?.is_technician_admin);
   return (
     <Tab.Navigator
