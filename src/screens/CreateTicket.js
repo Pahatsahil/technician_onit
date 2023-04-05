@@ -514,6 +514,7 @@ export const CreateTicket = ({navigation}) => {
                   fontSize: 16,
                   fontWeight: 'bold',
                   fontFamily: 'poppins-semibold',
+                  color:"black"
                 }}>
                 {serviceProvided?.service_name
                   ? serviceProvided?.service_name.split('-')[0]
