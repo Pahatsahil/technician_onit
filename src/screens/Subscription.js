@@ -41,6 +41,7 @@ const Subscription = () => {
         },
       })
         .then((res) => {
+          console.log("ORDER ID", res?.data?.data?.payment_response)
           handlePaymentRequest(res?.data?.data?.payment_response);
           setVisible(false);
         })

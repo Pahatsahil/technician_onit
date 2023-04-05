@@ -67,6 +67,7 @@ export const BottomTabs = () => {
       })}>
       <Tab.Screen name="Dashboard" component={Dashboard} />
       <Tab.Screen name="Accounts" component={Earning} />
+      {/* <Tab.Screen name="Accounts" component={Recharge} /> */}
       <Tab.Screen name="Booking" component={Home} />
       {/* <Tab.Screen name='Chat' component={Chat} /> */}
       <Tab.Screen name="Profile" component={Profile} />
