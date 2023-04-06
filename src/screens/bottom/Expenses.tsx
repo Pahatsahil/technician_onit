@@ -593,8 +593,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-<<<<<<< HEAD
 });
-=======
-});
->>>>>>> 7e7b8fb8b2a602f25b9ca85e9c99f516a4569163

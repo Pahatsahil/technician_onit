@@ -34,7 +34,7 @@ const Earning = (props: any) => {
 // =======
 const Earning = ({navigation}) => {
   const dispatch = useDispatch();
-  const {accessToken, userData, userId, walletBalance} = useSelector(
+  const {accessToken, userData, userI} = useSelector(
     (state: any) => state.auth,
   );
 // >>>>>>> 7e7b8fb8b2a602f25b9ca85e9c99f516a4569163
@@ -51,7 +51,6 @@ const Earning = ({navigation}) => {
   const [fromDateModal, setFromDateModal] = useState();
   const [toDate, setToDate] = useState();
 <<<<<<< HEAD
-  const [walletBalance, setWalletBalance] = useState(0);
 
 =======
   const [walletModal, setWalletModal] = useState(false);
@@ -68,11 +67,7 @@ const Earning = ({navigation}) => {
           'x-access-token': accessToken,
         },
       }).then(res => {
-<<<<<<< HEAD
         console.log('ORDER', res.data.data.paymentDetails);
-=======
-        console.log('Order Data', res.data.data.paymentDetails);
->>>>>>> 7e7b8fb8b2a602f25b9ca85e9c99f516a4569163
         setOrderDetailsList(res.data.data.paymentDetails);
         setLoader(false);
       });
