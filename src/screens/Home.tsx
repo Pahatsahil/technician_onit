@@ -13,9 +13,6 @@ import {Header} from '../components/Header';
 import axios from 'axios';
 import plus from '../images/plus.png';
 <<<<<<< HEAD:src/screens/Home.js
-import {GET_ALL_SERVICES} from '../utils/endpoints';
-import {useSelector} from 'react-redux';
-=======
 import {
   GET_ALL_SERVICES,
   GET_NOTIFICATION_TOKEN,
@@ -24,6 +21,7 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import {setWalletBalance} from '../../redux-toolkit/slice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+=======
 >>>>>>> 7e7b8fb8b2a602f25b9ca85e9c99f516a4569163:src/screens/Home.tsx
 
 const {height, width} = Dimensions.get('screen');
