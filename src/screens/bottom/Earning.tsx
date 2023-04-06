@@ -28,10 +28,10 @@ import {RAZOR_TEST_KEY, RECHARGE_WALLET} from '../../utils/endpoints';
 const {width, height} = Dimensions.get('screen');
 
 // <<<<<<< HEAD
-const Earning = (props: any) => {
-  const {navigation} = props;
-  const {accessToken} = useSelector((state: any) => state.auth);
-// =======
+// const Earning = (props: any) => {
+//   const {navigation} = props;
+//   const {accessToken} = useSelector((state: any) => state.auth);
+// // =======
 const Earning = ({navigation}) => {
   const dispatch = useDispatch();
   const {accessToken, userData, userI} = useSelector(
@@ -50,13 +50,9 @@ const Earning = ({navigation}) => {
   const [fromDate, setFromDate] = useState<Date>();
   const [fromDateModal, setFromDateModal] = useState();
   const [toDate, setToDate] = useState();
-<<<<<<< HEAD
-
-=======
   const [walletModal, setWalletModal] = useState(false);
   const [rechargeAmt, setRechargeAmt] = useState('');
   let CustomDateis = fromDate + ' - ' + toDate;
->>>>>>> 7e7b8fb8b2a602f25b9ca85e9c99f516a4569163
   const getOrderList = async () => {
     setLoader(true);
     try {
@@ -268,19 +264,12 @@ const Earning = ({navigation}) => {
             }}>
             <Text
               style={{
-<<<<<<< HEAD
-                color: '#FFFFFF',
-                fontSize: 15,
-                fontWeight: '600',
-                letterSpacing: 0.5,
-=======
                 backgroundColor: '#00796A',
                 width: width * 0.4,
                 height: 40,
                 borderRadius: 10,
                 justifyContent: 'center',
                 alignItems: 'center',
->>>>>>> 7e7b8fb8b2a602f25b9ca85e9c99f516a4569163
               }}>
               Adjust for Recharge
             </Text>
@@ -312,87 +301,6 @@ const Earning = ({navigation}) => {
     },
   ];
 
-<<<<<<< HEAD
-  const CustomDate = () => {
-    return (
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={customDateModal}
-        onRequestClose={() => {
-          setCustomDateModal(!customDateModal);
-        }}>
-        <View style={styles.modalBlack}>
-          <View style={styles.modalView5}>
-            <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <View style={{alignItems: 'center', marginBottom: 15}}>
-                <Text
-                  style={{color: '#17523C', fontSize: 14, paddingBottom: 10}}>
-                  From
-                </Text>
-                <TextInput
-                  style={{
-                    borderRadius: 10,
-                    borderColor: COLORS.DARK_GREEN,
-                    borderWidth: 1,
-                    width: width * 0.35,
-                  }}
-                  onChangeText={(text: any) => setFromDate(text)}
-                  value={fromDate}
-                />
-              </View>
-              <View style={{alignItems: 'center', marginBottom: 15}}>
-                <Text
-                  style={{color: '#17523C', fontSize: 14, paddingBottom: 10}}>
-                  To
-                </Text>
-                <TextInput
-                  style={{
-                    borderRadius: 10,
-                    borderColor: COLORS.DARK_GREEN,
-                    borderWidth: 1,
-                    width: width * 0.35,
-                  }}
-                  onChangeText={(text: any) => setToDate(text)}
-                  value={toDate}
-                />
-              </View>
-            </View>
-            <TouchableOpacity>
-              <View
-                style={{
-                  marginRight: 1,
-                  backgroundColor: '#00796A',
-                  // width: 300,
-                  // height: 51,
-                  // marginTop: 20,
-                  borderRadius: 10,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  padding: 10,
-                }}>
-                <Text
-                  style={{
-                    color: '#FFFFFF',
-                    fontWeight: '600',
-                    fontSize: 20,
-                    letterSpacing: 1,
-                  }}
-                  onPress={() => {
-                    setCustomDateModal(!customDateModal);
-                    setSelectedDate(fromDate + ' - ' + toDate);
-                  }}>
-                  OK
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
-    );
-  };
-=======
   // const CustomDate = () => {
   //   return (
   //     <Modal
@@ -477,7 +385,6 @@ const Earning = ({navigation}) => {
   //     </Modal>
   //   );
   // };
->>>>>>> 7e7b8fb8b2a602f25b9ca85e9c99f516a4569163
 
   const CalendarModal = () => {
     return (
@@ -1133,403 +1040,399 @@ const Earning = ({navigation}) => {
     );
   };
 
-  const CashRecharge = () => {
-    return (
-      <>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalPink}
-          onRequestClose={() => {
-            Alert.alert('Cash Recharge has been closed.');
-            setDateModal(!modalPink);
-          }}>
-          <View style={{flex: 1}}>
-            <View style={styles.modalView4}>
-              <>
-                <StatusBar
-                  barStyle="dark-content"
-                  hidden={false}
-                  backgroundColor="#F5F5F5"
-                />
+//   const CashRecharge = () => {
+//     return (
+//       <>
+//         <Modal
+//           animationType="slide"
+//           transparent={true}
+//           visible={modalPink}
+//           onRequestClose={() => {
+//             Alert.alert('Cash Recharge has been closed.');
+//             setDateModal(!modalPink);
+//           }}>
+//           <View style={{flex: 1}}>
+//             <View style={styles.modalView4}>
+//               <>
+//                 <StatusBar
+//                   barStyle="dark-content"
+//                   hidden={false}
+//                   backgroundColor="#F5F5F5"
+//                 />
 
-                <View
-                // style={{
-                //   flexDirection: "row",
-                //   backgroundColor: "#fff",
-                //   height: 60,
-                //   marginTop:30
-                // }}
-                >
-                  <Text
-                    style={{
-                      marginTop: 20,
-                      marginLeft: 123,
-                      fontSize: 22,
-                      fontWeight: 'bold',
-                      color: '#000000',
-                    }}>
-                    Cash Recharge
-                  </Text>
-                </View>
+//                 <View
+//                 // style={{
+//                 //   flexDirection: "row",
+//                 //   backgroundColor: "#fff",
+//                 //   height: 60,
+//                 //   marginTop:30
+//                 // }}
+//                 >
+//                   <Text
+//                     style={{
+//                       marginTop: 20,
+//                       marginLeft: 123,
+//                       fontSize: 22,
+//                       fontWeight: 'bold',
+//                       color: '#000000',
+//                     }}>
+//                     Cash Recharge
+//                   </Text>
+//                 </View>
 
-                <Text
-                  style={{
-                    marginLeft: 20,
-                    marginTop: 20,
-                    marginBottom: 0,
-                    fontSize: 15,
-                    fontWeight: '500',
-                  }}>
-                  Pay Using:
-                </Text>
+//                 <Text
+//                   style={{
+//                     marginLeft: 20,
+//                     marginTop: 20,
+//                     marginBottom: 0,
+//                     fontSize: 15,
+//                     fontWeight: '500',
+//                   }}>
+//                   Pay Using:
+//                 </Text>
 
-                {/* for upi ssection */}
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    backgroundColor: '#fff',
-                    height: 60,
-                    marginTop: 15,
-                    marginLeft: 20,
-                    marginRight: 20,
-                    borderRadius: 3,
-                    borderWidth: 1,
-                    borderColor: '#00796A',
-                  }}>
-                  <Image
-                    source={require('../../images/upi2.png')}
-                    style={{
-                      alignItems: 'center',
-                      marginLeft: 5,
-                    }}
-                  />
+//                 {/* for upi ssection */}
+//                 <View
+//                   style={{
+//                     flexDirection: 'row',
+//                     justifyContent: 'center',
+//                     alignItems: 'center',
+//                     backgroundColor: '#fff',
+//                     height: 60,
+//                     marginTop: 15,
+//                     marginLeft: 20,
+//                     marginRight: 20,
+//                     borderRadius: 3,
+//                     borderWidth: 1,
+//                     borderColor: '#00796A',
+//                   }}>
+//                   <Image
+//                     source={require('../../images/upi2.png')}
+//                     style={{
+//                       alignItems: 'center',
+//                       marginLeft: 5,
+//                     }}
+//                   />
 
-                  <Text
-                    style={{
-                      flex: 0.9,
-                      fontWeight: '400',
-                      fontSize: 16,
-                      color: 'black',
-                      marginLeft: 20,
-                    }}>
-                    UPI
-                  </Text>
-                  <Image
-                    source={require('../../images/check.png')}
-                    style={{
-                      justifyContent: 'flex-start',
-                      alignItems: 'flex-start',
-                    }}
-                  />
-                  {/* <Text>hi</Text> */}
-                </View>
+//                   <Text
+//                     style={{
+//                       flex: 0.9,
+//                       fontWeight: '400',
+//                       fontSize: 16,
+//                       color: 'black',
+//                       marginLeft: 20,
+//                     }}>
+//                     UPI
+//                   </Text>
+//                   <Image
+//                     source={require('../../images/check.png')}
+//                     style={{
+//                       justifyContent: 'flex-start',
+//                       alignItems: 'flex-start',
+//                     }}
+//                   />
+//                   {/* <Text>hi</Text> */}
+//                 </View>
 
-                {/* for wallet section */}
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    backgroundColor: '#fff',
-                    height: 60,
-                    marginTop: 15,
-                    marginLeft: 20,
-                    marginRight: 20,
-                    borderRadius: 3,
-                    borderWidth: 1,
-                    borderColor: '#00796A',
-                  }}>
-                  <Image
-                    source={require('../../images/bxs-wallet.png')}
-                    style={{
-                      alignItems: 'center',
-                      marginLeft: 5,
-                    }}
-                  />
-                  <Text
-                    style={{
-                      flex: 0.9,
-                      fontWeight: '400',
-                      fontSize: 16,
-                      color: 'black',
-                      marginLeft: 20,
-                    }}>
-                    Wallet
-                  </Text>
-                  <Text style={{color: 'green', fontSize: 16}}></Text>
-                  <Image
-                    source={require('../../images/check.png')}
-                    style={{
-                      justifyContent: 'flex-start',
-                      alignItems: 'flex-start',
-                    }}
-                  />
-                </View>
+//                 {/* for wallet section */}
+//                 <View
+//                   style={{
+//                     flexDirection: 'row',
+//                     justifyContent: 'center',
+//                     alignItems: 'center',
+//                     backgroundColor: '#fff',
+//                     height: 60,
+//                     marginTop: 15,
+//                     marginLeft: 20,
+//                     marginRight: 20,
+//                     borderRadius: 3,
+//                     borderWidth: 1,
+//                     borderColor: '#00796A',
+//                   }}>
+//                   <Image
+//                     source={require('../../images/bxs-wallet.png')}
+//                     style={{
+//                       alignItems: 'center',
+//                       marginLeft: 5,
+//                     }}
+//                   />
+//                   <Text
+//                     style={{
+//                       flex: 0.9,
+//                       fontWeight: '400',
+//                       fontSize: 16,
+//                       color: 'black',
+//                       marginLeft: 20,
+//                     }}>
+//                     Wallet
+//                   </Text>
+//                   <Text style={{color: 'green', fontSize: 16}}></Text>
+//                   <Image
+//                     source={require('../../images/check.png')}
+//                     style={{
+//                       justifyContent: 'flex-start',
+//                       alignItems: 'flex-start',
+//                     }}
+//                   />
+//                 </View>
 
-                {/*for card section  */}
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    backgroundColor: '#fff',
-                    height: 60,
-                    marginTop: 15,
-                    marginLeft: 20,
-                    marginRight: 20,
-                    borderRadius: 3,
-                    borderWidth: 1,
-                    borderColor: '#00796A',
-                  }}>
-                  <Image
-                    source={require('../../images/card.png')}
-                    style={{
-                      alignItems: 'center',
-                      marginLeft: 4,
-                    }}
-                  />
-                  <Text
-                    style={{
-                      flex: 0.9,
-                      fontWeight: '400',
-                      fontSize: 16,
-                      color: 'black',
-                      marginLeft: 20,
-                    }}>
-                    Credit/Debit card
-                  </Text>
-                  <Image
-                    source={require('../../images/check.png')}
-                    style={{
-                      justifyContent: 'flex-start',
-                      alignItems: 'flex-start',
-                    }}
-                  />
-                  {/* <Text>hi</Text> */}
-                </View>
-                <Text
-                  style={{
-                    marginLeft: 20,
-                    marginTop: 20,
-                    marginBottom: 0,
-                    fontSize: 15,
-                    fontWeight: '500',
-                  }}>
-                  Details:
-                </Text>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    backgroundColor: '#fff',
-                    height: 56,
-                    margin: 16,
-                    marginBottom: 0,
-                    borderRadius: 2,
-                    borderWidth: 1,
-                    borderColor: '#ddd',
-                  }}>
-                  <TextInput
-                    style={{
-                      flex: 1,
-                      fontWeight: '600',
-                      fontSize: 15,
-                      color: 'black',
-                      marginLeft: 15,
-                    }}
-                    placeholder="Card Holder Name "
-                    underlineColorAndroid="transparent"
-                    placeholderTextColor="#737373"
-                  />
-                </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    backgroundColor: '#fff',
-                    height: 56,
-                    margin: 16,
-                    marginBottom: 5,
-                    borderRadius: 2,
-                    borderWidth: 1,
-                    borderColor: '#ddd',
-                  }}>
-                  <TextInput
-                    style={{
-                      flex: 1,
-                      fontWeight: '600',
-                      fontSize: 15,
-                      color: 'black',
-                      marginLeft: 15,
-                    }}
-                    placeholder="Card Number "
-                    underlineColorAndroid="transparent"
-                    placeholderTextColor="#737373"
-                  />
-                </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    width: '96%',
-                  }}>
-                  <TextInput
-                    style={{
-                      flex: 1,
-                      fontWeight: '600',
-                      fontSize: 15,
-                      color: 'black',
-                      borderRadius: 2,
-                      borderWidth: 1,
-                      borderColor: '#ddd',
-                      backgroundColor: '#fff',
-                      marginLeft: 16,
-                      height: 56,
-                      padding: 20,
-                      marginTop: 14,
-                    }}
-                    placeholder="CVV "
-                    underlineColorAndroid="transparent"
-                    placeholderTextColor="#737373"
-                  />
-                  <TextInput
-                    style={{
-                      flex: 1,
-                      fontWeight: '600',
-                      fontSize: 15,
-                      color: 'black',
-                      borderRadius: 2,
-                      borderWidth: 1,
-                      borderColor: '#ddd',
-                      backgroundColor: '#fff',
-                      marginLeft: 16,
-                      height: 56,
-                      padding: 20,
-                      marginTop: 12,
-                    }}
-                    placeholder="Valid Thru "
-                    underlineColorAndroid="transparent"
-                    placeholderTextColor="#737373"
-                  />
-                </View>
-                <View style={{flexDirection: 'row', letterSpacing: 3}}>
-                  {/* checkbox */}
-                  <View style={{marginTop: 15, marginLeft: 12}}>
-                    <CheckBox
-                      value={isSelected}
-                      onValueChange={setSelection}
-                      // style={styles.checkbox}
-                    />
-                  </View>
+//                 {/*for card section  */}
+//                 <View
+//                   style={{
+//                     flexDirection: 'row',
+//                     justifyContent: 'center',
+//                     alignItems: 'center',
+//                     backgroundColor: '#fff',
+//                     height: 60,
+//                     marginTop: 15,
+//                     marginLeft: 20,
+//                     marginRight: 20,
+//                     borderRadius: 3,
+//                     borderWidth: 1,
+//                     borderColor: '#00796A',
+//                   }}>
+//                   <Image
+//                     source={require('../../images/card.png')}
+//                     style={{
+//                       alignItems: 'center',
+//                       marginLeft: 4,
+//                     }}
+//                   />
+//                   <Text
+//                     style={{
+//                       flex: 0.9,
+//                       fontWeight: '400',
+//                       fontSize: 16,
+//                       color: 'black',
+//                       marginLeft: 20,
+//                     }}>
+//                     Credit/Debit card
+//                   </Text>
+//                   <Image
+//                     source={require('../../images/check.png')}
+//                     style={{
+//                       justifyContent: 'flex-start',
+//                       alignItems: 'flex-start',
+//                     }}
+//                   />
+//                   {/* <Text>hi</Text> */}
+//                 </View>
+//                 <Text
+//                   style={{
+//                     marginLeft: 20,
+//                     marginTop: 20,
+//                     marginBottom: 0,
+//                     fontSize: 15,
+//                     fontWeight: '500',
+//                   }}>
+//                   Details:
+//                 </Text>
+//                 <View
+//                   style={{
+//                     flexDirection: 'row',
+//                     justifyContent: 'center',
+//                     alignItems: 'center',
+//                     backgroundColor: '#fff',
+//                     height: 56,
+//                     margin: 16,
+//                     marginBottom: 0,
+//                     borderRadius: 2,
+//                     borderWidth: 1,
+//                     borderColor: '#ddd',
+//                   }}>
+//                   <TextInput
+//                     style={{
+//                       flex: 1,
+//                       fontWeight: '600',
+//                       fontSize: 15,
+//                       color: 'black',
+//                       marginLeft: 15,
+//                     }}
+//                     placeholder="Card Holder Name "
+//                     underlineColorAndroid="transparent"
+//                     placeholderTextColor="#737373"
+//                   />
+//                 </View>
+//                 <View
+//                   style={{
+//                     flexDirection: 'row',
+//                     justifyContent: 'center',
+//                     alignItems: 'center',
+//                     backgroundColor: '#fff',
+//                     height: 56,
+//                     margin: 16,
+//                     marginBottom: 5,
+//                     borderRadius: 2,
+//                     borderWidth: 1,
+//                     borderColor: '#ddd',
+//                   }}>
+//                   <TextInput
+//                     style={{
+//                       flex: 1,
+//                       fontWeight: '600',
+//                       fontSize: 15,
+//                       color: 'black',
+//                       marginLeft: 15,
+//                     }}
+//                     placeholder="Card Number "
+//                     underlineColorAndroid="transparent"
+//                     placeholderTextColor="#737373"
+//                   />
+//                 </View>
+//                 <View
+//                   style={{
+//                     flexDirection: 'row',
+//                     justifyContent: 'center',
+//                     alignItems: 'center',
+//                     width: '96%',
+//                   }}>
+//                   <TextInput
+//                     style={{
+//                       flex: 1,
+//                       fontWeight: '600',
+//                       fontSize: 15,
+//                       color: 'black',
+//                       borderRadius: 2,
+//                       borderWidth: 1,
+//                       borderColor: '#ddd',
+//                       backgroundColor: '#fff',
+//                       marginLeft: 16,
+//                       height: 56,
+//                       padding: 20,
+//                       marginTop: 14,
+//                     }}
+//                     placeholder="CVV "
+//                     underlineColorAndroid="transparent"
+//                     placeholderTextColor="#737373"
+//                   />
+//                   <TextInput
+//                     style={{
+//                       flex: 1,
+//                       fontWeight: '600',
+//                       fontSize: 15,
+//                       color: 'black',
+//                       borderRadius: 2,
+//                       borderWidth: 1,
+//                       borderColor: '#ddd',
+//                       backgroundColor: '#fff',
+//                       marginLeft: 16,
+//                       height: 56,
+//                       padding: 20,
+//                       marginTop: 12,
+//                     }}
+//                     placeholder="Valid Thru "
+//                     underlineColorAndroid="transparent"
+//                     placeholderTextColor="#737373"
+//                   />
+//                 </View>
+//                 <View style={{flexDirection: 'row', letterSpacing: 3}}>
+//                   {/* checkbox */}
+//                   <View style={{marginTop: 15, marginLeft: 12}}>
+//                     <CheckBox
+//                       value={isSelected}
+//                       onValueChange={setSelection}
+//                       // style={styles.checkbox}
+//                     />
+//                   </View>
 
-                  <Text
-                    style={{
-                      marginLeft: 7,
-                      marginTop: 20,
-                      marginBottom: 0,
-                      fontSize: 16,
-                      fontWeight: '400',
-                    }}>
-                    Save for later,Your Card is
-                  </Text>
-                  <TouchableOpacity>
-                    <Text
-                      style={{
-                        color: '#08B0DC',
-                        borderBottomWidth: 1,
-                        borderColor: '#08B0DC',
-                        width: 50,
-                        fontSize: 16,
-                        marginTop: 20,
-                        marginLeft: 4,
-                      }}
-                      onPress={() => {
-                        Alert.alert('coming soon');
-                      }}>
-                      Secure
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-                <TouchableOpacity
-                  style={{
-                    justifyContent: 'center',
-                    width: '92%',
-                    backgroundColor: '#00796A',
-                    height: 50,
-                    marginTop: 18,
-                    marginLeft: 20,
-                    borderRadius: 3,
-                  }}
-                  //</View>onPress={() => { console.log("coming soon") }}>
-                  onPress={() => {
-                    Alert.alert('coming soon');
-                  }}>
-                  <Text
-                    style={{
-                      fontWeight: '400',
-                      fontSize: 18,
-                      letterSpacing: 1,
-                      textAlign: 'center',
-                      position: 'relative',
-                      color: '#fff',
-                    }}>
-                    Pay Now
-                  </Text>
-                </TouchableOpacity>
-              </>
-            </View>
-            <TouchableOpacity onPress={() => setModalPink(!modalPink)}>
-              <Image
-                source={require('../../images/back.png')}
-                style={{
-                  height: 40,
-                  width: 40,
+//                   <Text
+//                     style={{
+//                       marginLeft: 7,
+//                       marginTop: 20,
+//                       marginBottom: 0,
+//                       fontSize: 16,
+//                       fontWeight: '400',
+//                     }}>
+//                     Save for later,Your Card is
+//                   </Text>
+//                   <TouchableOpacity>
+//                     <Text
+//                       style={{
+//                         color: '#08B0DC',
+//                         borderBottomWidth: 1,
+//                         borderColor: '#08B0DC',
+//                         width: 50,
+//                         fontSize: 16,
+//                         marginTop: 20,
+//                         marginLeft: 4,
+//                       }}
+//                       onPress={() => {
+//                         Alert.alert('coming soon');
+//                       }}>
+//                       Secure
+//                     </Text>
+//                   </TouchableOpacity>
+//                 </View>
+//                 <TouchableOpacity
+//                   style={{
+//                     justifyContent: 'center',
+//                     width: '92%',
+//                     backgroundColor: '#00796A',
+//                     height: 50,
+//                     marginTop: 18,
+//                     marginLeft: 20,
+//                     borderRadius: 3,
+//                   }}
+//                   //</View>onPress={() => { console.log("coming soon") }}>
+//                   onPress={() => {
+//                     Alert.alert('coming soon');
+//                   }}>
+//                   <Text
+//                     style={{
+//                       fontWeight: '400',
+//                       fontSize: 18,
+//                       letterSpacing: 1,
+//                       textAlign: 'center',
+//                       position: 'relative',
+//                       color: '#fff',
+//                     }}>
+//                     Pay Now
+//                   </Text>
+//                 </TouchableOpacity>
+//               </>
+//             </View>
+//             <TouchableOpacity onPress={() => setModalPink(!modalPink)}>
+//               <Image
+//                 source={require('../../images/back.png')}
+//                 style={{
+//                   height: 40,
+//                   width: 40,
 
-                  marginVertical: '-174%',
-                  marginLeft: 18,
-                }}
-              />
-            </TouchableOpacity>
-          </View>
-        </Modal>
-        <TouchableOpacity onPress={() => setModalPink(true)}>
-          <View
-            style={{
-              backgroundColor: '#0066FF',
-              height: 40,
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: 10,
-              width: width * 0.4,
-            }}>
-            <Text
-              style={{
-                color: '#FFFFFF',
-                fontSize: 15,
-                fontWeight: '600',
-                letterSpacing: 0.5,
-              }}>
-              Cash Recharge
-            </Text>
-          </View>
-        </TouchableOpacity>
-      </>
-    );
-  };
+//                   marginVertical: '-174%',
+//                   marginLeft: 18,
+//                 }}
+//               />
+//             </TouchableOpacity>
+//           </View>
+//         </Modal>
+//         <TouchableOpacity onPress={() => setModalPink(true)}>
+//           <View
+//             style={{
+//               backgroundColor: '#0066FF',
+//               height: 40,
+//               justifyContent: 'center',
+//               alignItems: 'center',
+//               borderRadius: 10,
+//               width: width * 0.4,
+//             }}>
+//             <Text
+//               style={{
+//                 color: '#FFFFFF',
+//                 fontSize: 15,
+//                 fontWeight: '600',
+//                 letterSpacing: 0.5,
+//               }}>
+//               Cash Recharge
+//             </Text>
+//           </View>
+//         </TouchableOpacity>
+//       </>
+//     );
+//   };
   return (
     <>
       {/* <CustomDate /> */}
-<<<<<<< HEAD
-      {/* <WalletRecharge /> */}
-=======
       <WalletRecharge />
->>>>>>> 7e7b8fb8b2a602f25b9ca85e9c99f516a4569163
       <View style={styles.modalView3}>
         <ImageBackground
           style={{marginTop: -42, paddingBottom: 10, width: width}}
@@ -1580,11 +1483,7 @@ const Earning = ({navigation}) => {
             style={{
               backgroundColor: '#00796A',
               width: 350,
-<<<<<<< HEAD
-              height: 80,
-=======
               height: 85,
->>>>>>> 7e7b8fb8b2a602f25b9ca85e9c99f516a4569163
               alignSelf: 'center',
               borderRadius: 20,
               marginTop: 5,
@@ -1601,11 +1500,7 @@ const Earning = ({navigation}) => {
               Wallet Balance
             </Text>
             <TouchableOpacity
-<<<<<<< HEAD
-              // onPress={() => WalletBalanceAPI()}
-=======
               onPress={() => WalletBalanceAPI()}
->>>>>>> 7e7b8fb8b2a602f25b9ca85e9c99f516a4569163
               style={{
                 justifyContent: 'flex-end',
                 alignItems: 'flex-end',
@@ -1626,91 +1521,6 @@ const Earning = ({navigation}) => {
             </Text>
           </View>
         </ImageBackground>
-<<<<<<< HEAD
-        {/* <View
-          style={{
-            flex: 1,
-            // marginTop: 25,
-            marginBottom: 5,
-            marginHorizontal: 20,
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: width,
-          }}> */}
-        <View
-          style={{
-            // marginHorizontal: 10,
-            width: width,
-            alignSelf: 'center',
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginTop: 15,
-          }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              width: width * 0.9,
-              // backgroundColor: COLORS.RED_DARK,
-              justifyContent: 'space-between',
-            }}>
-            <View style={{alignSelf: 'center', justifyContent: 'center'}}>
-              <CalendarModal />
-              <TouchableOpacity onPress={() => setDateModal(true)}>
-                <Image
-                  source={require('../../images/Iconmodal.png')}
-                  style={{marginLeft: 8}}
-                />
-                <Text style={{color: '#17523C', fontSize: 14}}>Date</Text>
-              </TouchableOpacity>
-            </View>
-
-            <Text
-              style={{
-                color: '#00796A',
-                fontSize: 20,
-                fontWeight: 'bold',
-                marginTop: -15,
-              }}>
-              {selectedDate}
-            </Text>
-            <View
-              style={{
-                justifyContent: 'flex-end',
-                alignItems: 'flex-end',
-                marginRight: 26,
-                // marginVertical: 10,
-              }}>
-              <TouchableOpacity>
-                <Image source={require('../../images/email.png')} />
-              </TouchableOpacity>
-              <Text style={{color: '#17523C', fontSize: 14, marginRight: -16}}>
-                Export
-              </Text>
-            </View>
-          </View>
-
-          {EarningText.map(item => {
-            return item.id == 6 ? (
-              <TouchableOpacity
-                // onPress={() => setWalletModal(!walletModal)}
-                key={item.id}
-                style={{
-                  backgroundColor: COLORS.WHITE,
-                  flexDirection: 'row',
-                  marginVertical: 3,
-                  // alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: 10,
-                  width: width * 0.9,
-                }}>
-                <Image
-                  resizeMode="contain"
-                  source={item.icon}
-                  style={{alignSelf: 'center'}}
-                />
-                <View style={{width: width * 0.65, marginHorizontal: 10}}>
-=======
         <View
           style={{
             flex: 1,
@@ -1850,7 +1660,6 @@ const Earning = ({navigation}) => {
                       {item.subText}
                     </Text>
                   </View>
->>>>>>> 7e7b8fb8b2a602f25b9ca85e9c99f516a4569163
                   <Text
                     style={{
                       color: COLORS.DARK_GREEN,
@@ -1860,82 +1669,6 @@ const Earning = ({navigation}) => {
                     {item.name}
                     {item.amount && '  >>>'}
                   </Text>
-<<<<<<< HEAD
-                  <Text
-                    style={{
-                      color: COLORS.DARK_GREEN,
-                      fontSize: 13,
-                    }}>
-                    {item.subText}
-                  </Text>
-                </View>
-                <Text
-                  style={{
-                    color: COLORS.DARK_GREEN,
-                    fontWeight: '500',
-                    fontSize: 16,
-                  }}>
-                  {item.amount && '₹ '}
-                  {item.amount}
-                </Text>
-              </TouchableOpacity>
-            ) : (
-              <View
-                key={item.id}
-                style={{
-                  backgroundColor: COLORS.WHITE,
-                  flexDirection: 'row',
-                  marginVertical: 3,
-                  // alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: 10,
-                  width: width * 0.9,
-                }}>
-                <Image
-                  resizeMode="contain"
-                  source={item.icon}
-                  style={{alignSelf: 'center'}}
-                />
-                <View style={{width: width * 0.65, marginHorizontal: 10}}>
-                  <Text
-                    style={{
-                      color: COLORS.DARK_GREEN,
-                      fontWeight: '500',
-                      fontSize: 16,
-                    }}>
-                    {item.name}
-                  </Text>
-                  <Text
-                    style={{
-                      color: COLORS.DARK_GREEN,
-                      fontSize: 13,
-                    }}>
-                    {item.subText}
-                  </Text>
-                </View>
-                <Text
-                  style={{
-                    color: COLORS.DARK_GREEN,
-                    fontWeight: '500',
-                    fontSize: 16,
-                  }}>
-                  {item.amount && '₹ '}
-                  {item.amount}
-                </Text>
-              </View>
-            );
-          })}
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              width: width * 0.9,
-              // marginTop: -10,
-            }}>
-            <AdjustRecharge />
-            <CashRecharge />
-=======
                 </View>
               );
             })}
@@ -1950,7 +1683,6 @@ const Earning = ({navigation}) => {
               <AdjustRecharge />
               <CashRecharge />
             </View>
->>>>>>> 7e7b8fb8b2a602f25b9ca85e9c99f516a4569163
           </View>
         </View>
       </View>

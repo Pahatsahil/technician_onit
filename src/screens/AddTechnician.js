@@ -762,11 +762,7 @@ export const AddTechnician = ({navigation}) => {
                         }}
                         maximumDate={moment().subtract(18, 'years')._d}
                         date={value || moment().subtract(18, 'years')._d}
-<<<<<<< HEAD
-                      />                      
-=======
                       />
->>>>>>> 7e7b8fb8b2a602f25b9ca85e9c99f516a4569163
                     </TouchableOpacity>
                   )}
                   name="dob"

@@ -25,14 +25,9 @@ import {Picker} from '@react-native-picker/picker';
 import {useRef} from 'react';
 import {getUniqueId} from 'react-native-device-info';
 import {GET_ALL_SERVICES, REGISTER_CENTER_SEND_OTP} from '../utils/endpoints';
-<<<<<<< HEAD
-import { COLORS } from '../utils/constants';
-import CheckBox from '@react-native-community/checkbox';
-=======
 import {COLORS} from '../utils/constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
->>>>>>> 7e7b8fb8b2a602f25b9ca85e9c99f516a4569163
 const {width, height} = Dimensions.get('window');
 
 const K_OPTIONS = [
@@ -405,22 +400,6 @@ export default function SignUp({navigation}) {
               style={{
                 marginRight: 10,
                 borderRadius: 4,
-<<<<<<< HEAD
-                // backgroundColor: 'rgba(0,0,0,.1)',
-              }}>
-              <CheckBox
-                style={styles.checkbox}
-                value={toggleCheckBox}
-                tintColor={COLORS.BLACK}
-                // value={toggleCheckBox}
-                onValueChange={(val) => setToggleCheckBox(val)}
-                // status
-                
-                
-              />
-              {/* <Text>{toggleCheckBox ? 'Checked' : 'Unchecked'}</Text> */}
-            </View>
-=======
                 backgroundColor: 'rgba(0,0,0,.1)',
               }}></View>
             <CheckBox
@@ -430,7 +409,6 @@ export default function SignUp({navigation}) {
               // color={COLORS.DARK_GREEN}
               onValueChange={(val) => setToggleCheckBox(val)}
             />
->>>>>>> 7e7b8fb8b2a602f25b9ca85e9c99f516a4569163
             <Text
               style={{
                 marginVertical: 4,

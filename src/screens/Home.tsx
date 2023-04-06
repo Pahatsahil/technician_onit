@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect,useState} from 'react';
 import {
   View,
   Image,
@@ -12,7 +12,6 @@ import {Completed, NewRequest, Pending} from './requesttabs';
 import {Header} from '../components/Header';
 import axios from 'axios';
 import plus from '../images/plus.png';
-<<<<<<< HEAD:src/screens/Home.js
 import {
   GET_ALL_SERVICES,
   GET_NOTIFICATION_TOKEN,
@@ -21,8 +20,7 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import {setWalletBalance} from '../../redux-toolkit/slice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-=======
->>>>>>> 7e7b8fb8b2a602f25b9ca85e9c99f516a4569163:src/screens/Home.tsx
+import DateTimePicker from 'react-native-modal-datetime-picker';
 
 const {height, width} = Dimensions.get('screen');
 const Tab = createMaterialTopTabNavigator();
@@ -31,6 +29,8 @@ const Home = ({navigation, route}) => {
   const {walletBalance, userId, accessToken} = useSelector(
     (state: any) => state.auth,
   );
+  const [modalVisible, setModalVisible] = useState(false);
+  const [profilePicture, setProfilePicture] = useState();
   const dispatch = useDispatch();
   useEffect(() => {
     const fetchServices = async () => {
@@ -38,6 +38,29 @@ const Home = ({navigation, route}) => {
     };
     fetchServices();
   }, []);
+
+  const uploadImageForProfilePicture = (uploadType, imageType) => {
+    if (uploadType === 'camera') {
+        ImagePicker.openCamera({
+            height: 400,
+            width: 400,
+            cropping: true,
+            compressImageQuality: 0.7,
+        }).then(profilePicture => {
+            if (imageType === 'profilePicture') {
+                setProfilePicture(profilePicture);
+                setVisible(false);
+            }
+        });
+    }
+};
+
+useEffect(() => {
+    if (!userData?.userDetails?.personal_details.profile_picture ) {
+        setModalVisible(true);
+    }
+
+}, []);
 
   useEffect(() => {
     console.log('USERID', userId);

@@ -69,11 +69,11 @@ const MainStack = () => {
         component={Earning}
         options={{headerShown: false}}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="Expenses"
         component={Expenses}
         options={{headerShown: false}}
-      />
+      /> */}
       <Stack.Screen name="Chat" component={Chat} />
       <Stack.Screen name="Profile" component={Profile} />
       <Stack.Screen
