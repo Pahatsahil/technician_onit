@@ -119,7 +119,7 @@ export const AddTechnician = ({navigation}) => {
         reference_person_mobile: data?.reference_person_mobile,
       },
     };
-    console.log(payload);
+    console.log('seeeee',data);
     setLoader(true);
     try {
       await axios({

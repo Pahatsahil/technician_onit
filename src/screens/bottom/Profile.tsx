@@ -46,7 +46,7 @@ export default function Profile({ navigation: { navigate } }) {
     const { accessToken, isAuthorized, userData, profileImageUrl } = useSelector(
         (state: any) => state.auth,
     );
-    console.log('sound', userData)
+    console.log('soundadada', profileImageUrl)
     const [open, setOpen] = useState(false);
     const [logOutModal, setLogOutModal] = useState(false);
     const dispatch = useDispatch();
