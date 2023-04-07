@@ -55,6 +55,17 @@ export default function Profile({ navigation: { navigate } }) {
 
     const subject = 'Support and queries';
     const message = 'Write your query or problem.';
+    // const phoneNumber = '+918979817701';
+    const sendMessage = () => {
+        const phoneNumber = '+918979817701'; // replace with the recipient's phone number
+        const message = 'Hello, how are you?'; // replace with your message
+      
+        const url = `whatsapp://send?phone=${phoneNumber}&text=${message}`;
+      
+        Linking.openURL(url)
+          .then(() => console.log('Message sent'))
+          .catch((err) => console.error('An error occurred: ', err));
+      };
     const PROFILE_ITEMS = [
 
         {
@@ -66,9 +77,7 @@ export default function Profile({ navigation: { navigate } }) {
             name: 'Support',
             uri: support,
             onPress: () =>
-                Linking.openURL(
-                    `mailto:help@onit.services?subject=${subject}&body=${message}`,
-                ),
+                sendMessage()
         },
         {
             name: 'Terms & Conditions',

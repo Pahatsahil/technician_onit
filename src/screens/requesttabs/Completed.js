@@ -113,9 +113,9 @@ export default function Completed() {
                   borderColor: '#d6d6d6',
                   marginVertical: 10,
                 }}
-                // onPress={() =>
-                //   navigation.navigate('JobCompleted', {id: item._id})
-                // }
+                onPress={() =>
+                  navigation.navigate('profileCompleted', {id: item._id})
+                }
               >
                 <View
                   style={{

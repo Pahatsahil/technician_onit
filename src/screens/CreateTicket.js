@@ -85,6 +85,7 @@ export const CreateTicket = ({navigation}) => {
         offer_code: data?.offer_code,
       },
     };
+    console.log('PAYLOAD',payload)
 
     setLoader(true);
     try {
@@ -614,7 +615,7 @@ const styles = StyleSheet.create({
   labelText: {
     fontSize: 16,
     fontFamily: 'poppins-semibold',
-    color: '#000',
+    color: 'black',
     marginTop: 10,
   },
   star: {

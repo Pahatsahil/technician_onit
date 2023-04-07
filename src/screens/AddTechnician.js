@@ -876,10 +876,11 @@ export const AddTechnician = ({navigation}) => {
                   <View style={{width: '48%'}}>
                     <Controller
                       control={control}
+                    
                       render={({field: {onChange, onBlur, value}}) => {
                         if(city.length !== 0){
                           value = city
-                          console.log(value)
+                          console.log('city',value)
                         }
                         return(
                         <TextInput
@@ -899,11 +900,14 @@ export const AddTechnician = ({navigation}) => {
                           value={value}
                           autoCapitalize="characters"
                           maxLength={50}
+                          defaultValue={value}
                           editable={city.length == 0 ? false : true}
                         />
                       )}}
                       name="city"
-                      defaultValue=""
+                      defaultValue={city}
+                    //   if(defaultValue==)
+                      
                       rules={{required: city.length == 0 ? false : true}}
                     />
                     {(errors.city) && (

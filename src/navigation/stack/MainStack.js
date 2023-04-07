@@ -17,6 +17,7 @@ import {useSelector} from 'react-redux';
 import OnboardingScreens from '../../screens/onboarding/OnboardingScreens';
 import NewRequestBox from '../../components/NewRequestBox';
 import JobCompleted from '../../screens/requesttabs/JobCompleted';
+import CompletedRequestBox from '../../components/CompletedRequestBox';
 // <<<<<<< HEAD
 // =======
 import Earning from '../../screens/bottom/Earning';
@@ -124,6 +125,11 @@ const MainStack = () => {
       <Stack.Screen
         name="AboutUs"
         component={AboutUs}
+        options={{headerShown: false}}
+      />
+       <Stack.Screen
+        name="profileCompleted"
+        component={CompletedRequestBox}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
