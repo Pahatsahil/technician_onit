@@ -1,6 +1,7 @@
-export const BASE_URL = `https://api.onit.services/`; //Production
-// export const BASE_URL = `https://api.onit.fit/`;   //Testing
+// export const BASE_URL = `https://api.onit.services/`; //Production
+export const BASE_URL = `https://api.onit.fit/`;   //Testing
 export const RAZORPAY_API_KEY = `rzp_live_yr00EgqO9pvjDt`;
+export const RAZOR_TEST_KEY = 'rzp_test_xbtU9g8sjSB3vN';
 export const UPLOAD_URL = `${BASE_URL}common/upload-image/`;
 
 export const GET_ALL_SERVICES = `${BASE_URL}admin/get-all-services`;
@@ -27,7 +28,10 @@ export const ACCEPT_TICKET_AFTER_PAYMENT = `${BASE_URL}technicianapp/accept-tick
 
 export const PAY_ONBOARDING_KIT = `${BASE_URL}technicianApp/pay-onboarding-kit`;
 export const AFTER_PAYMENT_PAY_ONBOARDING_KIT = `${BASE_URL}/technicianApp/after-payment-pay-onboarding-kit`
-
+export const GET_WALLET_BALANCE = `${BASE_URL}payment/wallet-balance`
+export const RECHARGE_WALLET = `${BASE_URL}technicianApp/accepted-wallet-recharge-request`
+export const JOINING_BONUS = `${BASE_URL}payment/joining-bonus`
+export const GET_NOTIFICATION_TOKEN = `${BASE_URL}technician/tokens`
 //Image upload endpoints
 
 export const TECHNICIAN_PAN_CARD = `${UPLOAD_URL}TECHNICIAN_PAN_CARD`;

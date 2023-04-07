@@ -23,7 +23,7 @@ import moment from 'moment';
 import {TextInput} from 'react-native-gesture-handler';
 import ImagePicker from 'react-native-image-crop-picker';
 import {Controller, useForm} from 'react-hook-form';
-import DatePicker from 'react-native-date-picker';
+// import DatePicker from 'react-native-date-picker';
 import {LogBox} from 'react-native';
 import cross from '../images/cross.png';
 import axios from 'axios';
@@ -762,7 +762,7 @@ export const AddTechnician = ({navigation}) => {
                         }}
                         maximumDate={moment().subtract(18, 'years')._d}
                         date={value || moment().subtract(18, 'years')._d}
-                      />                      
+                      />
                     </TouchableOpacity>
                   )}
                   name="dob"
@@ -982,7 +982,8 @@ export const AddTechnician = ({navigation}) => {
                   defaultValue=""
                   rules={{
                     pattern: {
-                      value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+                      value: 
+                      /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
                       message: 'Please enter your email address',
                     },
                   }}
@@ -1034,6 +1035,7 @@ export const AddTechnician = ({navigation}) => {
                         onChangeText={value => onChange(value)}
                         value={value}
                         autoCapitalize="characters"
+                        keyboardType='numeric'
                       />
                     )}
                     name="reference_person_mobile"

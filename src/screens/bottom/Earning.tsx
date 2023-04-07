@@ -1,5 +1,3 @@
-import CheckBox from '@react-native-community/checkbox';
-import axios from 'axios';
 import React, {useEffect, useState} from 'react';
 import {
   View,
@@ -14,16 +12,26 @@ import {
   Alert,
   StatusBar,
   TextInput,
+  ToastAndroid,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import DateTimePicker from 'react-native-modal-datetime-picker';
+import {useDispatch, useSelector} from 'react-redux';
 import {Header} from '../../components/Header';
 import {COLORS} from '../../utils/constants';
+import CheckBox from '@react-native-community/checkbox';
+import axios from 'axios';
+import moment from 'moment';
+import {setWalletBalance} from '../../../redux-toolkit/slice';
+import RazorpayCheckout from 'react-native-razorpay';
+import {RAZOR_TEST_KEY, RECHARGE_WALLET} from '../../utils/endpoints';
 
 const {width, height} = Dimensions.get('screen');
 
-const Earning = (props: any) => {
-  const {navigation} = props;
-  const {accessToken} = useSelector((state: any) => state.auth);
+const Earning = ({navigation}) => {
+  const dispatch = useDispatch();
+  const {accessToken, userData, userId, walletBalance} = useSelector(
+    (state: any) => state.auth,
+  );
   const [orderDetailsList, setOrderDetailsList] = useState();
   const [loader, setLoader] = useState(false);
   const [dateModal, setDateModal] = useState(false);
@@ -33,10 +41,12 @@ const Earning = (props: any) => {
   const [modalPink, setModalPink] = useState(false);
   const [isSelected, setSelection] = useState(false);
   const [selectedDate, setSelectedDate] = useState('Last Month');
-  const [fromDate, setFromDate] = useState();
+  const [fromDate, setFromDate] = useState<Date>();
+  const [fromDateModal, setFromDateModal] = useState();
   const [toDate, setToDate] = useState();
-  const [walletBalance, setWalletBalance] = useState(0);
-
+  const [walletModal, setWalletModal] = useState(false);
+  const [rechargeAmt, setRechargeAmt] = useState('');
+  let CustomDateis = fromDate + ' - ' + toDate;
   const getOrderList = async () => {
     setLoader(true);
     try {
@@ -47,17 +57,17 @@ const Earning = (props: any) => {
           'x-access-token': accessToken,
         },
       }).then(res => {
-        console.log('ORDER', res.data.data.paymentDetails);
+        console.log(res.data.data.paymentDetails);
         setOrderDetailsList(res.data.data.paymentDetails);
         setLoader(false);
       });
     } catch (err) {
-      console.log(err);
+      console.log('Error Data', err);
     }
   };
-
   useEffect(() => {
     getOrderList();
+    WalletBalanceAPI()
   }, []);
 
   const EarningText = [
@@ -283,85 +293,90 @@ const Earning = (props: any) => {
     },
   ];
 
-  const CustomDate = () => {
-    return (
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={customDateModal}
-        onRequestClose={() => {
-          setCustomDateModal(!customDateModal);
-        }}>
-        <View style={styles.modalBlack}>
-          <View style={styles.modalView5}>
-            <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <View style={{alignItems: 'center', marginBottom: 15}}>
-                <Text
-                  style={{color: '#17523C', fontSize: 14, paddingBottom: 10}}>
-                  From
-                </Text>
-                <TextInput
-                  style={{
-                    borderRadius: 10,
-                    borderColor: COLORS.DARK_GREEN,
-                    borderWidth: 1,
-                    width: width * 0.35,
-                  }}
-                  onChangeText={(text: any) => setFromDate(text)}
-                  value={fromDate}
-                />
-              </View>
-              <View style={{alignItems: 'center', marginBottom: 15}}>
-                <Text
-                  style={{color: '#17523C', fontSize: 14, paddingBottom: 10}}>
-                  To
-                </Text>
-                <TextInput
-                  style={{
-                    borderRadius: 10,
-                    borderColor: COLORS.DARK_GREEN,
-                    borderWidth: 1,
-                    width: width * 0.35,
-                  }}
-                  onChangeText={(text: any) => setToDate(text)}
-                  value={toDate}
-                />
-              </View>
-            </View>
-            <TouchableOpacity>
-              <View
-                style={{
-                  marginRight: 1,
-                  backgroundColor: '#00796A',
-                  // width: 300,
-                  // height: 51,
-                  // marginTop: 20,
-                  borderRadius: 10,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  padding: 10,
-                }}>
-                <Text
-                  style={{
-                    color: '#FFFFFF',
-                    fontWeight: '600',
-                    fontSize: 20,
-                    letterSpacing: 1,
-                  }}
-                  onPress={() => {
-                    setCustomDateModal(!customDateModal);
-                    setSelectedDate(fromDate + ' - ' + toDate);
-                  }}>
-                  OK
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
-    );
-  };
+  // const CustomDate = () => {
+  //   return (
+  //     <Modal
+  //       animationType="slide"
+  //       transparent={true}
+  //       visible={customDateModal}
+  //       onRequestClose={() => {
+  //         setCustomDateModal(!customDateModal);
+  //       }}>
+  //       <View style={styles.modalBlack}>
+  //         <View style={styles.modalView5}>
+  //           <View
+  //             style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+  //             <View style={{alignItems: 'center',marginBottom: 15}}>
+  //               <Text style={{color: '#17523C', fontSize: 14, paddingBottom: 10}}>From</Text>
+  //               <Text
+  //                 style={{
+  //                   borderRadius: 10,
+  //                   borderColor: COLORS.DARK_GREEN,
+  //                   borderWidth: 1,
+  //                   width: width * 0.35,
+  //                 }}
+  //               >{fromDate}</Text>
+  //                     <DateTimePicker
+  //                       isVisible={open}
+  //                       mode="date"
+  //                       onConfirm={date => {
+  //                         setFromDateModal(false);
+  //                         setFromDate(date);
+  //                       }}
+  //                       onCancel={() => {
+  //                         setFromDateModal(false);
+  //                       }}
+  //                       minimumDate={moment().subtract(18, 'years')._d}
+  //                       date={moment().subtract(18, 'years')._d}
+  //                     />
+  //             </View>
+  //             <View style={{alignItems: 'center',marginBottom: 15}}>
+  //               <Text style={{color: '#17523C', fontSize: 14, paddingBottom: 10}}>To</Text>
+  //               <TextInput
+  //                 style={{
+  //                   borderRadius: 10,
+  //                   borderColor: COLORS.DARK_GREEN,
+  //                   borderWidth: 1,
+  //                   width: width * 0.35,
+  //                 }}
+  //                 onChangeText={(text: any) => setToDate(text)}
+  //                 value={toDate}
+  //               />
+  //             </View>
+  //           </View>
+  //           <TouchableOpacity>
+  //             <View
+  //               style={{
+  //                 marginRight: 1,
+  //                 backgroundColor: '#00796A',
+  //                 // width: 300,
+  //                 // height: 51,
+  //                 // marginTop: 20,
+  //                 borderRadius: 10,
+  //                 justifyContent: 'center',
+  //                 alignItems: 'center',
+  //                 padding: 10,
+  //               }}>
+  //               <Text
+  //                 style={{
+  //                   color: '#FFFFFF',
+  //                   fontWeight: '600',
+  //                   fontSize: 20,
+  //                   letterSpacing: 1,
+  //                 }}
+  //                 onPress={() => {
+  //                   setCustomDateModal(!customDateModal);
+  //                   setSelectedDate(CustomDateis);
+  //                 }}>
+  //                 OK
+  //               </Text>
+  //             </View>
+  //           </TouchableOpacity>
+  //         </View>
+  //       </View>
+  //     </Modal>
+  //   );
+  // };
 
   const CalendarModal = () => {
     return (
@@ -379,6 +394,7 @@ const Earning = (props: any) => {
               {CalendarData.map((item: any) => {
                 return (
                   <TouchableOpacity
+                    key={item.id}
                     style={{alignSelf: 'auto', margin: 5}}
                     onPress={() => {
                       setSelectedDate(item.name);
@@ -403,6 +419,7 @@ const Earning = (props: any) => {
               {CalendarData2.map((item: any) => {
                 return (
                   <TouchableOpacity
+                    key={item.id}
                     style={{alignSelf: 'auto', margin: 5}}
                     onPress={() => {
                       item.name == 'Custom Range'
@@ -438,7 +455,6 @@ const Earning = (props: any) => {
       </Modal>
     );
   };
-
   const CashRecharge = () => {
     return (
       <>
@@ -828,10 +844,198 @@ const Earning = (props: any) => {
       </>
     );
   };
+
+  const WalletBalanceAPI = async () => {
+    try {
+      let payload = {
+        userId: userId,
+        // amount: 99
+      };
+      const res = await axios({
+        url: 'https://api.onit.fit/payment/wallet-balance',
+        method: 'post',
+        headers: {
+          'x-access-token': accessToken,
+        },
+        data: payload,
+      });
+      if (res) {
+        console.log('DATA_BALANCE', res.data);
+        dispatch(setWalletBalance(res.data.wallet_balance));
+      } else {
+        console.log('ERROR BALANCE', res.error);
+      }
+    } catch (error) {
+      console.log('ERROR', error);
+    }
+  };
+
+  const rechargeWallet = async (data: any) => {
+    try {
+      setLoader(true)
+      let payload = {
+        userId: userId,
+        amount: rechargeAmt,
+        ...data,
+      }
+      const res = await axios({
+        method: 'post',
+        url: RECHARGE_WALLET,
+        data: payload,
+        headers: {
+          "x-access-token": accessToken
+        }
+      })
+      if (res) {
+        console.log('Recharged', res.data)
+        WalletBalanceAPI()
+      } else {
+        console.log('Recharged', res)  
+      }
+    } catch (error) {
+      console.log('RechargedER', error)  
+    }
+  };
+  const handlePaymentRequest = () => {
+    let amt = parseInt(rechargeAmt);
+    if (amt) {
+      var options = {
+        currency: 'INR',
+        // currency: payment_response?.currency.toString(),
+        key: RAZOR_TEST_KEY, // Your api key
+        amount: (amt * 100).toString(),
+        name: userData?.userDetails?.personal_details?.name.toString(),
+        // order_id: payment_response?.id.toString(),
+        prefill: {
+          email: userData.userDetails?.personal_details?.email.toString() || '',
+          contact:
+            userData.userDetails?.personal_details?.phone?.country_code +
+              userData?.populatedTechnicianDetails?.personal_details?.phone?.mobile_number.toString() ||
+            '',
+          name: 'Razorpay Software',
+        },
+      };
+      console.log('Options ---> ', options);
+      RazorpayCheckout.open(options)
+        .then((data: any) => {
+          console.log('This---->', data);
+          try {
+            rechargeWallet(data);
+          } catch (err) {
+            ToastAndroid.show('Something went wrong!', ToastAndroid.SHORT);
+            navigation.goBack();
+          }
+        })
+        .catch((error: any) => {
+          console.log(error);
+          ToastAndroid.show('Something went wrong!', ToastAndroid.SHORT);
+          navigation.navigate('Tab', {screen: 'Booking'});
+        });
+    } else {
+      ToastAndroid.show('Something went wrong!', ToastAndroid.SHORT);
+      navigation.goBack();
+    }
+  };
+  const WalletRecharge = () => {
+    return (
+      <Modal
+        visible={walletModal}
+        onRequestClose={() => setWalletModal(!walletModal)}
+        animationType="fade"
+        transparent>
+        <View style={styles.modalBlack}>
+          <View style={styles.walletModalView}>
+            <View
+              style={{
+                // alignSelf: 'center',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}>
+              <Text
+                style={{
+                  color: COLORS.DARK_GREEN,
+                  fontFamily: 'poppins',
+                  fontSize: 18,
+                  fontWeight: '700',
+                  marginLeft: width * 0.2,
+                }}>
+                Wallet Recharge
+              </Text>
+              <Pressable
+                style={{alignSelf: 'center'}}
+                onPress={() => setWalletModal(!walletModal)}>
+                <Image source={require('../../images/cross2.png')} />
+              </Pressable>
+            </View>
+            <View style={{alignItems: 'center', marginTop: 10}}>
+              <TextInput
+                value={rechargeAmt}
+                onChangeText={(text: any) => setRechargeAmt(text)}
+                placeholder={'Enter Amount'}
+                keyboardType="number-pad"
+                style={{
+                  width: width * 0.6,
+                  borderWidth: 1,
+                  borderColor: COLORS.LIGHT_BORDER,
+                  fontSize: 16,
+                  paddingHorizontal: 10,
+                }}
+              />
+              <View style={{flexDirection: 'row', marginVertical: 10}}>
+                <TouchableOpacity
+                  style={styles.amt}
+                  onPress={() => setRechargeAmt('100')}>
+                  <Text style={{color: COLORS.LIGHT_BORDER}}>₹ 100</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.amt}
+                  onPress={() => setRechargeAmt('200')}>
+                  <Text style={{color: COLORS.LIGHT_BORDER}}>₹ 200</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.amt}
+                  onPress={() => setRechargeAmt('500')}>
+                  <Text style={{color: COLORS.LIGHT_BORDER}}>₹ 500</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.amt}
+                  onPress={() => setRechargeAmt('1000')}>
+                  <Text style={{color: COLORS.LIGHT_BORDER}}>₹ 1000</Text>
+                </TouchableOpacity>
+              </View>
+              <TouchableOpacity onPress={() => handlePaymentRequest()}>
+                <View
+                  style={{
+                    backgroundColor: '#00796A',
+                    width: width * 0.4,
+                    height: 40,
+                    borderRadius: 10,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginVertical: 10,
+                  }}>
+                  <Text
+                    style={{
+                      color: '#FFFFFF',
+                      fontWeight: '600',
+                      letterSpacing: 0.5,
+                    }}>
+                    Recharge
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+    );
+  };
+
   return (
     <>
       {/* <CustomDate /> */}
-      {/* <WalletRecharge /> */}
+      <WalletRecharge />
       <View style={styles.modalView3}>
         <ImageBackground
           style={{marginTop: -42, paddingBottom: 10, width: width}}
@@ -842,7 +1046,7 @@ const Earning = (props: any) => {
               flexDirection: 'row',
               width: width * 0.8,
               paddingVertical: 10,
-              marginTop: 5,
+              marginTop: 10,
               alignSelf: 'center',
             }}>
             <Text
@@ -882,7 +1086,7 @@ const Earning = (props: any) => {
             style={{
               backgroundColor: '#00796A',
               width: 350,
-              height: 80,
+              height: 85,
               alignSelf: 'center',
               borderRadius: 20,
               marginTop: 5,
@@ -899,7 +1103,7 @@ const Earning = (props: any) => {
               Wallet Balance
             </Text>
             <TouchableOpacity
-              // onPress={() => WalletBalanceAPI()}
+              onPress={() => WalletBalanceAPI()}
               style={{
                 justifyContent: 'flex-end',
                 alignItems: 'flex-end',
@@ -920,176 +1124,171 @@ const Earning = (props: any) => {
             </Text>
           </View>
         </ImageBackground>
-        {/* <View
+        <View
           style={{
             flex: 1,
-            // marginTop: 25,
+            marginTop: 25,
             marginBottom: 5,
             marginHorizontal: 20,
             alignItems: 'center',
-            justifyContent: 'center',
             width: width,
-          }}> */}
-        <View
-          style={{
-            // marginHorizontal: 10,
-            width: width,
-            alignSelf: 'center',
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginTop: 15,
           }}>
+          {/* Calender Model */}
           <View
             style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              width: width * 0.9,
-              // backgroundColor: COLORS.RED_DARK,
-              justifyContent: 'space-between',
+              flex: 1,
             }}>
-            <View style={{alignSelf: 'center', justifyContent: 'center'}}>
-              <CalendarModal />
-              <TouchableOpacity onPress={() => setDateModal(true)}>
-                <Image
-                  source={require('../../images/Iconmodal.png')}
-                  style={{marginLeft: 8}}
-                />
-                <Text style={{color: '#17523C', fontSize: 14}}>Date</Text>
-              </TouchableOpacity>
-            </View>
-
-            <Text
-              style={{
-                color: '#00796A',
-                fontSize: 20,
-                fontWeight: 'bold',
-                marginTop: -15,
-              }}>
-              {selectedDate}
-            </Text>
             <View
               style={{
-                justifyContent: 'flex-end',
-                alignItems: 'flex-end',
-                marginRight: 26,
-                // marginVertical: 10,
+                flexDirection: 'row',
+                alignItems: 'center',
+                width: width * 0.9,
+                // backgroundColor: COLORS.RED_DARK,
+                justifyContent: 'space-between',
               }}>
-              <TouchableOpacity>
-                <Image source={require('../../images/email.png')} />
-              </TouchableOpacity>
-              <Text style={{color: '#17523C', fontSize: 14, marginRight: -16}}>
-                Export
-              </Text>
-            </View>
-          </View>
+              <View style={{alignSelf: 'center', justifyContent: 'center'}}>
+                <CalendarModal />
+                <TouchableOpacity onPress={() => setDateModal(true)}>
+                  <Image
+                    source={require('../../images/Iconmodal.png')}
+                    style={{marginLeft: 8}}
+                  />
+                  <Text style={{color: '#17523C', fontSize: 14}}>Date</Text>
+                </TouchableOpacity>
+              </View>
 
-          {EarningText.map(item => {
-            return item.id == 6 ? (
-              <TouchableOpacity
-                // onPress={() => setWalletModal(!walletModal)}
-                key={item.id}
+              <Text
                 style={{
-                  backgroundColor: COLORS.WHITE,
-                  flexDirection: 'row',
-                  marginVertical: 3,
-                  // alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: 10,
-                  width: width * 0.9,
+                  color: '#00796A',
+                  fontSize: 20,
+                  fontWeight: 'bold',
+                  marginTop: -15,
                 }}>
-                <Image
-                  resizeMode="contain"
-                  source={item.icon}
-                  style={{alignSelf: 'center'}}
-                />
-                <View style={{width: width * 0.65, marginHorizontal: 10}}>
-                  <Text
-                    style={{
-                      color: COLORS.DARK_GREEN,
-                      fontWeight: '500',
-                      fontSize: 16,
-                    }}>
-                    {item.name}
-                    {item.amount && '  >>>'}
-                  </Text>
-                  <Text
-                    style={{
-                      color: COLORS.DARK_GREEN,
-                      fontSize: 13,
-                    }}>
-                    {item.subText}
-                  </Text>
-                </View>
-                <Text
-                  style={{
-                    color: COLORS.DARK_GREEN,
-                    fontWeight: '500',
-                    fontSize: 16,
-                  }}>
-                  {item.amount && '₹ '}
-                  {item.amount}
-                </Text>
-              </TouchableOpacity>
-            ) : (
+                {selectedDate}
+              </Text>
               <View
-                key={item.id}
                 style={{
-                  backgroundColor: COLORS.WHITE,
-                  flexDirection: 'row',
-                  marginVertical: 3,
-                  // alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: 10,
-                  width: width * 0.9,
+                  justifyContent: 'flex-end',
+                  alignItems: 'flex-end',
+                  marginRight: 26,
+                  // marginVertical: 10,
                 }}>
-                <Image
-                  resizeMode="contain"
-                  source={item.icon}
-                  style={{alignSelf: 'center'}}
-                />
-                <View style={{width: width * 0.65, marginHorizontal: 10}}>
-                  <Text
-                    style={{
-                      color: COLORS.DARK_GREEN,
-                      fontWeight: '500',
-                      fontSize: 16,
-                    }}>
-                    {item.name}
-                  </Text>
-                  <Text
-                    style={{
-                      color: COLORS.DARK_GREEN,
-                      fontSize: 13,
-                    }}>
-                    {item.subText}
-                  </Text>
-                </View>
+                <TouchableOpacity>
+                  <Image source={require('../../images/email.png')} />
+                </TouchableOpacity>
                 <Text
-                  style={{
-                    color: COLORS.DARK_GREEN,
-                    fontWeight: '500',
-                    fontSize: 16,
-                  }}>
-                  {item.amount && '₹ '}
-                  {item.amount}
+                  style={{color: '#17523C', fontSize: 14, marginRight: -16}}>
+                  Export
                 </Text>
               </View>
-            );
-          })}
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              width: width * 0.9,
-              // marginTop: -10,
-            }}>
-            <AdjustRecharge />
-            <CashRecharge />
+            </View>
+
+            {EarningText.map(item => {
+              return item.id == 6 ? (
+                <TouchableOpacity
+                  onPress={() => setWalletModal(!walletModal)}
+                  key={item.id}
+                  style={{
+                    backgroundColor: COLORS.WHITE,
+                    flexDirection: 'row',
+                    marginVertical: 3,
+                    // alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: 10,
+                    width: width * 0.9,
+                  }}>
+                  <Image
+                    resizeMode="contain"
+                    source={item.icon}
+                    style={{alignSelf: 'center'}}
+                  />
+                  <View style={{width: width * 0.65, marginHorizontal: 10}}>
+                    <Text
+                      style={{
+                        color: COLORS.DARK_GREEN,
+                        fontWeight: '500',
+                        fontSize: 16,
+                      }}>
+                      {item.name}{item.amount && '  >>>'}
+                    </Text>
+                    <Text
+                      style={{
+                        color: COLORS.DARK_GREEN,
+                        fontSize: 13,
+                      }}>
+                      {item.subText}
+                    </Text>
+                  </View>
+                  <Text
+                    style={{
+                      color: COLORS.DARK_GREEN,
+                      fontWeight: '500',
+                      fontSize: 16,
+                    }}>
+                    {item.amount && '₹ '}
+                    {item.amount}
+                  </Text>
+                </TouchableOpacity>
+              ) : (
+                <View
+                  key={item.id}
+                  style={{
+                    backgroundColor: COLORS.WHITE,
+                    flexDirection: 'row',
+                    marginVertical: 3,
+                    // alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: 10,
+                    width: width * 0.9,
+                  }}>
+                  <Image
+                    resizeMode="contain"
+                    source={item.icon}
+                    style={{alignSelf: 'center'}}
+                  />
+                  <View style={{width: width * 0.65, marginHorizontal: 10}}>
+                    <Text
+                      style={{
+                        color: COLORS.DARK_GREEN,
+                        fontWeight: '500',
+                        fontSize: 16,
+                      }}>
+                      {item.name}
+                    </Text>
+                    <Text
+                      style={{
+                        color: COLORS.DARK_GREEN,
+                        fontSize: 13,
+                      }}>
+                      {item.subText}
+                    </Text>
+                  </View>
+                  <Text
+                    style={{
+                      color: COLORS.DARK_GREEN,
+                      fontWeight: '500',
+                      fontSize: 16,
+                    }}>
+                    {item.amount && '₹ '}
+                    {item.amount}
+                  </Text>
+                </View>
+              );
+            })}
+            <View
+              style={{
+                flexDirection: 'row',
+                flex: 1,
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginTop: -10,
+              }}>
+              <AdjustRecharge />
+              <CashRecharge />
+            </View>
           </View>
         </View>
       </View>
-      {/* </View> */}
     </>
   );
 };
@@ -1101,6 +1300,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 15,
+  },
+  amt: {
+    padding: 5,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    borderColor: COLORS.LIGHT_BORDER,
+    borderWidth: 1,
+    marginHorizontal: 3,
   },
   centeredView: {
     flex: 1,
@@ -1127,6 +1334,18 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     width: width * 0.9,
     height: width * 0.5,
+    elevation: 10,
+  },
+  walletModalView: {
+    // margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 25,
+    // alignItems: 'center',
+    overflow: 'hidden',
+    shadowColor: '#000',
+    width: width * 0.9,
+    height: height * 0.3,
     elevation: 10,
   },
   modalView5: {
