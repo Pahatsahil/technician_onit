@@ -25,7 +25,7 @@ import {Picker} from '@react-native-picker/picker';
 import {useRef} from 'react';
 import {getUniqueId} from 'react-native-device-info';
 import {GET_ALL_SERVICES, REGISTER_CENTER_SEND_OTP} from '../utils/endpoints';
-import CheckBox from '@react-native-community/checkbox';
+// import CheckBox from '@react-native-community/checkbox';
 import {COLORS} from '../utils/constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 

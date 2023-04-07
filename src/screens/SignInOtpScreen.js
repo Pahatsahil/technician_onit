@@ -130,6 +130,7 @@ const SignInOtpScreen = ({ navigation, route }) => {
         ToastAndroid.show("Logged in successfully!", ToastAndroid.SHORT);
         dispatch(setAccessToken(res?.data?.data?.token));
         setUserDetails(res?.data?.data?.token);
+        navigation.navigate('Booking')
       }
       )
     } catch (error) {

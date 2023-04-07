@@ -9,6 +9,7 @@ import {
   SignUpOtpScreen,
 } from '../../screens';
 import OnboardingScreens from '../../screens/onboarding/OnboardingScreens';
+import Home from '../../screens';
 import {useSelector} from 'react-redux';
 
 const Stack = createStackNavigator();
@@ -54,6 +55,11 @@ const AuthStack = () => {
         component={GenerateQR}
         options={{headerShown: false}}
       />
+      {/* <Stack.Screen
+        name="Booking"
+        component={Home}
+        options={{headerShown: false}}
+      /> */}
     </Stack.Navigator>
   );
 };
