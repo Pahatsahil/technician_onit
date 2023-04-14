@@ -141,7 +141,7 @@ const EditProfile = ({ navigation }) => {
                 </Text>
                 <TextInput
                     editable={false}
-                    defaultValue={userData.userDetails?.personal_details?.phone?.country_code + " " + userData.userDetails?.personal_details?.phone?.mobile_number}
+                    defaultValue={userData?.userDetails?.personal_details?.phone?.country_code + " " + userData.userDetails?.personal_details?.phone?.mobile_number}
                     style={styles.fullinput}
                     placeholder='Phone Number'
                     placeholderTextColor='black'
@@ -178,7 +178,7 @@ const EditProfile = ({ navigation }) => {
                         />
                     )}
                     name="email"
-                    defaultValue={userData.userDetails?.personal_details?.email.toUpperCase() || ""}
+                    defaultValue={userData?.userDetails?.personal_details?.email.toUpperCase() || ""}
                     rules={{
                         pattern: {
                             value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
@@ -241,7 +241,7 @@ const EditProfile = ({ navigation }) => {
                     <TextInput
                         editable={false}
                         style={styles.halfinput}
-                        defaultValue={userData?.userDetails?.address_details_permanent?.city.toUpperCase()}
+                        defaultValue={userData?.userDetails?.address_details_permanent?.city?.toUpperCase()}
                         placeholder='City'
                         placeholderTextColor='black'
                         keyboardType='name-phone-pad'

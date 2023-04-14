@@ -31,8 +31,11 @@ export const AFTER_PAYMENT_PAY_ONBOARDING_KIT = `${BASE_URL}/technicianApp/after
 export const GET_WALLET_BALANCE = `${BASE_URL}payment/wallet-balance`
 export const RECHARGE_WALLET = `${BASE_URL}technicianApp/accepted-wallet-recharge-request`
 export const JOINING_BONUS = `${BASE_URL}payment/joining-bonus`
+export const REFERRAL_BONUS = `${BASE_URL}payment/referral-bonus`
 export const GET_NOTIFICATION_TOKEN = `${BASE_URL}technician/tokens`
 //Image upload endpoints
+// technicianApp/upload-technician_profile_picture/:technician_obj_id
+// export const GET_PROFILE_PICTURE = `${BASE_URL}technicianApp/upload-technician_profile_picture/`
 
 export const TECHNICIAN_PAN_CARD = `${UPLOAD_URL}TECHNICIAN_PAN_CARD`;
 export const AADHAR_FRONT_IMAGE = `${UPLOAD_URL}AADHAR_FRONT_IMAGE`;

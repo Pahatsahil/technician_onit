@@ -55,7 +55,7 @@ const SignInOtpScreen = ({ navigation, route }) => {
 
   const resendOTP = async () => {
     setVisible(true)
-    console.log(data)
+    console.log('daada'.data)
     try {
       await axios({
         method: "post",
@@ -120,7 +120,7 @@ const SignInOtpScreen = ({ navigation, route }) => {
     setVisible(true)
     const otp = _otp[1] + _otp[2] + _otp[3] + _otp[4]
     const payload = { ...data, otp, device_id };
-    console.log(payload);
+    console.log('paaaayload--',payload);
     try {
       await axios({
         method: "post",

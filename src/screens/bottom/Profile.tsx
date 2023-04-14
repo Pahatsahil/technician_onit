@@ -191,7 +191,7 @@ export default function Profile({ navigation: { navigate } }) {
                             @ Zero Charges
                         </Text>
                         <QRCode
-                            value={`https://app.onit.services/#/booking/${userData.userDetails?.center_id[0].qr_details.qr_id}`}
+                            value={`https://app.onit.services/#/booking/${userData.userDetails?.center_id[0]?.qr_details?.qr_id}`}
                             // value={`http://facebook.github.io/react-native/`}
                             size={200}
                             // bgColor="white"

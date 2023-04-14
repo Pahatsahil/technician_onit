@@ -17,7 +17,7 @@ const AuthStack = () => {
   const {onboardingShown} = useSelector(state => state.auth);
   return (
     <Stack.Navigator initialRouteName="Onboarding">
-      {onboardingShown && (
+      {!onboardingShown && (
         <Stack.Screen
           name="Onboarding"
           component={OnboardingScreens}

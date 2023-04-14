@@ -214,6 +214,14 @@ export default function CompletedRequestBox() {
                     </Text>
                 </View>
 
+
+                <View style={{ flexDirection: "row", paddingTop: 20 }}>
+                    <Image source={require
+                        ('../images/location.png')} />
+                    <View style={{ justifyContent: "center" }}>
+                        <Text style={{ color: 'black', fontSize: 15, fontWeight: "400" }}>  Nitin Kohtri</Text>
+                    </View>
+                </View>
                 <View
                     style={{
                         width: '35%',
@@ -222,7 +230,7 @@ export default function CompletedRequestBox() {
                         borderTopEndRadius: 10,
                         alignItems: 'center',
                         justifyContent: 'center',
-                        padding: 2,
+                        padding: 10,
                     }}>
                     <View style={{ flexDirection: 'row' }}>
                         <Image
@@ -239,8 +247,40 @@ export default function CompletedRequestBox() {
                         <Text style={styles.smltext}> 09:00 - 11:00 am</Text>
                     </View>
                 </View>
- 
+                <View style={{flexDirection:"row",backgroundColor:"#E5E7E9",marginTop:15,height:55}}>
+                    <View style={{  paddingLeft: 10, paddingVertical: 5 ,justifyContent:"center"}}>
+                        <Image source={require('../images/warning.png')} style={{height:30,width:30}} />
+
+
+
+                    </View>
+                    <View style={{justifyContent:"center",paddingLeft:10}}>
+                        <Text style={{}}>
+                            Problem:
+                        </Text>
+                        <Text
+                            style={{
+                                fontFamily: 'poppins-medium',
+                                fontSize: 13,
+                                color: '#1D4831',
+                            }}>
+                            Tap Leaking and sink problem
+                        </Text>
+                    </View>
+                </View>
+                <View style={{padding:10,flexDirection:"row"}}>
+                <Image source={require
+                        ('../images/location.png')}  style={{height:30,width:30}}/>
+                        <View style={{alignItems:"center",justifyContent:"center",marginLeft:10}}>
+                            <Text style={{color:"#3498DB",fontSize:17}}>Delhi,Basungali</Text>
+                        </View>
+                </View>
+                <View>
+                    
+                </View>
+
             </View>
+
         </SafeAreaView >
     )
 }

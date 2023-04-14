@@ -211,7 +211,7 @@ export default function Completed() {
                           alignItems: 'flex-start',
                           alignSelf: 'center',
                         }}>
-                        ₹{+item?.ticket_price + +item?.closing_ticket_price}
+                        ₹{+item?.closing_ticket_price}
                       </Text>
                     </View>
                   </View>

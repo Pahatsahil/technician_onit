@@ -36,7 +36,8 @@ const TermsCondition = () => {
                     style={{
                         fontFamily: 'poppins-semibold',
                         fontWeight: "bold",
-                        fontSize: 22
+                        fontSize: 22,
+                        color:"black"
                     }}
                 >
                     Terms & <Text style={{ color:"#00796A"}}>

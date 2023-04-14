@@ -5,7 +5,7 @@ import {
     StyleSheet,
     Dimensions,
     TouchableOpacity,
-    Text, Modal, ToastAndroid
+    Text, Modal, ToastAndroid,PermissionsAndroid
 } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { Completed, NewRequest, Pending } from './requesttabs';
@@ -17,7 +17,8 @@ import {
     GET_NOTIFICATION_TOKEN,
     GET_WALLET_BALANCE,
     TECHNICIAN_PROFILE_PICTURE,
-    CREATE_NEW_TECHNICIAN
+    CREATE_NEW_TECHNICIAN,
+    BASE_URL
 } from '../utils/endpoints';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -26,11 +27,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import ImagePicker from 'react-native-image-crop-picker';
 import { setProfileImageUrl } from '../../redux-toolkit/slice';
+import { TabBar } from 'react-native-tab-view';
+import messaging from '@react-native-firebase/messaging';
 
 //9873371012
 //9810024941
 //8882449931
 // 8318187374
+//8080715946
+//7838716761
 
 const { height, width } = Dimensions.get('screen');
 const Tab = createMaterialTopTabNavigator();
@@ -48,6 +53,61 @@ const Home = ({ navigation, route }) => {
     const [s3aadhaarCardFront, sets3AadhaarCardFront] = useState();
     const [s3aadhaarCardBack, sets3AadhaarCardBack] = useState();
     const dispatch = useDispatch();
+
+
+    useEffect(() => {
+        PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+        );
+        GetFCMToken();
+      }, []);
+    
+      const GetFCMToken = async () => {
+        let fcmToken = await AsyncStorage.getItem('fcmtoken');
+        if (!fcmToken) {
+          try {
+            let fcmToken = await messaging().getToken();
+            if (fcmToken) {
+              console.log('FCM TOKEN', fcmToken);
+              AsyncStorage.setItem('fcmtoken', fcmToken);
+            }
+          } catch (error) {
+            console.log('ERROR in Token', error);
+          }
+        } else {
+          console.log("FCMTOKEN", fcmToken)
+        }
+      };
+      useEffect(() => {
+        NotificationToken();
+      }, []);
+    
+      const NotificationToken = async () => {
+        let fcmToken = await AsyncStorage.getItem('fcmtoken');
+        let device_id = await AsyncStorage.getItem('device_id');
+        console.log('abhay', fcmToken);
+        const payload = {
+          token: fcmToken,
+          device_id: device_id?.toString(),
+        };
+        try {
+          console.log('NOTIFICATIONs', payload);
+          const res = await axios({
+            method: 'post',
+            url: GET_NOTIFICATION_TOKEN,
+            data: payload,
+          });
+          if (res) {
+            console.log('NotificationToken', res.data);
+          }
+          console.log('', res);
+        } catch (err) {
+          console.log('errorToken', err);
+        }
+      };
+
+
+
     useEffect(() => {
         const fetchServices = async () => {
             const res = await axios.get(GET_ALL_SERVICES);
@@ -153,18 +213,21 @@ const Home = ({ navigation, route }) => {
     //     }
 
     // }, []);
-    useEffect(() => {
-        if (!profileImageUrl) {
-            setModalVisible(true);
-            uploadImage();
-        }
+    // useEffect(() => {
+    //     if (!profileImageUrl) {
+    //         setModalVisible(true);
+    //         uploadImage();
+    //         // !TabBar()
+            
+    //     }
 
-    }, [profilePicture]);
+    // }, [profilePicture]);
     const uploadImage = async () => {
         if (profilePicture) {
+            console.log("123",profilePicture)
             setLoader(true);
-            var data = new FormData();
-            data.append('aadhar', {
+            let data = new FormData();
+            data.append('TECHNICIAN_PROFILE_PICTURE', {
                 uri: profilePicture.path,
                 name: profilePicture.path.split('/').pop(),
                 type: profilePicture.mime,
@@ -172,7 +235,7 @@ const Home = ({ navigation, route }) => {
                 width: profilePicture.width,
             });
             try {
-                const response = await fetch(TECHNICIAN_PROFILE_PICTURE, {
+                const response = await fetch(`${BASE_URL}technicianApp/upload-technician_profile_picture/${userId}`, {
                     method: 'post',
 
                     headers: {
@@ -185,6 +248,7 @@ const Home = ({ navigation, route }) => {
                 });
                 let _data = await response.json();
                 // setImageResponse(_data);
+                console.log("datatatatata",_data)
                 if (_data.status === 200) {
                     // setS3ProfileImage();
                     dispatch(setProfileImageUrl(_data?.data?.fileSavedUrl.toString()))
@@ -195,7 +259,7 @@ const Home = ({ navigation, route }) => {
                     ToastAndroid.show('Image Uploaded successfully!', ToastAndroid.SHORT);
                 }
             } catch (error) {
-                console.log(error);
+                console.log('aaaa',error);
                 setLoader(false);
                 ToastAndroid.show('Error! Please Try again!', ToastAndroid.SHORT);
             }

@@ -597,6 +597,7 @@ export default function GenerateQR({navigation}) {
                         value={value}
                         autoCapitalize="characters"
                         maxLength={50}
+                        placeholderTextColor={"black"}
                       />
                     )}
                     name="address_line"
@@ -634,6 +635,7 @@ export default function GenerateQR({navigation}) {
                           placeholder="Area Pincode"
                           onChangeText={value => onChange(value)}
                           value={value}
+                          placeholderTextColor={"black"}
                           keyboardType="numeric"
                         />
                       )}}
@@ -667,15 +669,7 @@ export default function GenerateQR({navigation}) {
                     )}
                   </View>
                   <View style={{width: '48%'}}>
-                    <Controller
-                      control={control}
-                      render={({field: {onChange, onBlur, value}}) => {
-                        if(city.length !== 0){
-                          value = city
-                          console.log(value)
-                        }
-                        return(
-                        <TextInput
+                  <TextInput
                           style={{
                             borderRadius: 4,
                             marginTop: 10,
@@ -686,19 +680,29 @@ export default function GenerateQR({navigation}) {
                             fontSize: 16,
                             color: '#000',
                           }}
-                          onBlur={onBlur}
+                        //   onBlur={onBlur}
                           placeholder="City"
-                          onChangeText={value => onChange(value)}
-                          value={value}
+                          placeholderTextColor={"black"}
+                          onChangeText={city => setCity(city)}
+                          value={city}
                           autoCapitalize="characters"
                           maxLength={50}
                           editable={city.length == 0 ? false : true}
                         />
+                    {/* <Controller
+                      control={control}
+                      render={({field: {onChange, onBlur, value}}) => {
+                        if(city.length !== 0){
+                          value = city
+                          console.log(value)
+                        }
+                        return(
+                        
                       )}}
                       name="city"
                       defaultValue=""
                       rules={{required: city.length == 0 ? false : true}}
-                    />
+                    /> */}
                     {(errors.city) && (
                       <Text style={{color: 'red'}}>City is required!</Text>
                     )}
@@ -708,7 +712,7 @@ export default function GenerateQR({navigation}) {
               {/* Information */}
               <View>
                 <Text style={styles.headline}>
-                  Information
+                  E-mail
                   {/* <Text style={styles.star}>*</Text> */}
                 </Text>
                 <View>

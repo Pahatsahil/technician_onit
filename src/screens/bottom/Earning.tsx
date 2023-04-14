@@ -63,8 +63,8 @@ const Earning = ({navigation}) => {
           'x-access-token': accessToken,
         },
       }).then(res => {
-        console.log('ORDER', res.data.data.paymentDetails);
-        setOrderDetailsList(res.data.data.paymentDetails);
+        console.log('ORDER', res?.data.data.paymentDetails);
+        setOrderDetailsList(res?.data?.data?.paymentDetails);
         setLoader(false);
       });
     } catch (err) {
@@ -869,9 +869,9 @@ const Earning = ({navigation}) => {
       });
       if (res) {
         console.log('DATA_BALANCE', res.data);
-        dispatch(setWalletBalance(res.data.wallet_balance));
+        dispatch(setWalletBalance(res?.data?.wallet_balance));
       } else {
-        console.log('ERROR BALANCE', res.error);
+        console.log('ERROR BALANCE', res?.error);
       }
     } catch (error) {
       console.log('ERROR', error);
@@ -1517,7 +1517,7 @@ const Earning = ({navigation}) => {
                 marginTop: -16,
               }}>
               {'₹'}
-              {walletBalance}
+              {WalletBalanceAPI}
             </Text>
           </View>
         </ImageBackground>

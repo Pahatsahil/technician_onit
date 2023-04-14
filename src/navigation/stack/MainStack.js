@@ -18,6 +18,7 @@ import OnboardingScreens from '../../screens/onboarding/OnboardingScreens';
 import NewRequestBox from '../../components/NewRequestBox';
 import JobCompleted from '../../screens/requesttabs/JobCompleted';
 import CompletedRequestBox from '../../components/CompletedRequestBox';
+import SearchTecnician from '../../screens/SearchTecnician';
 // <<<<<<< HEAD
 // =======
 import Earning from '../../screens/bottom/Earning';
@@ -48,6 +49,11 @@ const MainStack = () => {
       <Stack.Screen
         name="Subscription"
         component={Subscription}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="CheckTechnican"
+        component={SearchTecnician}
         options={{headerShown: false}}
       />
       <Stack.Screen

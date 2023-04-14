@@ -90,7 +90,7 @@ export default function Recharge({navigation}) {
         },
       }).then(res => {
         console.log(res.data.data.paymentDetails);
-        setOrderDetailsList(res.data.data.paymentDetails);
+        setOrderDetailsList(res?.data?.data?.paymentDetails);
         setLoader(false);
       });
     } catch (err) {
@@ -1514,13 +1514,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 15,
+    marginTop: 15,padding:10
   },
   centeredView: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     // marginTop: 22,
+    
   },
   modalView: {
     margin: 20,
